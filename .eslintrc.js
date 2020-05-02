@@ -40,7 +40,7 @@ module.exports = {
     "react-native/split-platform-components": 2,
     "react-native/no-inline-styles": 2,
     "react-native/no-color-literals": 2,
-    "react-native/no-raw-text": 2,
+    "react-native/no-raw-text": 0,
     "react-native/no-single-element-style-arrays": 2,
     "@typescript-eslint/no-use-before-define": 0,
     "no-console": 0,
@@ -49,7 +49,7 @@ module.exports = {
     'import/resolver': {
       node: {
         extensions: [".js", ".ts", ".tsx"],
-        paths: "src",
+        paths: ".",
       }
     },
     'react-native/style-sheet-object-names': ['EStyleSheet', 'OtherStyleSheet', 'PStyleSheet'],

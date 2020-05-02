@@ -7,5 +7,14 @@ module.exports = (api) => {
         plugins: ['transform-remove-console'],
       },
     },
+    plugins: [
+      [
+        'module-resolver',
+        {
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
+          root: ['./'],
+        },
+      ],
+    ],
   }
 }
