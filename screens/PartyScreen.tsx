@@ -4,6 +4,7 @@ import {
 } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { Party } from 'types'
+import Restaurants from 'components/Restaurants'
 
 type StackParamList = {
   Home: undefined;
@@ -35,24 +36,20 @@ const PartyScreen = React.memo((props: Props) => {
   }
 
   return (
-    <View>
-      <Image
-        style={styles.image}
-        source={{
-          uri: party.current[0].image_url,
-        }}
-      />
-      <Text>{party.current[0].name}</Text>
-    </View>
+    <Restaurants {...{ restaurants: party.current }} />
   )
 })
 
 export default PartyScreen
 
 const styles = StyleSheet.create({
+  container: {
+    margin: 4,
+  },
   image: {
     width: '100%',
     height: '100%',
     resizeMode: 'contain',
+    borderRadius: 4,
   },
 })
