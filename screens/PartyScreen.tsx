@@ -1,8 +1,8 @@
 import React from 'react'
 import {
-  ActivityIndicator, Alert, BackHandler, View, Text, SafeAreaView, StyleSheet,
+  ActivityIndicator, Alert, BackHandler, View, Text, SafeAreaView, StyleSheet, TouchableOpacity,
 } from 'react-native'
-import { Feather as FeatherIcons, MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { Party } from 'types'
@@ -11,6 +11,7 @@ import SwipeWindow from 'components/SwipeWindow'
 type StackParamList = {
   Home: undefined;
   Party: undefined;
+  Match: undefined;
 }
 
 type NavigationProp = StackNavigationProp<
@@ -21,7 +22,7 @@ type NavigationProp = StackNavigationProp<
 type Props = {
   navigation: NavigationProp;
   party?: Party;
-  setParty: React.Dispatch<React.SetStateAction<Party | undefined>>;
+  setParty: React.Dispatch<React.SetStateAction<Party>>;
   ws: WebSocket;
 }
 
@@ -30,8 +31,9 @@ const PartyScreen = React.memo((props: Props) => {
     navigation, party, setParty, ws,
   } = props
 
+
   // Custom android back button
-  useFocusEffect(
+  useFocusEffect( // eslint-disable-line
     React.useCallback(() => {
       const onBackPress = (): boolean => {
         Alert.alert(
@@ -43,7 +45,7 @@ const PartyScreen = React.memo((props: Props) => {
               text: 'OK',
               onPress: (): void => {
                 navigation.navigate('Home')
-                setParty(undefined)
+                setParty({} as Party)
               },
             },
           ],
@@ -55,7 +57,7 @@ const PartyScreen = React.memo((props: Props) => {
       BackHandler.addEventListener('hardwareBackPress', onBackPress)
 
       return (): void => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
-    }, [navigation]),
+    }, [navigation, setParty]),
   )
 
   const handleSwipeRight = (id: string): void => {
@@ -66,6 +68,7 @@ const PartyScreen = React.memo((props: Props) => {
     return (
       <View>
         <Text>Waiting for other people to join.</Text>
+        <Text>{`Party id: ${party.id}`}</Text>
       </View>
     )
   }
@@ -75,8 +78,9 @@ const PartyScreen = React.memo((props: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <FeatherIcons name="user" size={32} color="gray" />
-        <FeatherIcons name="message-circle" size={32} color="gray" />
+        <TouchableOpacity onPress={(): void => navigation.navigate('Match')}>
+          <MaterialIcons name="list" size={32} color="gray" />
+        </TouchableOpacity>
       </View>
       <SwipeWindow restaurants={party.current} handleSwipeRight={handleSwipeRight} />
       <View style={styles.footer}>
@@ -97,7 +101,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     padding: 16,
   },
   footer: {
