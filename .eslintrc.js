@@ -44,6 +44,7 @@ module.exports = {
     "react-native/no-single-element-style-arrays": 2,
     "@typescript-eslint/no-use-before-define": 0,
     "no-console": 0,
+    "react/jsx-props-no-spreading": 0,
   },
   settings: {
     'import/resolver': {
