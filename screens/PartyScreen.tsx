@@ -1,8 +1,9 @@
 import React from 'react'
 import {
-  ActivityIndicator, View, Text, SafeAreaView, StyleSheet,
+  ActivityIndicator, Alert, BackHandler, View, Text, SafeAreaView, StyleSheet,
 } from 'react-native'
 import { Feather as FeatherIcons, MaterialIcons } from '@expo/vector-icons'
+import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { Party } from 'types'
 import SwipeWindow from 'components/SwipeWindow'
@@ -24,7 +25,28 @@ type Props = {
 }
 
 const PartyScreen = React.memo((props: Props) => {
-  const { party } = props
+  const { navigation, party } = props
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const onBackPress = (): boolean => {
+        Alert.alert(
+          'Are you sure you want to exit?',
+          'Exiting will make you lose all data in this party',
+          [
+            { text: 'Cancel', onPress: (): void => console.log('cancelled') },
+            { text: 'OK', onPress: (): void => navigation.navigate('Home') },
+          ],
+          { cancelable: true },
+        )
+        return true
+      }
+
+      BackHandler.addEventListener('hardwareBackPress', onBackPress)
+
+      return (): void => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
+    }, [navigation]),
+  )
 
   if (!party || !party.current) return <ActivityIndicator size="small" />
 
