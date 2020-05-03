@@ -47,7 +47,13 @@ export default function App(): React.ReactElement {
                   'Exiting will make you lose all data in this party',
                   [
                     { text: 'Cancel', onPress: (): void => console.log('cancelled') },
-                    { text: 'OK', onPress: (): void => navigation.navigate('Home') },
+                    {
+                      text: 'OK',
+                      onPress: (): void => {
+                        navigation.navigate('Home')
+                        setParty(undefined)
+                      },
+                    },
                   ],
                   { cancelable: true },
                 )}
@@ -57,7 +63,9 @@ export default function App(): React.ReactElement {
             ),
           })}
         >
-          {(props): React.ReactElement => <PartyScreen {...props} ws={ws} party={party} />}
+          {(props): React.ReactElement => (
+            <PartyScreen {...props} ws={ws} party={party} setParty={setParty} />
+          )}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

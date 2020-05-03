@@ -21,12 +21,16 @@ type NavigationProp = StackNavigationProp<
 type Props = {
   navigation: NavigationProp;
   party?: Party;
+  setParty: React.Dispatch<React.SetStateAction<Party | undefined>>;
   ws: WebSocket;
 }
 
 const PartyScreen = React.memo((props: Props) => {
-  const { navigation, party } = props
+  const {
+    navigation, party, setParty, ws,
+  } = props
 
+  // Custom android back button
   useFocusEffect(
     React.useCallback(() => {
       const onBackPress = (): boolean => {
@@ -35,7 +39,13 @@ const PartyScreen = React.memo((props: Props) => {
           'Exiting will make you lose all data in this party',
           [
             { text: 'Cancel', onPress: (): void => console.log('cancelled') },
-            { text: 'OK', onPress: (): void => navigation.navigate('Home') },
+            {
+              text: 'OK',
+              onPress: (): void => {
+                navigation.navigate('Home')
+                setParty(undefined)
+              },
+            },
           ],
           { cancelable: true },
         )
@@ -48,9 +58,11 @@ const PartyScreen = React.memo((props: Props) => {
     }, [navigation]),
   )
 
-  if (!party || !party.current) return <ActivityIndicator size="small" />
+  const handleSwipeRight = (id: string): void => {
+    ws.send(JSON.stringify({ type: 'swipe-right', payload: { restaurant_id: id } }))
+  }
 
-  if (party.status === 'waiting') {
+  if (party?.status === 'waiting') {
     return (
       <View>
         <Text>Waiting for other people to join.</Text>
@@ -58,13 +70,15 @@ const PartyScreen = React.memo((props: Props) => {
     )
   }
 
+  if (!party || !party.current) return <ActivityIndicator size="small" />
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <FeatherIcons name="user" size={32} color="gray" />
         <FeatherIcons name="message-circle" size={32} color="gray" />
       </View>
-      <SwipeWindow restaurants={party.current} />
+      <SwipeWindow restaurants={party.current} handleSwipeRight={handleSwipeRight} />
       <View style={styles.footer}>
         <View style={styles.circle}>
           <MaterialIcons name="keyboard-arrow-down" size={32} color="black" />

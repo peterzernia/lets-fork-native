@@ -69,6 +69,7 @@ const {
 } = Animated
 
 type Props = {
+  handleSwipeRight: (id: string) => void;
   restaurants: Restaurant[];
 }
 
@@ -154,8 +155,13 @@ export default class SwipeWindow extends React.PureComponent<Props, ComponentSta
   };
 
   swiped = ([translationX]) => {
-    console.log({ likes: translationX > 0 })
+    const { handleSwipeRight } = this.props
     const { restaurants: [lastRestaurant, ...restaurants] } = this.state
+
+    // positive translation means right swipe
+    if (translationX > 0) {
+      handleSwipeRight(lastRestaurant.id)
+    }
     this.setState({ restaurants }, this.init)
   }
 
