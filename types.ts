@@ -5,11 +5,11 @@ export type Message = {
 
 export type Party = {
   id: string;
-  current: Restaurant[];
-  matches: Restaurant[];
-  restaurants: Restaurant[];
+  current?: Restaurant[];
+  matches?: Restaurant[];
+  restaurants?: Restaurant[];
   status: 'waiting' | 'active';
-  total: number;
+  total?: number;
 }
 
 export type Restaurant = {
