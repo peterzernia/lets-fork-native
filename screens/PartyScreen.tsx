@@ -1,10 +1,11 @@
 import React from 'react'
 import {
-  Image, View, Text, StyleSheet,
+  ActivityIndicator, View, Text, SafeAreaView, StyleSheet,
 } from 'react-native'
+import { Feather as FeatherIcons, MaterialIcons } from '@expo/vector-icons'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { Party } from 'types'
-import Restaurants from 'components/Restaurants'
+import SwipeWindow from 'components/SwipeWindow'
 
 type StackParamList = {
   Home: undefined;
@@ -23,9 +24,9 @@ type Props = {
 }
 
 const PartyScreen = React.memo((props: Props) => {
-  const { party, ws } = props
+  const { party } = props
 
-  if (!party || !party.current) return null
+  if (!party || !party.current) return <ActivityIndicator size="small" />
 
   if (party.status === 'waiting') {
     return (
@@ -36,7 +37,18 @@ const PartyScreen = React.memo((props: Props) => {
   }
 
   return (
-    <Restaurants {...{ restaurants: party.current }} />
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <FeatherIcons name="user" size={32} color="gray" />
+        <FeatherIcons name="message-circle" size={32} color="gray" />
+      </View>
+      <SwipeWindow restaurants={party.current} />
+      <View style={styles.footer}>
+        <View style={styles.circle}>
+          <MaterialIcons name="keyboard-arrow-down" size={32} color="black" />
+        </View>
+      </View>
+    </SafeAreaView>
   )
 })
 
@@ -44,12 +56,30 @@ export default PartyScreen
 
 const styles = StyleSheet.create({
   container: {
-    margin: 4,
+    flex: 1,
+    backgroundColor: '#fbfaff',
   },
-  image: {
-    width: '100%',
-    height: '100%',
-    resizeMode: 'contain',
-    borderRadius: 4,
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 16,
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    padding: 16,
+  },
+  circle: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    padding: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    shadowColor: 'gray',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.18,
+    shadowRadius: 2,
   },
 })
