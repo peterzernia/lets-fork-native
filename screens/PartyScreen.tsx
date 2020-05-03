@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  ActivityIndicator, Alert, BackHandler, View, Text, SafeAreaView, StyleSheet, TouchableOpacity,
+  ActivityIndicator, Alert, BackHandler, View, Text, SafeAreaView, StyleSheet,
 } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
@@ -78,11 +78,6 @@ const PartyScreen = React.memo((props: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={(): void => navigation.navigate('Match')}>
-          <MaterialIcons name="list" size={32} color="gray" />
-        </TouchableOpacity>
-      </View>
       <SwipeWindow restaurants={party.current} handleSwipeRight={handleSwipeRight} />
       <View style={styles.footer}>
         <View style={styles.circle}>
@@ -99,11 +94,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fbfaff',
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    padding: 16,
   },
   footer: {
     flexDirection: 'row',

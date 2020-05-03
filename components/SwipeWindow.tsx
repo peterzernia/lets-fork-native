@@ -190,7 +190,9 @@ export default class SwipeWindow extends React.PureComponent<Props, ComponentSta
     return (
       <View style={styles.cards}>
         {
-          restaurants.length ? <Card restaurant={restaurants[0]} /> : null
+          restaurants.length
+            ? <Card restaurant={restaurants[0]} />
+            : null
         }
         {
           lastRestaurant && (

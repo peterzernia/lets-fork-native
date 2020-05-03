@@ -61,15 +61,26 @@ export default function App(): React.ReactElement {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home">
+        <Stack.Screen
+          name="Home"
+          options={(): object => ({
+            headerTitle: (): null => null,
+          })}
+        >
           {(props): React.ReactElement => <HomeScreen {...props} ws={ws} />}
         </Stack.Screen>
-        <Stack.Screen name="Match">
+        <Stack.Screen
+          name="Match"
+          options={(): object => ({
+            headerTitle: (): null => null,
+          })}
+        >
           {(props): React.ReactElement => <MatchScreen {...props} party={party} />}
         </Stack.Screen>
         <Stack.Screen
           name="Party"
-          options={({ navigation }): any => ({
+          options={({ navigation }): object => ({
+            headerTitle: (): null => null,
             headerLeft: (): React.ReactElement => (
               <TouchableOpacity
                 style={styles.backButton}
@@ -93,6 +104,11 @@ export default function App(): React.ReactElement {
                 <MaterialIcons name="close" color="black" size={24} />
               </TouchableOpacity>
             ),
+            headerRight: (): React.ReactElement => (
+              <TouchableOpacity style={styles.matchButton} onPress={(): void => navigation.navigate('Match')}>
+                <MaterialIcons name="list" size={32} color="gray" />
+              </TouchableOpacity>
+            ),
           })}
         >
           {(props): React.ReactElement => (
@@ -107,5 +123,8 @@ export default function App(): React.ReactElement {
 const styles = StyleSheet.create({
   backButton: {
     marginLeft: 16,
+  },
+  matchButton: {
+    marginRight: 16,
   },
 })
