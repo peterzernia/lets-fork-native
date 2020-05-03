@@ -190,18 +190,20 @@ export default class SwipeWindow extends React.PureComponent<Props, ComponentSta
     return (
       <View style={styles.cards}>
         {
-            restaurants.reverse().map((restaurant) => (
-              <Card key={restaurant.id} restaurant={restaurant} />
-            ))
+          restaurants.length ? <Card restaurant={restaurants[0]} /> : null
         }
-        <PanGestureHandler
-          onHandlerStateChange={onGestureEvent}
-          onGestureEvent={onGestureEvent}
-        >
-          <Animated.View style={style}>
-            <Card restaurant={lastRestaurant} />
-          </Animated.View>
-        </PanGestureHandler>
+        {
+          lastRestaurant && (
+            <PanGestureHandler
+              onHandlerStateChange={onGestureEvent}
+              onGestureEvent={onGestureEvent}
+            >
+              <Animated.View style={style}>
+                <Card restaurant={lastRestaurant} />
+              </Animated.View>
+            </PanGestureHandler>
+          )
+        }
       </View>
     )
   }
