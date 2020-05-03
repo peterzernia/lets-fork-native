@@ -81,6 +81,7 @@ export default function App(): React.ReactElement {
                     {
                       text: 'OK',
                       onPress: (): void => {
+                        ws.send(JSON.stringify({ type: 'quit' }))
                         navigation.navigate('Home')
                         setParty({} as Party)
                       },

@@ -44,6 +44,7 @@ const PartyScreen = React.memo((props: Props) => {
             {
               text: 'OK',
               onPress: (): void => {
+                ws.send(JSON.stringify({ type: 'quit' }))
                 navigation.navigate('Home')
                 setParty({} as Party)
               },
