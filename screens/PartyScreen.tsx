@@ -58,7 +58,7 @@ const PartyScreen = React.memo((props: Props) => {
       BackHandler.addEventListener('hardwareBackPress', onBackPress)
 
       return (): void => BackHandler.removeEventListener('hardwareBackPress', onBackPress)
-    }, [navigation, setParty]),
+    }, [navigation, setParty, ws]),
   )
 
   const handleSwipeRight = (id: string): void => {
