@@ -71,6 +71,7 @@ const {
 type Props = {
   handleSwipeRight: (id: string) => void;
   restaurants: Restaurant[];
+  setCurrent: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
 }
 
 type ComponentState = {
@@ -155,8 +156,9 @@ export default class SwipeWindow extends React.PureComponent<Props, ComponentSta
   };
 
   swiped = ([translationX]) => {
-    const { handleSwipeRight } = this.props
+    const { handleSwipeRight, setCurrent } = this.props
     const { restaurants: [lastRestaurant, ...restaurants] } = this.state
+    setCurrent(restaurants[0])
 
     // positive translation means right swipe
     if (translationX > 0) {
@@ -168,6 +170,7 @@ export default class SwipeWindow extends React.PureComponent<Props, ComponentSta
   render(): React.ReactElement {
     const { onGestureEvent, translateX, translateY } = this
     const { restaurants: [lastRestaurant, ...restaurants] } = this.state
+
     const rotateZ = concat(
       interpolate(translateX, {
         inputRange: [-width / 2, width / 2],

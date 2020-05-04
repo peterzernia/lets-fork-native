@@ -1,12 +1,21 @@
 import React from 'react'
 import {
-  ActivityIndicator, Alert, BackHandler, View, Text, SafeAreaView, StyleSheet,
+  ActivityIndicator,
+  Alert,
+  BackHandler,
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
 } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { Party } from 'types'
+import { Party, Restaurant } from 'types'
 import SwipeWindow from 'components/SwipeWindow'
+import Details from 'components/Details'
 
 type StackParamList = {
   Home: undefined;
@@ -25,11 +34,13 @@ type Props = {
   setParty: React.Dispatch<React.SetStateAction<Party>>;
   ws: WebSocket;
 }
+const { height } = Dimensions.get('window')
 
 const PartyScreen = React.memo((props: Props) => {
   const {
     navigation, party, setParty, ws,
   } = props
+  const [current, setCurrent] = React.useState<Restaurant | undefined>()
 
 
   // Custom android back button
@@ -78,12 +89,21 @@ const PartyScreen = React.memo((props: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <SwipeWindow restaurants={party.current} handleSwipeRight={handleSwipeRight} />
-      <View style={styles.footer}>
-        <View style={styles.circle}>
-          <MaterialIcons name="keyboard-arrow-down" size={32} color="black" />
+      <ScrollView>
+        <View style={styles.swipe}>
+          <SwipeWindow
+            handleSwipeRight={handleSwipeRight}
+            restaurants={party.current}
+            setCurrent={setCurrent}
+          />
+          <View style={styles.footer}>
+            <View style={styles.circle}>
+              <MaterialIcons name="keyboard-arrow-down" size={32} color="black" />
+            </View>
+          </View>
         </View>
-      </View>
+        { current ? <Details restaurant={current} /> : null}
+      </ScrollView>
     </SafeAreaView>
   )
 })
@@ -95,10 +115,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fbfaff',
   },
+  swipe: {
+    // TODO: subtract header height
+    height,
+  },
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     padding: 16,
+    height: 190,
   },
   circle: {
     width: 64,

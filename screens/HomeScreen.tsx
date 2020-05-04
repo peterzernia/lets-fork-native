@@ -25,7 +25,7 @@ const HomeScreen = React.memo((props: Props): React.ReactElement => {
 
   // creates a new party
   const handleCreate = (): void => {
-    ws.send(JSON.stringify({ type: 'create', payload: { latitude: '52.492495', longitude: '13.393264', radius: '1000' } }))
+    ws.send(JSON.stringify({ type: 'create', payload: { latitude: '43.801357', longitude: '-91.239578', radius: '1000' } }))
     navigation.navigate('Party')
   }
 
