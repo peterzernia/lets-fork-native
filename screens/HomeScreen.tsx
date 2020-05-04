@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-// import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import Button from 'components/Button'
 import Input from 'components/Input'
@@ -10,15 +9,12 @@ type StackParamList = {
   Party: undefined;
 }
 
-// type HomeScreenRouteProp = RouteProp<StackParamList, 'Home'>
-
 type NavigationProp = StackNavigationProp<
   StackParamList,
   'Home'
 >
 
 type Props = {
-  // route: HomeScreenRouteProp;
   navigation: NavigationProp;
   ws: WebSocket;
 }

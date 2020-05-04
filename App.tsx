@@ -7,7 +7,7 @@ import { Party } from 'types'
 import HomeScreen from 'screens/HomeScreen'
 import MatchScreen from 'screens/MatchScreen'
 import PartyScreen from 'screens/PartyScreen'
-
+import RestaurantScreen from 'screens/RestaurantScreen'
 
 const ws = new WebSocket('ws://192.168.178.25:8003/api/v1/ws')
 
@@ -106,7 +106,7 @@ export default function App(): React.ReactElement {
             ),
             headerRight: (): React.ReactElement => (
               <TouchableOpacity style={styles.matchButton} onPress={(): void => navigation.navigate('Match')}>
-                <MaterialIcons name="list" size={32} color="gray" />
+                <MaterialIcons name="list" size={32} color="black" />
               </TouchableOpacity>
             ),
           })}
@@ -115,6 +115,13 @@ export default function App(): React.ReactElement {
             <PartyScreen {...props} ws={ws} party={party} setParty={setParty} />
           )}
         </Stack.Screen>
+        <Stack.Screen
+          name="Restaurant"
+          component={RestaurantScreen}
+          options={(): object => ({
+            headerTitle: (): null => null,
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   )

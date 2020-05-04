@@ -14,6 +14,9 @@ export type Party = {
 
 export type Restaurant = {
   alias: string;
+  categories: Categories[];
+  coordinates: Coordinates;
+  location: Location;
   display_phone: string;
   id: string;
   image_url: string;
@@ -21,9 +24,33 @@ export type Restaurant = {
   is_closed: boolean;
   name: string;
   phone: string;
-  photos: string[];
+  photos?: string[];
   price: string;
   rating: number;
   transactions: string[];
   url: string;
+
+  // review_count?
+  // hours?
+  // special_hours?
+}
+
+type Categories = {
+  alias: string;
+  title: string;
+}
+
+type Coordinates = {
+  latitude: number;
+  longitude: number;
+}
+
+type Location = {
+  address1: string;
+  address2: string;
+  address3: string;
+  city: string;
+  country: string;
+  state: string;
+  zip_code: string;
 }

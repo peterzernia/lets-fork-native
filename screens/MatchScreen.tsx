@@ -1,14 +1,17 @@
 import React from 'react'
 import {
-  Image, View, Text, StyleSheet, ScrollView,
+  Image, View, Text, StyleSheet, ScrollView, TouchableOpacity,
 } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { Party } from 'types'
+import { Party, Restaurant } from 'types'
 
 type StackParamList = {
   Home: undefined;
-  Party: undefined;
   Match: undefined;
+  Party: undefined;
+  Restaurant: {
+    restaurant: Restaurant;
+  };
 }
 
 type NavigationProp = StackNavigationProp<
@@ -22,12 +25,13 @@ type Props = {
 }
 
 const MatchScreen = React.memo((props: Props) => {
-  const { party } = props
+  const { navigation, party } = props
 
   if (!party?.matches) {
     return (
       <View style={styles.container}>
-        <Text>No matches!</Text>
+        <Text>No matches yet</Text>
+        <Text>Keep swiping!</Text>
       </View>
     )
   }
@@ -35,14 +39,21 @@ const MatchScreen = React.memo((props: Props) => {
   return (
     <ScrollView contentContainerStyle={styles.scrollView}>
       {party?.matches.map((restaurant) => (
-        <View key={restaurant.id} style={styles.card}>
-          <View style={styles.overlay}>
-            <View>
-              <Text style={styles.name}>{restaurant.name}</Text>
+        <TouchableOpacity
+          key={restaurant.id}
+          onPress={(): void => navigation.navigate('Restaurant', {
+            restaurant,
+          })}
+        >
+          <View style={styles.card}>
+            <View style={styles.overlay}>
+              <View>
+                <Text style={styles.name}>{restaurant.name}</Text>
+              </View>
             </View>
+            <Image style={styles.image} source={{ uri: restaurant.image_url }} />
           </View>
-          <Image style={styles.image} source={{ uri: restaurant.image_url }} />
-        </View>
+        </TouchableOpacity>
       ))}
     </ScrollView>
   )
