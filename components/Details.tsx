@@ -22,11 +22,19 @@ export default function Details(props: Props): React.ReactElement {
     longitudeDelta: 0.01,
   })
 
+  // rating
+  // transacitons
+
   return (
     <View>
-      <Text>{`${restaurant.price} • ${restaurant.categories.map((category) => category.title).join(', ')}`}</Text>
-      <Text>{ restaurant.rating }</Text>
-      <View style={styles.icons}>
+      <View style={styles.section}>
+        <Text
+          style={styles.text}
+        >
+          {`${restaurant.price} • ${restaurant.categories.map((category) => category.title).join(', ')}`}
+        </Text>
+      </View>
+      <View style={styles.section}>
         <TouchableOpacity onPress={(): void => call(restaurant.display_phone)}>
           <MaterialIcons name="phone" size={32} />
         </TouchableOpacity>
@@ -34,7 +42,6 @@ export default function Details(props: Props): React.ReactElement {
           <FontAwesome name="yelp" size={32} />
         </TouchableOpacity>
       </View>
-      { restaurant.transactions.length ? <Text>{ restaurant.transactions.join(', ') }</Text> : null }
       <View style={styles.mapContainer}>
         <MapView
           region={region}
@@ -63,8 +70,8 @@ export default function Details(props: Props): React.ReactElement {
         }
       }}
       >
-        <View style={styles.directions}>
-          <Text>Get Directions</Text>
+        <View style={styles.section}>
+          <Text style={styles.text}>Get Directions</Text>
           <MaterialIcons name="directions" size={32} />
         </View>
       </TouchableOpacity>
@@ -73,11 +80,6 @@ export default function Details(props: Props): React.ReactElement {
 }
 
 const styles = StyleSheet.create({
-  icons: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
   mapContainer: {
     flex: 1,
     backgroundColor: '#fff',
@@ -88,12 +90,14 @@ const styles = StyleSheet.create({
     height: 200,
     width,
   },
-  directions: {
+  section: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     height: 80,
+  },
+  text: {
     fontWeight: 'bold',
   },
 })
