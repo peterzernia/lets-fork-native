@@ -2,6 +2,7 @@ import * as React from 'react'
 import {
   Image, StyleSheet, View, Text,
 } from 'react-native'
+import Rating from 'components/Rating'
 import { Restaurant } from 'types'
 
 type Props = {
@@ -15,8 +16,9 @@ export default function Card(props: Props): React.ReactElement {
     <View style={StyleSheet.absoluteFill}>
       <Image style={styles.image} source={{ uri: restaurant.image_url }} />
       <View style={styles.overlay}>
-        <View style={styles.footer}>
+        <View>
           <Text style={styles.name}>{restaurant.name}</Text>
+          <Rating rating={restaurant.rating} />
         </View>
       </View>
     </View>
@@ -34,9 +36,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     padding: 16,
-  },
-  footer: {
-    flexDirection: 'row',
   },
   name: {
     color: 'white',
