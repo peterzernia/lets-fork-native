@@ -1,11 +1,12 @@
 import React from 'react'
 import {
-  View, Text, TouchableOpacity, StyleSheet, Linking, Dimensions, Platform,
+  View, Text, TouchableOpacity, StyleSheet, Linking, Dimensions, Platform, Image,
 } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import { Restaurant } from 'types'
 import { call } from 'utils/phone'
+import { getRestaurant } from 'utils/api'
 
 type Props = {
   restaurant: Restaurant;
@@ -14,7 +15,8 @@ type Props = {
 const { width } = Dimensions.get('window')
 
 export default function Details(props: Props): React.ReactElement {
-  const { restaurant } = props
+  const { restaurant: defaultRestaurant } = props
+  const [restaurant, setRestaurant] = React.useState(defaultRestaurant)
   const [region, setRegion] = React.useState({
     latitude: restaurant.coordinates.latitude,
     longitude: restaurant.coordinates.longitude,
@@ -22,11 +24,26 @@ export default function Details(props: Props): React.ReactElement {
     longitudeDelta: 0.01,
   })
 
+  React.useEffect(() => {
+    const fetchData = async (): Promise<void> => {
+      try {
+        const rest = await getRestaurant(restaurant.id)
+        setRestaurant(rest)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+
+    fetchData()
+  }, [restaurant.id])
+
   // rating
   // transacitons
 
   return (
     <View>
+      { restaurant.photos
+        && <Image style={styles.image} source={{ uri: restaurant?.photos[0] }} /> }
       <View style={styles.section}>
         <Text
           style={styles.text}
@@ -80,6 +97,11 @@ export default function Details(props: Props): React.ReactElement {
 }
 
 const styles = StyleSheet.create({
+  image: {
+    width,
+    height: 300,
+    resizeMode: 'cover',
+  },
   mapContainer: {
     flex: 1,
     backgroundColor: '#fff',

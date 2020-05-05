@@ -27,6 +27,7 @@ export type Restaurant = {
   photos?: string[];
   price: string;
   rating: number;
+  review_count: number;
   transactions: string[];
   url: string;
 
