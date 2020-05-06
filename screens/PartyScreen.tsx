@@ -9,8 +9,8 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { Party, Restaurant } from 'types'
@@ -41,6 +41,7 @@ const PartyScreen = React.memo((props: Props) => {
     navigation, party, setParty, ws,
   } = props
   const [current, setCurrent] = React.useState<Restaurant | undefined>()
+  const [details, setDetails] = React.useState(false)
 
 
   // Custom android back button
@@ -87,22 +88,33 @@ const PartyScreen = React.memo((props: Props) => {
 
   if (!party || !party.current) return <ActivityIndicator size="small" />
 
+  if (party?.current && !current) {
+    setCurrent(party.current[0])
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <View style={styles.swipe}>
+      <ScrollView
+        onScroll={(e): void => {
+          if (e.nativeEvent.contentOffset.y === 0) {
+            setDetails(false)
+          }
+        }}
+      >
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={(): void => setDetails(true)}
+          style={details ? styles.hidden : styles.swipe}
+        >
           <SwipeWindow
             handleSwipeRight={handleSwipeRight}
             restaurants={party.current}
             setCurrent={setCurrent}
+            visible={!details}
           />
-          <View style={styles.footer}>
-            <View style={styles.circle}>
-              <MaterialIcons name="keyboard-arrow-down" size={32} color="black" />
-            </View>
-          </View>
-        </View>
-        { current ? <Details restaurant={current} /> : null}
+        </TouchableOpacity>
+        { details
+          ? <Details restaurant={current || {} as Restaurant} /> : null}
       </ScrollView>
     </SafeAreaView>
   )
@@ -117,7 +129,10 @@ const styles = StyleSheet.create({
   },
   swipe: {
     // TODO: subtract header height
-    height,
+    height: height - 80,
+  },
+  hidden: {
+    height: 0,
   },
   footer: {
     flexDirection: 'row',

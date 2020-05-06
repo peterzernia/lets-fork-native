@@ -21,7 +21,7 @@ type Props = {
   restaurant: Restaurant;
 }
 
-const { width } = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 
 export default function Details(props: Props): React.ReactElement {
   const { restaurant: defaultRestaurant } = props
@@ -140,7 +140,7 @@ export default function Details(props: Props): React.ReactElement {
 const styles = StyleSheet.create({
   image: {
     width,
-    height: 300,
+    height: height - 70,
     resizeMode: 'cover',
   },
   mapContainer: {

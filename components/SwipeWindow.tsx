@@ -72,6 +72,7 @@ type Props = {
   handleSwipeRight: (id: string) => void;
   restaurants: Restaurant[];
   setCurrent: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
+  visible: boolean;
 }
 
 type ComponentState = {
@@ -170,6 +171,7 @@ export default class SwipeWindow extends React.PureComponent<Props, ComponentSta
   render(): React.ReactElement {
     const { onGestureEvent, translateX, translateY } = this
     const { restaurants: [lastRestaurant, ...restaurants] } = this.state
+    const { visible } = this.props
 
     const rotateZ = concat(
       interpolate(translateX, {
@@ -189,6 +191,8 @@ export default class SwipeWindow extends React.PureComponent<Props, ComponentSta
         { rotateZ },
       ],
     }
+
+    if (!visible) return <View style={styles.hidden} />
 
     return (
       <View style={styles.cards}>
@@ -219,5 +223,8 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 8,
     zIndex: 100,
+  },
+  hidden: {
+    height: 0,
   },
 })

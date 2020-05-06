@@ -13,7 +13,7 @@ export default function Card(props: Props): React.ReactElement {
   const { restaurant } = props
 
   return (
-    <View style={StyleSheet.absoluteFill}>
+    <View style={styles.container}>
       <Image style={styles.image} source={{ uri: restaurant.image_url }} />
       <View style={styles.overlay}>
         <View>
@@ -26,6 +26,12 @@ export default function Card(props: Props): React.ReactElement {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 9,
+  },
   image: {
     ...StyleSheet.absoluteFillObject,
     width: undefined,
