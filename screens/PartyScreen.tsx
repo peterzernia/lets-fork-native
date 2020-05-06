@@ -40,7 +40,7 @@ const PartyScreen = React.memo((props: Props) => {
   const {
     navigation, party, setParty, ws,
   } = props
-  const [current, setCurrent] = React.useState<Restaurant | undefined>()
+  const [restaurants, setRestaurants] = React.useState<Restaurant[]>()
   const [details, setDetails] = React.useState(false)
 
 
@@ -88,10 +88,6 @@ const PartyScreen = React.memo((props: Props) => {
 
   if (!party || !party.current) return <ActivityIndicator size="small" />
 
-  if (party?.current && !current) {
-    setCurrent(party.current[0])
-  }
-
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -108,13 +104,15 @@ const PartyScreen = React.memo((props: Props) => {
         >
           <SwipeWindow
             handleSwipeRight={handleSwipeRight}
-            restaurants={party.current}
-            setCurrent={setCurrent}
+            restaurants={restaurants || party.current}
+            setRestaurants={setRestaurants}
             visible={!details}
           />
         </TouchableOpacity>
         { details
-          ? <Details restaurant={current || {} as Restaurant} /> : null}
+          ? (
+            <Details restaurant={restaurants?.[0] || party.current[0]} />
+          ) : null}
       </ScrollView>
     </SafeAreaView>
   )

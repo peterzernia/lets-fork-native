@@ -71,19 +71,13 @@ const {
 type Props = {
   handleSwipeRight: (id: string) => void;
   restaurants: Restaurant[];
-  setCurrent: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
+  setRestaurants: React.Dispatch<React.SetStateAction<Restaurant[] | undefined>>;
   visible: boolean;
 }
 
-type ComponentState = {
-  restaurants: Restaurant[];
-}
-
-export default class SwipeWindow extends React.PureComponent<Props, ComponentState> {
+export default class SwipeWindow extends React.PureComponent<Props> {
   constructor(props: Props) {
     super(props)
-    const { restaurants } = props
-    this.state = { restaurants }
     this.translationX = new Value(0)
     this.translationY = new Value(0)
     this.velocityX = new Value(0)
@@ -157,21 +151,22 @@ export default class SwipeWindow extends React.PureComponent<Props, ComponentSta
   };
 
   swiped = ([translationX]) => {
-    const { handleSwipeRight, setCurrent } = this.props
-    const { restaurants: [lastRestaurant, ...restaurants] } = this.state
-    setCurrent(restaurants[0])
+    const { handleSwipeRight, restaurants, setRestaurants } = this.props
+    const [lastRestaurant, ...rest] = restaurants
+    console.log(lastRestaurant)
 
     // positive translation means right swipe
     if (translationX > 0) {
       handleSwipeRight(lastRestaurant.id)
     }
-    this.setState({ restaurants }, this.init)
+    setRestaurants(rest)
+    this.setState(this.init)
   }
 
   render(): React.ReactElement {
     const { onGestureEvent, translateX, translateY } = this
-    const { restaurants: [lastRestaurant, ...restaurants] } = this.state
-    const { visible } = this.props
+    const { restaurants, visible } = this.props
+    const [lastRestaurant, ...rest] = restaurants
 
     const rotateZ = concat(
       interpolate(translateX, {
@@ -197,8 +192,8 @@ export default class SwipeWindow extends React.PureComponent<Props, ComponentSta
     return (
       <View style={styles.cards}>
         {
-          restaurants.length
-            ? <Card restaurant={restaurants[0]} />
+          rest.length
+            ? <Card restaurant={rest[0]} />
             : null
         }
         {
