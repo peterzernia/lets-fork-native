@@ -1,6 +1,15 @@
 import React from 'react'
 import {
-  View, Text, TouchableOpacity, StyleSheet, Linking, Dimensions, Platform, Image,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Linking,
+  Dimensions,
+  Platform,
+  Image,
+  ScrollView,
+  Animated,
 } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
@@ -37,13 +46,45 @@ export default function Details(props: Props): React.ReactElement {
     fetchData()
   }, [restaurant.id])
 
-  // rating
+  const images = [
+    <Image
+      key={restaurant.image_url}
+      style={styles.image}
+      source={{ uri: restaurant.image_url }}
+    />,
+  ]
+
+  if (restaurant.photos?.length) {
+    restaurant.photos.forEach((url) => {
+      if (url !== restaurant.image_url) {
+        images.push(
+          <Image
+            key={url}
+            style={styles.image}
+            source={{ uri: url }}
+          />,
+        )
+      }
+    })
+  }
+
   // transacitons
 
   return (
     <View>
-      { restaurant.photos
-        && <Image style={styles.image} source={{ uri: restaurant?.photos[0] }} /> }
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator
+        scrollEventThrottle={10}
+        pagingEnabled
+        onScroll={
+          Animated.event(
+            [{ nativeEvent: { contentOffset: { x: new Animated.Value(0) } } }],
+          )
+        }
+      >
+        {images}
+      </ScrollView>
       <View style={styles.section}>
         <Text
           style={styles.text}
