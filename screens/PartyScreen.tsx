@@ -42,6 +42,7 @@ const PartyScreen = React.memo((props: Props) => {
   } = props
   const [restaurants, setRestaurants] = React.useState<Restaurant[]>()
   const [details, setDetails] = React.useState(false)
+  const [blocked, setBlocked] = React.useState(false)
 
 
   // Custom android back button
@@ -99,12 +100,18 @@ const PartyScreen = React.memo((props: Props) => {
       >
         <TouchableOpacity
           activeOpacity={1}
-          onPress={(): void => setDetails(true)}
+          onPress={(): void => {
+            console.log(blocked)
+            if (!blocked) {
+              setDetails(true)
+            }
+          }}
           style={details ? styles.hidden : styles.swipe}
         >
           <SwipeWindow
             handleSwipeRight={handleSwipeRight}
             restaurants={restaurants || party.current}
+            setBlocked={setBlocked}
             setRestaurants={setRestaurants}
             visible={!details}
           />

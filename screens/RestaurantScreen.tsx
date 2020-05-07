@@ -1,4 +1,5 @@
 import React from 'react'
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import Details from 'components/Details'
@@ -30,8 +31,19 @@ const RestaurantScreen = React.memo((props: Props) => {
   const { restaurant } = route.params
 
   return (
-    <Details restaurant={restaurant} />
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <Details restaurant={restaurant} />
+      </ScrollView>
+    </SafeAreaView>
   )
 })
 
 export default RestaurantScreen
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fbfaff',
+  },
+})
