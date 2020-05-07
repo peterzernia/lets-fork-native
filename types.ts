@@ -31,7 +31,6 @@ export type Restaurant = {
   transactions: string[];
   url: string;
 
-  // review_count?
   // hours?
   // special_hours?
 }

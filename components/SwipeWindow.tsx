@@ -1,4 +1,5 @@
 // https://github.com/wcandillon/can-it-be-done-in-react-native/blob/master/season1/tinder-swiping/components/Profiles.js
+/* eslint max-classes-per-file: 0 */
 import * as React from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
@@ -76,7 +77,29 @@ type Props = {
   visible: boolean;
 }
 
-export default class SwipeWindow extends React.PureComponent<Props> {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+class SW extends React.PureComponent<Props> {
+  translationX: any;
+
+  translateX: any;
+
+  translationY: any;
+
+  translateY: any;
+
+  velocityX: any;
+
+  offsetY: any;
+
+  offsetX: any
+
+  gestureState: any;
+
+  onGestureEvent: any;
+}
+/* eslint-enable @typescript-eslint/no-explicit-any */
+
+export default class SwipeWindow extends SW {
   constructor(props: Props) {
     super(props)
     this.translationX = new Value(0)
@@ -86,16 +109,14 @@ export default class SwipeWindow extends React.PureComponent<Props> {
     this.offsetX = new Value(0)
     this.gestureState = new Value(State.UNDETERMINED)
     this.onGestureEvent = event(
-      [
-        {
-          nativeEvent: {
-            translationX: this.translationX,
-            translationY: this.translationY,
-            velocityX: this.velocityX,
-            state: this.gestureState,
-          },
+      [{
+        nativeEvent: {
+          translationX: this.translationX,
+          translationY: this.translationY,
+          velocityX: this.velocityX,
+          state: this.gestureState,
         },
-      ],
+      }],
       { useNativeDriver: true },
     )
     this.init()
@@ -151,7 +172,7 @@ export default class SwipeWindow extends React.PureComponent<Props> {
     )
   };
 
-  swiped = ([translationX]): void => {
+  swiped = ([translationX]: readonly number[]): void => {
     const {
       handleSwipeRight, restaurants, setBlocked, setRestaurants,
     } = this.props
