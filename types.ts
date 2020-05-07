@@ -18,6 +18,7 @@ export type Restaurant = {
   coordinates: Coordinates;
   location: Location;
   display_phone: string;
+  hours?: Hours[];
   id: string;
   image_url: string;
   is_claimed: boolean;
@@ -31,7 +32,6 @@ export type Restaurant = {
   transactions: string[];
   url: string;
 
-  // hours?
   // special_hours?
 }
 
@@ -53,4 +53,15 @@ type Location = {
   country: string;
   state: string;
   zip_code: string;
+}
+
+export type Hours = {
+  hours_type: 'REGULAR';
+  is_open_now: boolean;
+  open: {
+    day: number;
+    end: string;
+    is_overnight: boolean;
+    start: string;
+  }[];
 }

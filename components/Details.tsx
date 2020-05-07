@@ -11,6 +11,7 @@ import {
   ScrollView,
   Animated,
 } from 'react-native'
+import Hours from 'components/Hours'
 import MapView, { Marker } from 'react-native-maps'
 import { useHeaderHeight } from '@react-navigation/stack'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
@@ -135,6 +136,8 @@ export default function Details(props: Props): React.ReactElement {
           <MaterialIcons name="directions" size={32} />
         </View>
       </TouchableOpacity>
+      { restaurant.hours?.length
+        ? <Hours hours={restaurant.hours} /> : null}
     </View>
   )
 }
