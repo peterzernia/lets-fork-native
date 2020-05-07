@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
 } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
-import { StackNavigationProp } from '@react-navigation/stack'
+import { StackNavigationProp, useHeaderHeight } from '@react-navigation/stack'
 import { Party, Restaurant } from 'types'
 import SwipeWindow from 'components/SwipeWindow'
 import Details from 'components/Details'
@@ -43,6 +43,7 @@ const PartyScreen = React.memo((props: Props) => {
   const [restaurants, setRestaurants] = React.useState<Restaurant[]>()
   const [details, setDetails] = React.useState(false)
   const [blocked, setBlocked] = React.useState(false)
+  const headerHeight = useHeaderHeight()
 
 
   // Custom android back button
@@ -106,7 +107,7 @@ const PartyScreen = React.memo((props: Props) => {
               setDetails(true)
             }
           }}
-          style={details ? styles.hidden : styles.swipe}
+          style={details ? styles.hidden : swipeStyle(headerHeight).swipe}
         >
           <SwipeWindow
             handleSwipeRight={handleSwipeRight}
@@ -127,14 +128,15 @@ const PartyScreen = React.memo((props: Props) => {
 
 export default PartyScreen
 
+const swipeStyle = (hh: number): any => StyleSheet.create({
+  swipe: {
+    height: height - hh,
+  },
+})
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fbfaff',
-  },
-  swipe: {
-    // TODO: subtract header height
-    height: height - 80,
   },
   hidden: {
     height: 0,

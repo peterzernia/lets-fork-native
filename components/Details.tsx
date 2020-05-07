@@ -12,6 +12,7 @@ import {
   Animated,
 } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
+import { useHeaderHeight } from '@react-navigation/stack'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import { Restaurant } from 'types'
 import { call } from 'utils/phone'
@@ -24,6 +25,7 @@ type Props = {
 const { width, height } = Dimensions.get('window')
 
 export default function Details(props: Props): React.ReactElement {
+  const headerHeight = useHeaderHeight()
   const { restaurant: defaultRestaurant } = props
   const [restaurant, setRestaurant] = React.useState(defaultRestaurant)
   const [region, setRegion] = React.useState({
@@ -49,7 +51,7 @@ export default function Details(props: Props): React.ReactElement {
   const images = [
     <Image
       key={restaurant.image_url}
-      style={styles.image}
+      style={imageStyle(headerHeight).image}
       source={{ uri: restaurant.image_url }}
     />,
   ]
@@ -60,7 +62,7 @@ export default function Details(props: Props): React.ReactElement {
         images.push(
           <Image
             key={url}
-            style={styles.image}
+            style={imageStyle(headerHeight).image}
             source={{ uri: url }}
           />,
         )
@@ -136,13 +138,15 @@ export default function Details(props: Props): React.ReactElement {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
+const imageStyle = (hh: number): any => StyleSheet.create({
   image: {
     width,
-    height: height - 70,
+    height: height - hh,
     resizeMode: 'cover',
   },
+})
+
+const styles = StyleSheet.create({
   mapContainer: {
     flex: 1,
     backgroundColor: '#fff',
