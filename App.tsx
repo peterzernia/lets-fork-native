@@ -1,10 +1,14 @@
 import React from 'react'
-import { Alert, TouchableOpacity, StyleSheet } from 'react-native'
+import {
+  Alert, TouchableOpacity, StyleSheet,
+} from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Party } from 'types'
+import CreateScreen from 'screens/CreateScreen'
 import HomeScreen from 'screens/HomeScreen'
+import JoinScreen from 'screens/JoinScreen'
 import MatchScreen from 'screens/MatchScreen'
 import PartyScreen from 'screens/PartyScreen'
 import RestaurantScreen from 'screens/RestaurantScreen'
@@ -62,12 +66,27 @@ export default function App(): React.ReactElement {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
-          name="Home"
+          name="Create"
           options={(): object => ({
             headerTitle: (): null => null,
           })}
         >
-          {(props): React.ReactElement => <HomeScreen {...props} ws={ws} />}
+          {(props): React.ReactElement => <CreateScreen {...props} ws={ws} />}
+        </Stack.Screen>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={(): object => ({
+            headerTitle: (): null => null,
+          })}
+        />
+        <Stack.Screen
+          name="Join"
+          options={(): object => ({
+            headerTitle: (): null => null,
+          })}
+        >
+          {(props): React.ReactElement => <JoinScreen {...props} ws={ws} />}
         </Stack.Screen>
         <Stack.Screen
           name="Match"

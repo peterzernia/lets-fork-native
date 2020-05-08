@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   },
 })
 
-const dayStyles = (isToday: boolean) => StyleSheet.create({
+const dayStyles = (isToday: boolean): any => StyleSheet.create({
   day: {
     fontWeight: isToday ? 'bold' : 'normal',
   },
