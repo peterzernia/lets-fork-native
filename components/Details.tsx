@@ -134,7 +134,7 @@ export default function Details(props: Props): React.ReactElement {
       }}
       >
         <View style={styles.section}>
-          <Text style={styles.text}>Get Directions</Text>
+          <Text style={styles.directionText}>Get Directions</Text>
           <MaterialIcons name="directions" size={32} />
         </View>
       </TouchableOpacity>
@@ -173,5 +173,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingLeft: 16,
     paddingTop: 16,
+    paddingBottom: 16,
+  },
+  directionText: {
+    fontWeight: 'bold',
   },
 })

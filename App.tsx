@@ -14,8 +14,9 @@ import MatchScreen from 'screens/MatchScreen'
 import PartyScreen from 'screens/PartyScreen'
 import RestaurantScreen from 'screens/RestaurantScreen'
 import * as Location from 'expo-location'
+import env from 'env'
 
-const ws = new WebSocket('ws://192.168.178.25:8003/api/v1/ws')
+const ws = new WebSocket(env.WS)
 
 const Stack = createStackNavigator()
 
