@@ -159,7 +159,10 @@ const PartyScreen = React.memo((props: Props) => {
           height: height - headerHeight,
         }}
       >
-        <Text>No more restaurants</Text>
+        <Text style={styles.text}>
+          No more restaurants.
+          Go through the list again or try expanding your search range.
+        </Text>
         <Button onPress={(): void => setRestaurants(party.restaurants)}>Start Over</Button>
       </View>
     )

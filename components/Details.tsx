@@ -88,12 +88,16 @@ export default function Details(props: Props): React.ReactElement {
       >
         {images}
       </ScrollView>
-      <View style={styles.section}>
+      <View>
+        <Text style={styles.text}>{restaurant.name}</Text>
         <Text
           style={styles.text}
         >
-          {`${restaurant.price} • ${restaurant.categories.map((category) => category.title).join(', ')}`}
+          {`${restaurant.price} • ${restaurant.categories.map((c) => c.title).join(', ')}`}
         </Text>
+        { restaurant.transactions.length
+          ? <Text style={styles.text}>{restaurant.transactions.join(' • ')}</Text>
+          : null}
       </View>
       <View style={styles.section}>
         <TouchableOpacity onPress={(): void => call(restaurant.display_phone)}>
@@ -169,5 +173,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontWeight: 'bold',
+    paddingLeft: 16,
+    paddingTop: 16,
   },
 })
