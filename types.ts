@@ -6,6 +6,7 @@ export type Message = {
 export type Party = {
   id: string;
   current?: Restaurant[];
+  error?: string;
   matches?: Restaurant[];
   restaurants?: Restaurant[];
   status: 'waiting' | 'active';

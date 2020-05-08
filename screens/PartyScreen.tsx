@@ -22,6 +22,7 @@ import { MaterialIcons } from '@expo/vector-icons'
 
 type StackParamList = {
   Home: undefined;
+  Join: undefined;
   Party: undefined;
   Match: undefined;
 }
@@ -47,7 +48,24 @@ const PartyScreen = React.memo((props: Props) => {
   const [details, setDetails] = React.useState(false)
   const [blocked, setBlocked] = React.useState(false)
   const headerHeight = useHeaderHeight()
+  console.log(party?.error)
 
+  if (party?.error) {
+    Alert.alert(
+      'Yike! Something went wrong',
+      party.error,
+      [
+        {
+          text: 'OK',
+          onPress: (): void => {
+            navigation.navigate('Join')
+            setParty({} as Party)
+          },
+        },
+      ],
+      { cancelable: false },
+    )
+  }
 
   // Custom android back button
   useFocusEffect( // eslint-disable-line
