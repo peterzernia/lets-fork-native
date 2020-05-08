@@ -48,7 +48,6 @@ const PartyScreen = React.memo((props: Props) => {
   const [details, setDetails] = React.useState(false)
   const [blocked, setBlocked] = React.useState(false)
   const headerHeight = useHeaderHeight()
-  console.log(party?.error)
 
   if (party?.error) {
     Alert.alert(
@@ -110,7 +109,7 @@ const PartyScreen = React.memo((props: Props) => {
       >
         <Text style={styles.text}>Share this code with friends to have them join your party.</Text>
         <Text style={styles.code}>{party.id}</Text>
-        <TouchableOpacity onPress={(): Promise<ShareAction> => Share.share({ message: `Join my party on Let's fork with this code: ${party.id}` })}>
+        <TouchableOpacity onPress={(): Promise<ShareAction> => Share.share({ message: `Join my party on Let's Fork with this code: ${party.id}` })}>
           <MaterialIcons name="share" size={32} />
         </TouchableOpacity>
       </View>

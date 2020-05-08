@@ -97,7 +97,7 @@ export default function App(): React.ReactElement {
           name="Home"
           component={HomeScreen}
           options={(): object => ({
-            headerTitle: (): null => null,
+            headerShown: false,
           })}
         />
         <Stack.Screen
