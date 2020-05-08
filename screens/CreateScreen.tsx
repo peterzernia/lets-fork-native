@@ -14,6 +14,7 @@ import Button from 'components/Button'
 import Price from 'components/Price'
 import { LocationData } from 'expo-location'
 import colors from 'utils/colors'
+import { getLocale } from 'utils/phone'
 
 type StackParamList = {
   Party: undefined;
@@ -65,6 +66,12 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
 
   const symbol = '$'
 
+  const locale = getLocale()
+  const countries = ['LR', 'MM', 'US']
+  const units = countries.includes(locale.substring(3)) ? 'mi' : 'km'
+  // m converted to mi or km
+  const conversion = countries.includes(locale.substring(3)) ? 1609.344 : 1000
+
   return (
     <ScrollView>
       <MapView
@@ -80,7 +87,9 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
           radius={radius}
         />
       </MapView>
-      <Text style={styles.radius}>{`Find restaurants within: ${(radius / 1000).toFixed(1)}km`}</Text>
+      <Text style={styles.radius}>
+        {`Find restaurants within: ${(radius / conversion).toFixed(1)}${units}`}
+      </Text>
       <Slider
         style={styles.slider}
         minimumValue={500}
