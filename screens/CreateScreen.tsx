@@ -68,9 +68,9 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
   return (
     <ScrollView>
       <MapView
-        initialRegion={region}
         style={styles.map}
-        onRegionChange={setRegion}
+        region={region}
+        onRegionChangeComplete={setRegion}
         rotateEnabled={false}
         scrollEnabled
         zoomEnabled
