@@ -10,12 +10,15 @@ import {
   Dimensions,
   ScrollView,
   TouchableOpacity,
+  Share,
+  ShareAction,
 } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp, useHeaderHeight } from '@react-navigation/stack'
 import { Party, Restaurant } from 'types'
 import SwipeWindow from 'components/SwipeWindow'
 import Details from 'components/Details'
+import { MaterialIcons } from '@expo/vector-icons'
 
 type StackParamList = {
   Home: undefined;
@@ -81,14 +84,33 @@ const PartyScreen = React.memo((props: Props) => {
 
   if (party?.status === 'waiting') {
     return (
-      <View>
-        <Text>Waiting for other people to join.</Text>
-        <Text>{`Party id: ${party.id}`}</Text>
+      <View
+        style={{
+          ...styles.waiting,
+          height: height - headerHeight,
+        }}
+      >
+        <Text style={styles.text}>Share this code with friends to have them join your party.</Text>
+        <Text style={styles.code}>{party.id}</Text>
+        <TouchableOpacity onPress={(): Promise<ShareAction> => Share.share({ message: `Join my party on Let's fork with this code: ${party.id}` })}>
+          <MaterialIcons name="share" size={32} />
+        </TouchableOpacity>
       </View>
     )
   }
 
-  if (!party || !party.current) return <ActivityIndicator size="small" />
+  if (!party || !party.current) {
+    return (
+      <View
+        style={{
+          ...styles.waiting,
+          height: height - headerHeight,
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </View>
+    )
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -134,6 +156,21 @@ const swipeStyle = (hh: number): any => StyleSheet.create({
   },
 })
 const styles = StyleSheet.create({
+  waiting: {
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  text: {
+    paddingLeft: 32,
+    paddingRight: 32,
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  code: {
+    fontWeight: 'bold',
+    fontSize: 36,
+  },
   container: {
     flex: 1,
     backgroundColor: '#fbfaff',

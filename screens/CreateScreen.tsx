@@ -46,12 +46,18 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
 
   // creates a new party
   const handleCreate = (): void => {
+    const pr: number[] = []
+    price.forEach((p, i) => {
+      if (p) pr.push(i + 1)
+    })
+
     ws.send(JSON.stringify({
       type: 'create',
       payload: {
         latitude: `${region.latitude}`,
         longitude: `${region.longitude}`,
         radius: `${radius}`,
+        price: pr.length ? pr : null,
       },
     }))
     navigation.navigate('Party')
