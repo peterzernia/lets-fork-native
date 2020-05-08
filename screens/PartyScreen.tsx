@@ -19,6 +19,7 @@ import { Party, Restaurant } from 'types'
 import SwipeWindow from 'components/SwipeWindow'
 import Details from 'components/Details'
 import { MaterialIcons } from '@expo/vector-icons'
+import { usePrevious } from 'utils/hooks'
 
 type StackParamList = {
   Home: undefined;
@@ -65,6 +66,26 @@ const PartyScreen = React.memo((props: Props) => {
       { cancelable: false },
     )
   }
+
+  // Request more cards with 3 remaining to prevent
+  // having to show loader
+  React.useEffect(() => {
+    if (restaurants && restaurants?.length === 3) {
+      ws.send(JSON.stringify({ type: 'request-more' }))
+    }
+  }, [restaurants, ws])
+
+  // When anyone requests more cards, they are set in current
+  // and this useEffect loads the new cards into the restaurants array
+  const prevState = usePrevious(party || {} as Party)
+  React.useEffect(() => {
+    if (JSON.stringify(prevState.current) !== JSON.stringify(party?.current)) {
+      if (party?.current?.length && restaurants) {
+        const res = [...restaurants, ...party?.current]
+        setRestaurants(res)
+      }
+    }
+  }, [party, prevState, restaurants])
 
   // Custom android back button
   useFocusEffect( // eslint-disable-line
@@ -116,7 +137,7 @@ const PartyScreen = React.memo((props: Props) => {
     )
   }
 
-  if (!party || !party.current) {
+  if (!party || !party.restaurants) {
     return (
       <View
         style={{
@@ -150,7 +171,7 @@ const PartyScreen = React.memo((props: Props) => {
         >
           <SwipeWindow
             handleSwipeRight={handleSwipeRight}
-            restaurants={restaurants || party.current}
+            restaurants={restaurants || party.restaurants}
             setBlocked={setBlocked}
             setRestaurants={setRestaurants}
             visible={!details}
@@ -158,7 +179,7 @@ const PartyScreen = React.memo((props: Props) => {
         </TouchableOpacity>
         { details
           ? (
-            <Details restaurant={restaurants?.[0] || party.current[0]} />
+            <Details restaurant={restaurants?.[0] || party.restaurants[0]} />
           ) : null}
       </ScrollView>
     </SafeAreaView>

@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Party } from 'types'
+import { usePrevious } from 'utils/hooks'
 import CreateScreen from 'screens/CreateScreen'
 import HomeScreen from 'screens/HomeScreen'
 import JoinScreen from 'screens/JoinScreen'
@@ -21,15 +22,6 @@ const Stack = createStackNavigator()
 export default function App(): React.ReactElement {
   const [location, setLocation] = React.useState<Location.LocationData>()
   const [party, setParty] = React.useState<Party>({} as Party)
-
-  // Hook to keep track of the previous state of Data
-  const usePrevious = (value: Party): React.MutableRefObject<Party>['current'] => {
-    const ref = React.useRef({} as Party)
-    React.useEffect(() => {
-      ref.current = value
-    })
-    return ref.current
-  }
 
   // prevState of the party
   const prevState = usePrevious(party)
