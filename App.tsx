@@ -12,12 +12,14 @@ import JoinScreen from 'screens/JoinScreen'
 import MatchScreen from 'screens/MatchScreen'
 import PartyScreen from 'screens/PartyScreen'
 import RestaurantScreen from 'screens/RestaurantScreen'
+import * as Location from 'expo-location'
 
 const ws = new WebSocket('ws://192.168.178.25:8003/api/v1/ws')
 
 const Stack = createStackNavigator()
 
 export default function App(): React.ReactElement {
+  const [location, setLocation] = React.useState<Location.LocationData>()
   const [party, setParty] = React.useState<Party>({} as Party)
 
   // Hook to keep track of the previous state of Data
@@ -62,6 +64,18 @@ export default function App(): React.ReactElement {
     }
   }, [prevState])
 
+  React.useEffect(() => {
+    (async (): Promise<void> => {
+      const { status } = await Location.requestPermissionsAsync()
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied')
+      }
+
+      const loc = await Location.getCurrentPositionAsync({})
+      setLocation(loc)
+    })()
+  }, [])
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -71,7 +85,13 @@ export default function App(): React.ReactElement {
             headerTitle: (): null => null,
           })}
         >
-          {(props): React.ReactElement => <CreateScreen {...props} ws={ws} />}
+          {(props): React.ReactElement => (
+            <CreateScreen
+              {...props}
+              ws={ws}
+              location={location}
+            />
+          )}
         </Stack.Screen>
         <Stack.Screen
           name="Home"

@@ -1140,6 +1140,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.6.tgz#c7f2ac187c1f25aa8c30d11baa8f4398eca3bb84"
   integrity sha512-PpMoeXwPUoldCRKDuSi+zK5rT+sJTW6ri6RdGPkSKRzU77Q1d9IaR0O5IKvBj0XSdL3p+dcOa05gk35aGDffBQ==
 
+"@react-native-community/slider@^2.0.9":
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-2.0.9.tgz#bf74045c96f1fb22e3ec961e321300c230c63990"
+  integrity sha512-6GHUKXxiDSs75VZQRa6B+nxo8rqpIEcegZ1iCSQG4aW2oSVepceqDol+0y3/KaBt5WMpD4KybLw8ZZqkT6olaQ==
+
 "@react-navigation/core@^5.4.0":
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/@react-navigation/core/-/core-5.4.0.tgz#6b4973d48396d28ed3efee582b28807682a5865d"
