@@ -46,9 +46,9 @@ const PartyScreen = React.memo((props: Props) => {
   const {
     navigation, party, setParty, ws,
   } = props
+  const [finished, setFinished] = React.useState<boolean>(false)
   const [restaurants, setRestaurants] = React.useState<Restaurant[]>()
   const [details, setDetails] = React.useState(false)
-  const [blocked, setBlocked] = React.useState(false)
   const headerHeight = useHeaderHeight()
 
   if (party?.error) {
@@ -138,20 +138,7 @@ const PartyScreen = React.memo((props: Props) => {
     )
   }
 
-  if (!party || !party.restaurants) {
-    return (
-      <View
-        style={{
-          ...styles.waiting,
-          height: height - headerHeight,
-        }}
-      >
-        <ActivityIndicator size="large" />
-      </View>
-    )
-  }
-
-  if (!restaurants?.length) {
+  if (finished || party?.total === 0) {
     return (
       <View
         style={{
@@ -163,7 +150,26 @@ const PartyScreen = React.memo((props: Props) => {
           No more restaurants.
           Go through the list again or try expanding your search range.
         </Text>
-        <Button onPress={(): void => setRestaurants(party.restaurants)}>Start Over</Button>
+        <Button onPress={(): void => {
+          setFinished(false)
+          setRestaurants(party?.restaurants)
+        }}
+        >
+          Start Over
+        </Button>
+      </View>
+    )
+  }
+
+  if (!party || !party.restaurants) {
+    return (
+      <View
+        style={{
+          ...styles.waiting,
+          height: height - headerHeight,
+        }}
+      >
+        <ActivityIndicator size="large" />
       </View>
     )
   }
@@ -179,25 +185,20 @@ const PartyScreen = React.memo((props: Props) => {
       >
         <TouchableOpacity
           activeOpacity={1}
-          onPress={(): void => {
-            console.log(blocked)
-            if (!blocked) {
-              setDetails(true)
-            }
-          }}
+          onPress={(): void => setDetails(true)}
           style={details ? styles.hidden : { height: height - headerHeight }}
         >
           <SwipeWindow
             handleSwipeRight={handleSwipeRight}
             restaurants={restaurants || party.restaurants}
-            setBlocked={setBlocked}
+            setFinished={setFinished}
             setRestaurants={setRestaurants}
             visible={!details}
           />
         </TouchableOpacity>
-        { details && restaurants?.[0]
+        { details
           ? (
-            <Details restaurant={restaurants?.[0]} />
+            <Details restaurant={restaurants?.[0] || party.restaurants[0]} />
           ) : null}
       </ScrollView>
     </SafeAreaView>

@@ -72,7 +72,7 @@ const {
 type Props = {
   handleSwipeRight: (id: string) => void;
   restaurants: Restaurant[];
-  setBlocked: React.Dispatch<React.SetStateAction<boolean>>;
+  setFinished: React.Dispatch<React.SetStateAction<boolean>>;
   setRestaurants: React.Dispatch<React.SetStateAction<Restaurant[] | undefined>>;
   visible: boolean;
 }
@@ -174,9 +174,8 @@ export default class SwipeWindow extends SW {
 
   swiped = ([translationX]: readonly number[]): void => {
     const {
-      handleSwipeRight, restaurants, setBlocked, setRestaurants,
+      handleSwipeRight, restaurants, setFinished, setRestaurants,
     } = this.props
-    setBlocked(true)
     console.log(true)
     const [lastRestaurant, ...rest] = restaurants
 
@@ -184,9 +183,14 @@ export default class SwipeWindow extends SW {
     if (translationX > 0) {
       handleSwipeRight(lastRestaurant.id)
     }
+
     setRestaurants(rest)
+
+    if (!rest.length) {
+      setFinished(true)
+    }
+
     this.setState(this.init)
-    setBlocked(false)
   }
 
   render(): React.ReactElement {

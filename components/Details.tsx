@@ -29,12 +29,6 @@ export default function Details(props: Props): React.ReactElement {
   const headerHeight = useHeaderHeight()
   const { restaurant: defaultRestaurant } = props
   const [restaurant, setRestaurant] = React.useState(defaultRestaurant)
-  const [region, setRegion] = React.useState({
-    latitude: restaurant.coordinates.latitude,
-    longitude: restaurant.coordinates.longitude,
-    latitudeDelta: 0.001,
-    longitudeDelta: 0.01,
-  })
 
   React.useEffect(() => {
     const fetchData = async (): Promise<void> => {
@@ -109,12 +103,16 @@ export default function Details(props: Props): React.ReactElement {
       </View>
       <View style={styles.mapContainer}>
         <MapView
-          region={region}
+          initialRegion={{
+            latitude: restaurant.coordinates.latitude,
+            longitude: restaurant.coordinates.longitude,
+            latitudeDelta: 0.001,
+            longitudeDelta: 0.01,
+          }}
           style={styles.map}
-          onRegionChange={setRegion}
           rotateEnabled={false}
-          scrollEnabled={false}
-          zoomEnabled={false}
+          scrollEnabled
+          zoomEnabled
         >
           <Marker
             coordinate={{
