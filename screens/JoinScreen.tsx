@@ -1,7 +1,9 @@
 
 import React from 'react'
-import { View } from 'react-native'
-import { StackNavigationProp } from '@react-navigation/stack'
+import {
+  View, StyleSheet, Dimensions, Text,
+} from 'react-native'
+import { StackNavigationProp, useHeaderHeight } from '@react-navigation/stack'
 import Button from 'components/Button'
 import Input from 'components/Input'
 
@@ -20,9 +22,12 @@ type Props = {
   ws: WebSocket;
 }
 
+const { height } = Dimensions.get('window')
+
 const JoinScreen = React.memo((props: Props): React.ReactElement => {
   const { navigation, ws } = props
   const [value, setValue] = React.useState('')
+  const headerHeight = useHeaderHeight()
 
   // joins an existing party
   const handleJoin = (): void => {
@@ -31,8 +36,14 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
   }
 
   return (
-    <View>
-      <Input value={value} handleChange={setValue} />
+    <View
+      style={{
+        ...styles.container,
+        height: height - headerHeight,
+      }}
+    >
+      <Text style={styles.text}>Please enter the code</Text>
+      <Input value={value} handleChange={setValue} keyboardType="phone-pad" />
       <Button onPress={(): void => handleJoin()}>
         Join
       </Button>
@@ -41,3 +52,15 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
 })
 
 export default JoinScreen
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    fontWeight: 'bold',
+    padding: 16,
+  },
+})
