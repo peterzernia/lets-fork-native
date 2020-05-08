@@ -20,6 +20,7 @@ import SwipeWindow from 'components/SwipeWindow'
 import Details from 'components/Details'
 import { MaterialIcons } from '@expo/vector-icons'
 import { usePrevious } from 'utils/hooks'
+import Button from 'components/Button'
 
 type StackParamList = {
   Home: undefined;
@@ -150,6 +151,20 @@ const PartyScreen = React.memo((props: Props) => {
     )
   }
 
+  if (!restaurants?.length) {
+    return (
+      <View
+        style={{
+          ...styles.waiting,
+          height: height - headerHeight,
+        }}
+      >
+        <Text>No more restaurants</Text>
+        <Button onPress={(): void => setRestaurants(party.restaurants)}>Start Over</Button>
+      </View>
+    )
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
@@ -167,7 +182,7 @@ const PartyScreen = React.memo((props: Props) => {
               setDetails(true)
             }
           }}
-          style={details ? styles.hidden : swipeStyle(headerHeight).swipe}
+          style={details ? styles.hidden : { height: height - headerHeight }}
         >
           <SwipeWindow
             handleSwipeRight={handleSwipeRight}
@@ -177,9 +192,9 @@ const PartyScreen = React.memo((props: Props) => {
             visible={!details}
           />
         </TouchableOpacity>
-        { details
+        { details && restaurants?.[0]
           ? (
-            <Details restaurant={restaurants?.[0] || party.restaurants[0]} />
+            <Details restaurant={restaurants?.[0]} />
           ) : null}
       </ScrollView>
     </SafeAreaView>
@@ -188,11 +203,6 @@ const PartyScreen = React.memo((props: Props) => {
 
 export default PartyScreen
 
-const swipeStyle = (hh: number): any => StyleSheet.create({
-  swipe: {
-    height: height - hh,
-  },
-})
 const styles = StyleSheet.create({
   waiting: {
     flexDirection: 'column',
