@@ -1,6 +1,7 @@
-import { Alert, Linking, Platform } from 'react-native'
+import {
+  Alert, Linking, Platform, NativeModules,
+} from 'react-native'
 
-// eslint-disable-next-line import/prefer-default-export
 export const call = (phone: string): void => {
   let phoneNumber: string
   if (Platform.OS !== 'android') {
@@ -19,3 +20,8 @@ export const call = (phone: string): void => {
     })
     .catch((err) => console.log(err))
 }
+
+export const getLocale = () => (Platform.OS === 'ios'
+  ? NativeModules.SettingsManager.settings.AppleLocale
+    || NativeModules.SettingsManager.settings.AppleLanguages[0] // iOS 13
+  : NativeModules.I18nManager.localeIdentifier)

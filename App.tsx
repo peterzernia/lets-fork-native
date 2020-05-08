@@ -151,7 +151,12 @@ export default function App(): React.ReactElement {
           })}
         >
           {(props): React.ReactElement => (
-            <PartyScreen {...props} ws={ws} party={party} setParty={setParty} />
+            <PartyScreen
+              {...props}
+              ws={ws}
+              party={party}
+              setParty={setParty}
+            />
           )}
         </Stack.Screen>
         <Stack.Screen

@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 import { Hours as HoursType } from 'types'
 import { formatTime } from 'utils/datetime'
+import { getLocale } from 'utils/phone'
 
 type Props = {
   hours: HoursType[];
@@ -18,7 +19,10 @@ export default function Hours(props: Props): React.ReactElement {
   const saturday = hours[0].open.find((day) => day.day === 5)
   const sunday = hours[0].open.find((day) => day.day === 6)
 
-  const ampm = true
+  const locale = getLocale()
+  // list of countries that use 12hr format
+  const countries = ['US', 'UK', 'PH', 'CA', 'AU', 'NZ', 'IN', 'EG', 'SA', 'CO', 'PK', 'MY']
+  const ampm = countries.includes(locale.substring(3))
 
   return (
     <View style={styles.container}>
