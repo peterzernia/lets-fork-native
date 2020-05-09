@@ -95,7 +95,7 @@ export default function Details(props: Props): React.ReactElement {
         >
           {`${restaurant.price} • ${restaurant?.categories?.map((c) => c.title).join(', ')}`}
         </Text>
-        { restaurant.transactions.length
+        { restaurant?.transactions?.length
           ? <Text style={styles.text}>{restaurant.transactions.join(' • ')}</Text>
           : null}
       </View>
@@ -107,28 +107,33 @@ export default function Details(props: Props): React.ReactElement {
           <FontAwesome name="yelp" size={32} />
         </TouchableOpacity>
       </View>
-      <View style={styles.mapContainer}>
-        <MapView
-          initialRegion={{
-            latitude: restaurant.coordinates.latitude,
-            longitude: restaurant.coordinates.longitude,
-            latitudeDelta: 0.001,
-            longitudeDelta: 0.01,
-          }}
-          style={styles.map}
-          rotateEnabled={false}
-          scrollEnabled
-          zoomEnabled
-        >
-          <Marker
-            coordinate={{
-              latitude: restaurant.coordinates.latitude,
-              longitude: restaurant.coordinates.longitude,
-            }}
-            title={restaurant.name}
-          />
-        </MapView>
-      </View>
+      {
+        restaurant?.coordinates?.latitude && restaurant?.coordinates?.longitude
+          ? (
+            <View style={styles.mapContainer}>
+              <MapView
+                initialRegion={{
+                  latitude: restaurant.coordinates.latitude,
+                  longitude: restaurant.coordinates.longitude,
+                  latitudeDelta: 0.001,
+                  longitudeDelta: 0.01,
+                }}
+                style={styles.map}
+                rotateEnabled={false}
+                scrollEnabled
+                zoomEnabled
+              >
+                <Marker
+                  coordinate={{
+                    latitude: restaurant.coordinates.latitude,
+                    longitude: restaurant.coordinates.longitude,
+                  }}
+                  title={restaurant.name}
+                />
+              </MapView>
+            </View>
+          ) : null
+      }
       <TouchableOpacity onPress={(): void => {
         const url = Platform.select({
           ios: `maps:0,0?q=${restaurant.coordinates.latitude},${restaurant.coordinates.longitude}`,
