@@ -1,19 +1,24 @@
 import * as React from 'react'
 import {
-  Image, StyleSheet, View, Text,
+  Image, StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native'
 import Rating from 'components/Rating'
 import { Restaurant } from 'types'
 
 type Props = {
   restaurant: Restaurant;
+  setDetails: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
 };
 
 export default function Card(props: Props): React.ReactElement {
-  const { restaurant } = props
+  const { restaurant, setDetails } = props
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={1}
+      style={styles.container}
+      onPress={(): void => setDetails(restaurant)}
+    >
       <Image style={styles.image} source={{ uri: restaurant.image_url }} />
       <View style={styles.overlay}>
         <View>
@@ -21,7 +26,7 @@ export default function Card(props: Props): React.ReactElement {
           <Rating rating={restaurant.rating} />
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 

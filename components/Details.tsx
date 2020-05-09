@@ -46,7 +46,10 @@ export default function Details(props: Props): React.ReactElement {
   const images = [
     <Image
       key={restaurant.image_url}
-      style={imageStyle(headerHeight).image}
+      style={{
+        ...styles.image,
+        height: height - headerHeight,
+      }}
       source={{ uri: restaurant.image_url }}
     />,
   ]
@@ -57,7 +60,10 @@ export default function Details(props: Props): React.ReactElement {
         images.push(
           <Image
             key={url}
-            style={imageStyle(headerHeight).image}
+            style={{
+              ...styles.image,
+              height: height - headerHeight,
+            }}
             source={{ uri: url }}
           />,
         )
@@ -87,7 +93,7 @@ export default function Details(props: Props): React.ReactElement {
         <Text
           style={styles.text}
         >
-          {`${restaurant.price} • ${restaurant.categories.map((c) => c.title).join(', ')}`}
+          {`${restaurant.price} • ${restaurant?.categories.map((c) => c.title).join(', ')}`}
         </Text>
         { restaurant.transactions.length
           ? <Text style={styles.text}>{restaurant.transactions.join(' • ')}</Text>
@@ -143,15 +149,12 @@ export default function Details(props: Props): React.ReactElement {
     </View>
   )
 }
-const imageStyle = (hh: number): any => StyleSheet.create({
-  image: {
-    width,
-    height: height - hh,
-    resizeMode: 'cover',
-  },
-})
 
 const styles = StyleSheet.create({
+  image: {
+    width,
+    resizeMode: 'cover',
+  },
   mapContainer: {
     flex: 1,
     backgroundColor: '#fff',

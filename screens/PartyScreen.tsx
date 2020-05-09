@@ -48,7 +48,7 @@ const PartyScreen = React.memo((props: Props) => {
   } = props
   const [finished, setFinished] = React.useState<boolean>(false)
   const [restaurants, setRestaurants] = React.useState<Restaurant[]>()
-  const [details, setDetails] = React.useState(false)
+  const [details, setDetails] = React.useState<Restaurant | undefined>()
   const headerHeight = useHeaderHeight()
 
   if (party?.error) {
@@ -179,26 +179,29 @@ const PartyScreen = React.memo((props: Props) => {
       <ScrollView
         onScroll={(e): void => {
           if (e.nativeEvent.contentOffset.y === 0) {
-            setDetails(false)
+            setDetails(undefined)
           }
         }}
       >
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={(): void => setDetails(true)}
-          style={details ? styles.hidden : { height: height - headerHeight }}
+        <View
+          style={
+            details
+              ? styles.hidden
+              : { height: height - headerHeight }
+          }
         >
           <SwipeWindow
             handleSwipeRight={handleSwipeRight}
             restaurants={restaurants || party.restaurants}
+            setDetails={setDetails}
             setFinished={setFinished}
             setRestaurants={setRestaurants}
             visible={!details}
           />
-        </TouchableOpacity>
+        </View>
         { details
           ? (
-            <Details restaurant={restaurants?.[0] || party.restaurants[0]} />
+            <Details restaurant={details} />
           ) : null}
       </ScrollView>
     </SafeAreaView>

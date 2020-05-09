@@ -2,7 +2,7 @@
 /* eslint max-classes-per-file: 0 */
 import * as React from 'react'
 import { StyleSheet, View, Dimensions } from 'react-native'
-import { PanGestureHandler, State } from 'react-native-gesture-handler'
+import { PanGestureHandler, State, TouchableOpacity } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated'
 import { Restaurant } from 'types'
 import Card from 'components/Card'
@@ -72,13 +72,18 @@ const {
 type Props = {
   handleSwipeRight: (id: string) => void;
   restaurants: Restaurant[];
+  setDetails: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
   setFinished: React.Dispatch<React.SetStateAction<boolean>>;
   setRestaurants: React.Dispatch<React.SetStateAction<Restaurant[] | undefined>>;
   visible: boolean;
 }
 
+type Sta = {
+  loading: boolean;
+}
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-class SW extends React.PureComponent<Props> {
+class SW extends React.PureComponent<Props, Sta> {
   translationX: any;
 
   translateX: any;
@@ -102,6 +107,9 @@ class SW extends React.PureComponent<Props> {
 export default class SwipeWindow extends SW {
   constructor(props: Props) {
     super(props)
+    this.state = {
+      loading: false,
+    }
     this.translationX = new Value(0)
     this.translationY = new Value(0)
     this.velocityX = new Value(0)
@@ -173,10 +181,10 @@ export default class SwipeWindow extends SW {
   };
 
   swiped = ([translationX]: readonly number[]): void => {
+    this.setState({ loading: true })
     const {
       handleSwipeRight, restaurants, setFinished, setRestaurants,
     } = this.props
-    console.log(true)
     const [lastRestaurant, ...rest] = restaurants
 
     // positive translation means right swipe
@@ -191,11 +199,13 @@ export default class SwipeWindow extends SW {
     }
 
     this.setState(this.init)
+    this.setState({ loading: false })
   }
 
   render(): React.ReactElement {
     const { onGestureEvent, translateX, translateY } = this
-    const { restaurants, visible } = this.props
+    const { restaurants, setDetails, visible } = this.props
+    const { loading } = this.state
     const [lastRestaurant, ...rest] = restaurants
 
     const rotateZ = concat(
@@ -222,8 +232,8 @@ export default class SwipeWindow extends SW {
     return (
       <View style={styles.cards}>
         {
-          rest.length
-            ? <Card restaurant={rest[0]} />
+          rest.length && !loading
+            ? <Card restaurant={rest[0]} setDetails={setDetails} />
             : null
         }
         {
@@ -233,7 +243,7 @@ export default class SwipeWindow extends SW {
               onGestureEvent={onGestureEvent}
             >
               <Animated.View style={style}>
-                <Card restaurant={lastRestaurant} />
+                <Card restaurant={lastRestaurant} setDetails={setDetails} />
               </Animated.View>
             </PanGestureHandler>
           )
