@@ -93,7 +93,7 @@ export default function Details(props: Props): React.ReactElement {
         <Text
           style={styles.text}
         >
-          {`${restaurant.price} • ${restaurant?.categories.map((c) => c.title).join(', ')}`}
+          {`${restaurant.price} • ${restaurant?.categories?.map((c) => c.title).join(', ')}`}
         </Text>
         { restaurant.transactions.length
           ? <Text style={styles.text}>{restaurant.transactions.join(' • ')}</Text>
@@ -144,8 +144,7 @@ export default function Details(props: Props): React.ReactElement {
           <MaterialIcons name="directions" size={32} />
         </View>
       </TouchableOpacity>
-      { restaurant.hours?.length
-        ? <Hours hours={restaurant.hours} /> : null}
+      <Hours hours={restaurant.hours} />
     </View>
   )
 }

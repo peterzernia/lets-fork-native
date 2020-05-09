@@ -5,11 +5,21 @@ import { formatTime } from 'utils/datetime'
 import { getLocale } from 'utils/phone'
 
 type Props = {
-  hours: HoursType[];
+  hours?: HoursType[];
 }
 
 export default function Hours(props: Props): React.ReactElement {
   const { hours } = props
+
+  if (!hours) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.header}>Hours</Text>
+        <View style={styles.divider} />
+      </View>
+    )
+  }
+
   const today = new Date().getDay() + 1
   const monday = hours[0].open.find((day) => day.day === 0)
   const tuesday = hours[0].open.find((day) => day.day === 1)
