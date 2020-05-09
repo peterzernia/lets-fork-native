@@ -23,7 +23,7 @@ export default function Card(props: Props): React.ReactElement {
       <View style={styles.overlay}>
         <View>
           <Text style={styles.name}>{restaurant.name}</Text>
-          <Rating rating={restaurant.rating} />
+          <Rating rating={restaurant.rating} size="lg" />
         </View>
       </View>
     </TouchableOpacity>

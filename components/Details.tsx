@@ -18,6 +18,7 @@ import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import { Restaurant } from 'types'
 import { call } from 'utils/phone'
 import { getRestaurant } from 'utils/api'
+import Rating from 'components/Rating'
 
 type Props = {
   restaurant: Restaurant;
@@ -89,7 +90,10 @@ export default function Details(props: Props): React.ReactElement {
         {images}
       </ScrollView>
       <View>
-        <Text style={styles.text}>{restaurant.name}</Text>
+        <View style={styles.name}>
+          <Text style={styles.text}>{`${restaurant.name} • `}</Text>
+          <Rating rating={restaurant.rating} size="sm" />
+        </View>
         <Text
           style={styles.text}
         >
@@ -161,6 +165,10 @@ const styles = StyleSheet.create({
   image: {
     width,
     resizeMode: 'cover',
+  },
+  name: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   mapContainer: {
     flex: 1,
