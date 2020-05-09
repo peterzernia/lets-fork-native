@@ -96,8 +96,11 @@ export default function Details(props: Props): React.ReactElement {
           {`${restaurant.price} • ${restaurant?.categories?.map((c) => c.title).join(', ')}`}
         </Text>
         { restaurant?.transactions?.length
-          ? <Text style={styles.text}>{restaurant.transactions.join(' • ')}</Text>
-          : null}
+          ? (
+            <Text style={styles.text}>
+              {restaurant.transactions.map((tran) => `${tran[0].toUpperCase()}${tran.substring(1)}`).join(' • ')}
+            </Text>
+          ) : null}
       </View>
       <View style={styles.section}>
         <TouchableOpacity onPress={(): void => call(restaurant.display_phone)}>
