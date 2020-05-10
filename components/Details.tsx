@@ -19,6 +19,7 @@ import { Restaurant } from 'types'
 import { call } from 'utils/phone'
 import { getRestaurant } from 'utils/api'
 import Rating from 'components/Rating'
+import env from 'env'
 
 type Props = {
   restaurant: Restaurant;
@@ -44,12 +45,16 @@ export default function Details(props: Props): React.ReactElement {
     fetchData()
   }, [restaurant.id])
 
+  const imageHeight = env.ADS
+    ? height - headerHeight - 50
+    : height - headerHeight
+
   const images = [
     <Image
       key={restaurant.image_url}
       style={{
         ...styles.image,
-        height: height - headerHeight,
+        height: imageHeight,
       }}
       source={{ uri: restaurant.image_url }}
     />,
@@ -63,7 +68,7 @@ export default function Details(props: Props): React.ReactElement {
             key={url}
             style={{
               ...styles.image,
-              height: height - headerHeight,
+              height: imageHeight,
             }}
             source={{ uri: url }}
           />,
@@ -102,7 +107,7 @@ export default function Details(props: Props): React.ReactElement {
         { restaurant?.transactions?.length
           ? (
             <Text style={styles.text}>
-              {restaurant.transactions.map((tran) => `${tran[0].toUpperCase()}${tran.substring(1)}`).join(' • ')}
+              {restaurant.transactions.map((tran) => `${tran[0].toUpperCase()}${tran.replace('_', ' ').substring(1)}`).join(' • ')}
             </Text>
           ) : null}
       </View>
