@@ -92,7 +92,7 @@ export default function Details(props: Props): React.ReactElement {
       <View>
         <View style={styles.name}>
           <Text style={styles.text}>{`${restaurant.name} • `}</Text>
-          <Rating rating={restaurant.rating} size="sm" />
+          { restaurant.rating ? <Rating rating={restaurant.rating} size="sm" /> : null }
         </View>
         <Text
           style={styles.text}

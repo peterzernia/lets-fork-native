@@ -1,20 +1,20 @@
 import Constants from 'expo-constants'
 
 const ENV = {
-  dev: {
+  development: {
     WS: 'ws://192.168.178.25:8003/api/v1/ws',
     API: 'http://192.168.178.25:8003/api/v1',
   },
-  prod: {
-    WS: 'ws://192.168.178.25:8003/api/v1/ws',
-    API: 'http://192.168.178.25:8003/api/v1',
+  production: {
+    WS: 'wss://letsfork.peterzernia.com/api/v1/ws',
+    API: 'https://letsfork.peterzernia.com/api/v1',
   },
 }
 
-// eslint-disable-next-line
-const getEnvVars = (env = '') => {
-  if (env.indexOf('prod') !== -1) return ENV.prod
-  return ENV.dev
+const getEnvVars = (releaseChannel: string | undefined): typeof ENV.development => {
+  if (releaseChannel === undefined) return ENV.development
+  if (releaseChannel.indexOf('production') !== -1) return ENV.production
+  return ENV.development
 }
 
 export default getEnvVars(Constants.manifest.releaseChannel)
