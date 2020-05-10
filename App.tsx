@@ -14,6 +14,7 @@ import MatchScreen from 'screens/MatchScreen'
 import PartyScreen from 'screens/PartyScreen'
 import RestaurantScreen from 'screens/RestaurantScreen'
 import * as Location from 'expo-location'
+import { AdMobBanner, setTestDeviceIDAsync } from 'expo-ads-admob'
 import env from 'env'
 
 const ws = new WebSocket(env.WS)
@@ -66,6 +67,8 @@ export default function App(): React.ReactElement {
 
       const loc = await Location.getCurrentPositionAsync({})
       setLocation(loc)
+
+      await setTestDeviceIDAsync('EMULATOR')
     })()
   }, [])
 
@@ -160,6 +163,12 @@ export default function App(): React.ReactElement {
           })}
         />
       </Stack.Navigator>
+      <AdMobBanner
+        bannerSize="fullBanner"
+        adUnitID="ca-app-pub-3940256099942544/6300978111" // Test ID, Replace with your-admob-unit-id
+        servePersonalizedAds
+        // onDidFailToReceiveAdWithError={this.bannerError}
+      />
     </NavigationContainer>
   )
 }
