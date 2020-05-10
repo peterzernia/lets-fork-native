@@ -14,7 +14,8 @@ import MatchScreen from 'screens/MatchScreen'
 import PartyScreen from 'screens/PartyScreen'
 import RestaurantScreen from 'screens/RestaurantScreen'
 import * as Location from 'expo-location'
-import { AdMobBanner } from 'expo-ads-admob'
+import { AdMobBanner, setTestDeviceIDAsync } from 'expo-ads-admob'
+import colors from 'utils/colors'
 import env from 'env'
 
 const ws = new WebSocket(env.WS)
@@ -67,6 +68,10 @@ export default function App(): React.ReactElement {
 
       const loc = await Location.getCurrentPositionAsync({})
       setLocation(loc)
+
+      if (env.ENV === 'development') {
+        await setTestDeviceIDAsync('EMULATOR')
+      }
     })()
   }, [])
 
@@ -164,11 +169,13 @@ export default function App(): React.ReactElement {
       {
         env.ADS ? (
           <AdMobBanner
-            bannerSize="fullBanner"
-            // adUnitID="ca-app-pub-3940256099942544/6300978111" // test
-            adUnitID="ca-app-pub-7615991652854969/8991339797" // real
-            servePersonalizedAds
-            onAdViewDidReceiveAd={(): void => console.log('add received')}
+            style={styles.banner}
+            bannerSize="banner"
+            adUnitID={env.ENV === 'development'
+              ? 'ca-app-pub-3940256099942544/6300978111' // test id
+              : 'ca-app-pub-7615991652854969/8991339797'}
+            servePersonalizedAds={false}
+            onAdViewDidReceiveAd={(): void => console.log('ad received')}
             onDidFailToReceiveAdWithError={(err): void => console.log('Ad mob error: ', err)}
           />
         ) : null
@@ -185,7 +192,8 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   banner: {
-    position: 'absolute',
-    bottom: 0,
+    backgroundColor: colors.black,
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 })
