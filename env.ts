@@ -2,12 +2,14 @@ import Constants from 'expo-constants'
 
 const ENV = {
   development: {
-    WS: 'ws://192.168.178.25:8003/api/v1/ws',
+    ADS: true,
     API: 'http://192.168.178.25:8003/api/v1',
+    WS: 'ws://192.168.178.25:8003/api/v1/ws',
   },
   production: {
-    WS: 'wss://letsfork.peterzernia.com/api/v1/ws',
+    ADS: true,
     API: 'https://letsfork.peterzernia.com/api/v1',
+    WS: 'wss://letsfork.peterzernia.com/api/v1/ws',
   },
 }
 
