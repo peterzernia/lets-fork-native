@@ -7,5 +7,5 @@ publish:
 .PHONY: publish
 
 build:
-	expo build:android --release-channel production
+	expo build:android -t app-bundle --release-channel production
 .PHONY: build

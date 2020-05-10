@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 8,
     zIndex: 100,
-    marginBottom: env.ADS ? 58 : 0,
+    marginBottom: env.ADS ? 58 : 8,
   },
   hidden: {
     height: 0,
