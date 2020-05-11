@@ -141,12 +141,12 @@ export default function Details(props: Props): React.ReactElement {
                 initialRegion={{
                   latitude: restaurant.coordinates.latitude,
                   longitude: restaurant.coordinates.longitude,
-                  latitudeDelta: 0.001,
-                  longitudeDelta: 0.01,
+                  latitudeDelta: 0.005,
+                  longitudeDelta: 0.05,
                 }}
                 style={styles.map}
                 rotateEnabled={false}
-                scrollEnabled
+                scrollEnabled={false}
                 zoomEnabled
               >
                 <Marker
