@@ -8,4 +8,5 @@ export default {
   green: '#629460',
   orange: '#FF9F1C',
   purple: '#A470CF',
+  yelpRed: '#D32323',
 }

@@ -18,6 +18,7 @@ import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import { Restaurant } from 'types'
 import { call } from 'utils/phone'
 import { getRestaurant } from 'utils/api'
+import colors from 'utils/colors'
 import env from 'env'
 
 type Props = {
@@ -115,7 +116,7 @@ export default function Details(props: Props): React.ReactElement {
           <MaterialIcons name="phone" size={32} />
         </TouchableOpacity>
         <TouchableOpacity onPress={(): Promise<any> => Linking.openURL(restaurant.url)}>
-          <FontAwesome name="yelp" size={32} />
+          <FontAwesome name="yelp" size={32} color={colors.yelpRed} />
         </TouchableOpacity>
       </View>
       {
