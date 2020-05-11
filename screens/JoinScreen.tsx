@@ -3,6 +3,7 @@ import React from 'react'
 import {
   View, StyleSheet, Dimensions, Text,
 } from 'react-native'
+import ReconnectingWebsocket from 'reconnecting-websocket'
 import { StackNavigationProp, useHeaderHeight } from '@react-navigation/stack'
 import Button from 'components/Button'
 import Input from 'components/Input'
@@ -19,7 +20,7 @@ type NavigationProp = StackNavigationProp<
 
 type Props = {
   navigation: NavigationProp;
-  ws: WebSocket;
+  ws: ReconnectingWebsocket;
 }
 
 const { height } = Dimensions.get('window')

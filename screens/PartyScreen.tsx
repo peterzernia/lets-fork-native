@@ -14,6 +14,7 @@ import {
   ShareAction,
   Platform,
 } from 'react-native'
+import ReconnectingWebsocket from 'reconnecting-websocket'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp, useHeaderHeight } from '@react-navigation/stack'
 import { Party, Restaurant } from 'types'
@@ -40,7 +41,7 @@ type Props = {
   navigation: NavigationProp;
   party?: Party;
   setParty: React.Dispatch<React.SetStateAction<Party>>;
-  ws: WebSocket;
+  ws: ReconnectingWebsocket;
 }
 const { height } = Dimensions.get('window')
 
