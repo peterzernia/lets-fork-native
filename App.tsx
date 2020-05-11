@@ -15,14 +15,16 @@ import PartyScreen from 'screens/PartyScreen'
 import RestaurantScreen from 'screens/RestaurantScreen'
 import * as Location from 'expo-location'
 import { AdMobBanner, setTestDeviceIDAsync } from 'expo-ads-admob'
+import { AppLoading } from 'expo'
 import colors from 'utils/colors'
 import env from 'env'
 
-const ws = new WebSocket(env.WS)
+let ws = new WebSocket(env.WS)
 
 const Stack = createStackNavigator()
 
 export default function App(): React.ReactElement {
+  const [loading, setLoading] = React.useState<boolean>(true)
   const [location, setLocation] = React.useState<Location.LocationData>()
   const [party, setParty] = React.useState<Party>({} as Party)
 
@@ -56,24 +58,35 @@ export default function App(): React.ReactElement {
 
     ws.onclose = (): void => {
       console.log('closed')
+      console.log(ws)
+      ws = new WebSocket(env.WS)
     }
   }, [prevState])
 
-  React.useEffect(() => {
-    (async (): Promise<void> => {
-      const { status } = await Location.requestPermissionsAsync()
-      if (status !== 'granted') {
-        console.log('Permission to access location was denied')
-      }
+  const loadApplicationAsync = async (): Promise<void> => {
+    const { status } = await Location.requestPermissionsAsync()
+    if (status !== 'granted') {
+      console.log('Permission to access location was denied')
+    }
 
-      const loc = await Location.getCurrentPositionAsync({})
-      setLocation(loc)
+    const loc = await Location.getCurrentPositionAsync({})
+    console.log(loc)
+    setLocation(loc)
 
-      if (env.ENV === 'development') {
-        await setTestDeviceIDAsync('EMULATOR')
-      }
-    })()
-  }, [])
+    if (env.ENV === 'development') {
+      await setTestDeviceIDAsync('EMULATOR')
+    }
+  }
+
+  if (loading) {
+    return (
+      <AppLoading
+        startAsync={loadApplicationAsync}
+        onFinish={(): void => setLoading(false)}
+        onError={console.warn}
+      />
+    )
+  }
 
   return (
     <NavigationContainer>

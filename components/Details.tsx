@@ -24,7 +24,7 @@ import env from 'env'
 
 type Props = {
   restaurant: Restaurant;
-  setDetails: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
+  setDetails?: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
 }
 
 const { width, height } = Dimensions.get('window')
@@ -58,7 +58,9 @@ export default function Details(props: Props): React.ReactElement {
     <TouchableOpacity
       key={restaurant.image_url}
       activeOpacity={1}
-      onPress={(): void => setDetails(undefined)}
+      onPress={(): void => {
+        if (setDetails) setDetails(undefined)
+      }}
     >
       <Image
         style={{
@@ -77,7 +79,9 @@ export default function Details(props: Props): React.ReactElement {
           <TouchableOpacity
             key={url}
             activeOpacity={1}
-            onPress={(): void => setDetails(undefined)}
+            onPress={(): void => {
+              if (setDetails) setDetails(undefined)
+            }}
           >
             <Image
               style={{
