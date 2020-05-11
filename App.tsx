@@ -58,7 +58,13 @@ export default function App(): React.ReactElement {
 
     ws.onclose = (): void => {
       console.log('closed')
-      console.log(ws)
+      Alert.alert(
+        "Oops! Something's gone wrong",
+        "It looks like you've disconnected. Hang on while we try to reconnect you.",
+        [
+          { text: 'OK', onPress: (): void => console.log('ok') },
+        ],
+      )
       ws = new WebSocket(env.WS)
     }
   }, [prevState])
