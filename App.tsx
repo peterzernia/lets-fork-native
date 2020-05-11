@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Alert, TouchableOpacity, StyleSheet,
+  Alert, TouchableOpacity, StyleSheet, Text,
 } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -110,7 +110,7 @@ export default function App(): React.ReactElement {
         <Stack.Screen
           name="Match"
           options={(): object => ({
-            headerTitle: (): null => null,
+            headerTitle: (): React.ReactElement => <Text style={styles.matchHeader}>{`Party code: ${party.id}`}</Text>,
           })}
         >
           {(props): React.ReactElement => <MatchScreen {...props} party={party} />}
@@ -195,5 +195,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.black,
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  matchHeader: {
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 })
