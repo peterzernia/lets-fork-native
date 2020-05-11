@@ -24,13 +24,14 @@ import env from 'env'
 
 type Props = {
   restaurant: Restaurant;
+  setDetails: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
 }
 
 const { width, height } = Dimensions.get('window')
 
 export default function Details(props: Props): React.ReactElement {
   const headerHeight = useHeaderHeight()
-  const { restaurant: defaultRestaurant } = props
+  const { restaurant: defaultRestaurant, setDetails } = props
   const [restaurant, setRestaurant] = React.useState(defaultRestaurant)
 
   React.useEffect(() => {
@@ -53,35 +54,43 @@ export default function Details(props: Props): React.ReactElement {
     ? height - headerHeight - 50
     : height - headerHeight
 
-  const images = [
-    <Image
+  const images = [(
+    <TouchableOpacity
       key={restaurant.image_url}
-      style={{
-        ...styles.image,
-        height: imageHeight,
-      }}
-      source={{ uri: restaurant.image_url }}
-    />,
-  ]
+      activeOpacity={1}
+      onPress={(): void => setDetails(undefined)}
+    >
+      <Image
+        style={{
+          ...styles.image,
+          height: imageHeight,
+        }}
+        source={{ uri: restaurant.image_url }}
+      />
+    </TouchableOpacity>
+  )]
 
   if (restaurant.photos?.length) {
     restaurant.photos.forEach((url) => {
       if (url !== restaurant.image_url) {
         images.push(
-          <Image
+          <TouchableOpacity
             key={url}
-            style={{
-              ...styles.image,
-              height: imageHeight,
-            }}
-            source={{ uri: url }}
-          />,
+            activeOpacity={1}
+            onPress={(): void => setDetails(undefined)}
+          >
+            <Image
+              style={{
+                ...styles.image,
+                height: imageHeight,
+              }}
+              source={{ uri: url }}
+            />
+          </TouchableOpacity>,
         )
       }
     })
   }
-
-  // transacitons
 
   return (
     <View>
@@ -102,16 +111,17 @@ export default function Details(props: Props): React.ReactElement {
         <Text style={styles.text}>{restaurant.name}</Text>
         <View style={styles.rating}>
           <Rating rating={restaurant.rating} size="sm" />
+          <Text style={styles.text}>{`•   ${restaurant.review_count} reviews on Yelp`}</Text>
         </View>
         <Text
           style={styles.text}
         >
-          {`${restaurant.price} • ${restaurant?.categories?.map((c) => c.title).join(', ')}`}
+          {`${restaurant.price}   •   ${restaurant?.categories?.map((c) => c.title).join(', ')}`}
         </Text>
         { restaurant?.transactions?.length
           ? (
             <Text style={styles.text}>
-              {restaurant.transactions.map((tran) => `${tran[0].toUpperCase()}${tran.replace('_', ' ').substring(1)}`).join(' • ')}
+              {restaurant.transactions.map((tran) => `${tran[0].toUpperCase()}${tran.replace('_', ' ').substring(1)}`).join('   •   ')}
             </Text>
           ) : null}
       </View>
@@ -177,6 +187,8 @@ const styles = StyleSheet.create({
   },
   rating: {
     paddingLeft: 16,
+    paddingRight: 16,
+    flexDirection: 'row',
   },
   mapContainer: {
     flex: 1,
