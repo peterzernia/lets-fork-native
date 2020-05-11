@@ -2,6 +2,7 @@ import React from 'react'
 import {
   Alert, TouchableOpacity, StyleSheet, Text,
 } from 'react-native'
+import ReconnectingWebsocket from 'reconnecting-websocket'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { MaterialIcons } from '@expo/vector-icons'
@@ -19,7 +20,7 @@ import { AppLoading } from 'expo'
 import colors from 'utils/colors'
 import env from 'env'
 
-let ws = new WebSocket(env.WS)
+const ws = new ReconnectingWebsocket(env.WS)
 
 const Stack = createStackNavigator()
 
@@ -59,7 +60,6 @@ export default function App(): React.ReactElement {
         "Oops! Something's gone wrong",
         "It looks like you've disconnected. Hang on while we try to reconnect you.",
       )
-      ws = new WebSocket(env.WS)
     }
 
     ws.onerror = (err): void => {

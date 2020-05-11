@@ -8,6 +8,7 @@ import {
   Text,
   ScrollView,
 } from 'react-native'
+import ReconnectingWebsocket from 'reconnecting-websocket'
 import { StackNavigationProp } from '@react-navigation/stack'
 import MapView, { Circle } from 'react-native-maps'
 import Button from 'components/Button'
@@ -30,7 +31,7 @@ type NavigationProp = StackNavigationProp<
 type Props = {
   location?: LocationData;
   navigation: NavigationProp;
-  ws: WebSocket;
+  ws: ReconnectingWebsocket;
 }
 
 const { width } = Dimensions.get('window')
