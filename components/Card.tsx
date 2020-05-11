@@ -5,6 +5,7 @@ import {
 import { FontAwesome } from '@expo/vector-icons'
 import Rating from 'components/Rating'
 import { Restaurant } from 'types'
+import colors from 'utils/colors'
 
 type Props = {
   restaurant: Restaurant;
@@ -26,7 +27,7 @@ export default function Card(props: Props): React.ReactElement {
           <Text style={styles.name}>{restaurant.name}</Text>
           <View style={styles.yelp}>
             <Rating rating={restaurant.rating} />
-            <FontAwesome name="yelp" size={32} color="white" />
+            <FontAwesome name="yelp" size={32} color={colors.white} />
           </View>
         </View>
       </View>
