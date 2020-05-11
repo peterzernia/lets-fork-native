@@ -13,6 +13,7 @@ import j from 'assets/stars/extra_large_5.png'
 
 type Props = {
   rating: number;
+  size: 'sm' | 'lg';
 }
 
 type ratings = {
@@ -33,10 +34,16 @@ const RATINGS: ratings = {
 }
 
 export default function Rating(props: Props): React.ReactElement {
-  const { rating } = props
+  const { rating, size } = props
 
   return (
-    <Image style={styles.image} source={RATINGS[rating]} />
+    <Image
+      style={{
+        ...styles.image,
+        width: size === 'lg' ? 160 : 80,
+      }}
+      source={RATINGS[rating]}
+    />
   )
 }
 
@@ -44,7 +51,6 @@ const styles = StyleSheet.create({
   image: {
     marginTop: -28,
     marginBottom: -28,
-    width: 160,
     resizeMode: 'contain',
   },
 })
