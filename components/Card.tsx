@@ -2,6 +2,7 @@ import * as React from 'react'
 import {
   Image, StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native'
+import { FontAwesome } from '@expo/vector-icons'
 import Rating from 'components/Rating'
 import { Restaurant } from 'types'
 
@@ -23,7 +24,10 @@ export default function Card(props: Props): React.ReactElement {
       <View style={styles.overlay}>
         <View>
           <Text style={styles.name}>{restaurant.name}</Text>
-          <Rating rating={restaurant.rating} size="lg" />
+          <View style={styles.yelp}>
+            <Rating rating={restaurant.rating} />
+            <FontAwesome name="yelp" size={32} color="white" />
+          </View>
         </View>
       </View>
     </TouchableOpacity>
@@ -51,5 +55,9 @@ const styles = StyleSheet.create({
   name: {
     color: 'white',
     fontSize: 32,
+  },
+  yelp: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 })
