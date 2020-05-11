@@ -49,23 +49,21 @@ export default function App(): React.ReactElement {
         Alert.alert(
           'You have a new match!',
           'Click the list icon in the top right to view your matches',
-          [
-            { text: 'OK', onPress: (): void => console.log('ok') },
-          ],
         )
       }
     }
 
-    ws.onclose = (): void => {
-      console.log('closed')
+    ws.onclose = (msg): void => {
+      console.log('closed', msg.reason)
       Alert.alert(
         "Oops! Something's gone wrong",
         "It looks like you've disconnected. Hang on while we try to reconnect you.",
-        [
-          { text: 'OK', onPress: (): void => console.log('ok') },
-        ],
       )
       ws = new WebSocket(env.WS)
+    }
+
+    ws.onerror = (err): void => {
+      console.log('websocket error:', err)
     }
   }, [prevState])
 
@@ -76,7 +74,6 @@ export default function App(): React.ReactElement {
     }
 
     const loc = await Location.getCurrentPositionAsync({})
-    console.log(loc)
     setLocation(loc)
 
     if (env.ENV === 'development') {
@@ -145,7 +142,7 @@ export default function App(): React.ReactElement {
                   'Are you sure you want to exit?',
                   'Exiting will make you lose all data in this party',
                   [
-                    { text: 'Cancel', onPress: (): void => console.log('cancelled') },
+                    { text: 'Cancel' },
                     {
                       text: 'OK',
                       onPress: (): void => {

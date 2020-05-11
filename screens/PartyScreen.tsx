@@ -98,7 +98,7 @@ const PartyScreen = React.memo((props: Props) => {
           'Are you sure you want to exit?',
           'Exiting will make you lose all data in this party',
           [
-            { text: 'Cancel', onPress: (): void => console.log('cancelled') },
+            { text: 'Cancel' },
             {
               text: 'OK',
               onPress: (): void => {
