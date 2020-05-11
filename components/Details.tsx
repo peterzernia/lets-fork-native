@@ -18,7 +18,6 @@ import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
 import { Restaurant } from 'types'
 import { call } from 'utils/phone'
 import { getRestaurant } from 'utils/api'
-import Rating from 'components/Rating'
 import env from 'env'
 
 type Props = {
@@ -36,14 +35,17 @@ export default function Details(props: Props): React.ReactElement {
     const fetchData = async (): Promise<void> => {
       try {
         const rest = await getRestaurant(restaurant.id)
-        setRestaurant(rest)
+        setRestaurant({
+          ...restaurant,
+          ...rest,
+        })
       } catch (err) {
         console.log(err)
       }
     }
 
     fetchData()
-  }, [restaurant.id])
+  }, [restaurant])
 
   const imageHeight = env.ADS
     ? height - headerHeight - 50
@@ -95,10 +97,7 @@ export default function Details(props: Props): React.ReactElement {
         {images}
       </ScrollView>
       <View>
-        <View style={styles.name}>
-          <Text style={styles.text}>{`${restaurant.name} • `}</Text>
-          { restaurant.rating ? <Rating rating={restaurant.rating} size="sm" /> : null }
-        </View>
+        <Text style={styles.text}>{restaurant.name}</Text>
         <Text
           style={styles.text}
         >
@@ -170,10 +169,6 @@ const styles = StyleSheet.create({
   image: {
     width,
     resizeMode: 'cover',
-  },
-  name: {
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   mapContainer: {
     flex: 1,

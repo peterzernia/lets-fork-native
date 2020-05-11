@@ -21,6 +21,7 @@ import Details from 'components/Details'
 import { MaterialIcons } from '@expo/vector-icons'
 import { usePrevious } from 'utils/hooks'
 import Button from 'components/Button'
+import env from 'env'
 
 type StackParamList = {
   Home: undefined;
@@ -187,7 +188,7 @@ const PartyScreen = React.memo((props: Props) => {
           style={
             details
               ? styles.hidden
-              : { height: height - headerHeight }
+              : { height: env.ADS ? height - headerHeight - 50 : height - headerHeight }
           }
         >
           <SwipeWindow
@@ -232,24 +233,5 @@ const styles = StyleSheet.create({
   },
   hidden: {
     height: 0,
-  },
-  footer: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    padding: 16,
-    height: 190,
-  },
-  circle: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
-    padding: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    shadowColor: 'gray',
-    shadowOffset: { width: 1, height: 1 },
-    shadowOpacity: 0.18,
-    shadowRadius: 2,
   },
 })
