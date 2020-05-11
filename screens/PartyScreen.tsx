@@ -12,13 +12,14 @@ import {
   TouchableOpacity,
   Share,
   ShareAction,
+  Platform,
 } from 'react-native'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp, useHeaderHeight } from '@react-navigation/stack'
 import { Party, Restaurant } from 'types'
 import SwipeWindow from 'components/SwipeWindow'
 import Details from 'components/Details'
-import { MaterialIcons } from '@expo/vector-icons'
+import { MaterialIcons, Ionicons } from '@expo/vector-icons'
 import { usePrevious } from 'utils/hooks'
 import Button from 'components/Button'
 import env from 'env'
@@ -133,7 +134,11 @@ const PartyScreen = React.memo((props: Props) => {
         <Text style={styles.text}>Share this code with friends to have them join your party.</Text>
         <Text style={styles.code}>{party.id}</Text>
         <TouchableOpacity onPress={(): Promise<ShareAction> => Share.share({ message: `Join my party on Let's Fork with this code: ${party.id}` })}>
-          <MaterialIcons name="share" size={32} />
+          {Platform.OS === 'ios' ? (
+            <Ionicons name="ios-share-alt" size={32} />
+          ) : (
+            <MaterialIcons name="share" size={32} />
+          )}
         </TouchableOpacity>
       </View>
     )
