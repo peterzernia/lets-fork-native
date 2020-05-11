@@ -207,7 +207,7 @@ const PartyScreen = React.memo((props: Props) => {
         </View>
         { details
           ? (
-            <Details restaurant={details} />
+            <Details restaurant={details} setDetails={setDetails} />
           ) : null}
       </ScrollView>
     </SafeAreaView>
