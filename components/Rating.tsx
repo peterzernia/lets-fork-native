@@ -1,66 +1,50 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons'
-import colors from 'utils/colors'
+import { Image, ImageSourcePropType, StyleSheet } from 'react-native'
+import a from 'assets/stars/extra_large_0.png'
+import b from 'assets/stars/extra_large_1.png'
+import c from 'assets/stars/extra_large_1_half.png'
+import d from 'assets/stars/extra_large_2.png'
+import e from 'assets/stars/extra_large_2_half.png'
+import f from 'assets/stars/extra_large_3.png'
+import g from 'assets/stars/extra_large_3_half.png'
+import h from 'assets/stars/extra_large_4.png'
+import i from 'assets/stars/extra_large_4_half.png'
+import j from 'assets/stars/extra_large_5.png'
 
-type StarProps = {
-  fill: 'full' | 'half';
-  size: 'sm' | 'lg';
-}
-
-function Star(props: StarProps): React.ReactElement {
-  const { fill, size } = props
-
-  const SIZES = {
-    sm: 12,
-    lg: 32,
-  }
-
-  const COLORS = {
-    sm: colors.black,
-    lg: colors.white,
-  }
-
-  return (
-    <View style={
-      fill === 'half' && { width: SIZES[size] / 2 }
-    }
-    >
-      <MaterialIcons
-        name="star"
-        size={SIZES[size]}
-        color={COLORS[size]}
-      />
-    </View>
-  )
-}
-
-
-type RatingProps = {
+type Props = {
   rating: number;
-  size: 'sm' | 'lg';
 }
 
-export default function Rating(props: RatingProps): React.ReactElement {
-  const { rating, size } = props
+type ratings = {
+  [key: number]: ImageSourcePropType;
+}
 
-  const stars = [...Array(Math.floor(rating))].map((e, i: number) => (
-    <Star key={i} size={size} fill="full" /> // eslint-disable-line react/no-array-index-key
-  ))
+const RATINGS: ratings = {
+  0: a,
+  1: b,
+  1.5: c,
+  2: d,
+  2.5: e,
+  3: f,
+  3.5: g,
+  4: h,
+  4.5: i,
+  5: j,
+}
 
-  if (rating - Math.floor(rating) > 0) {
-    stars.push(<Star key={0.5} size={size} fill="half" />)
-  }
+export default function Rating(props: Props): React.ReactElement {
+  const { rating } = props
 
   return (
-    <View style={styles.rating}>
-      {stars}
-    </View>
+    <Image style={styles.image} source={RATINGS[rating]} />
   )
 }
 
 const styles = StyleSheet.create({
-  rating: {
-    flexDirection: 'row',
+  image: {
+    marginTop: -28,
+    marginBottom: -28,
+    width: 160,
+    resizeMode: 'contain',
   },
 })

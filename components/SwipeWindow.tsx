@@ -6,7 +6,6 @@ import { PanGestureHandler, State } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated'
 import { Restaurant } from 'types'
 import Card from 'components/Card'
-import env from 'env'
 
 const runSpring = (
   clock: Animated.Clock,
@@ -259,7 +258,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 8,
     zIndex: 100,
-    marginBottom: env.ADS ? 58 : 8,
+    marginBottom: 8,
   },
   hidden: {
     height: 0,
