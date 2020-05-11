@@ -12,6 +12,7 @@ import {
   Animated,
 } from 'react-native'
 import Hours from 'components/Hours'
+import Rating from 'components/Rating'
 import MapView, { Marker } from 'react-native-maps'
 import { useHeaderHeight } from '@react-navigation/stack'
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons'
@@ -99,6 +100,9 @@ export default function Details(props: Props): React.ReactElement {
       </ScrollView>
       <View>
         <Text style={styles.text}>{restaurant.name}</Text>
+        <View style={styles.rating}>
+          <Rating rating={restaurant.rating} size="sm" />
+        </View>
         <Text
           style={styles.text}
         >
@@ -171,6 +175,9 @@ const styles = StyleSheet.create({
     width,
     resizeMode: 'cover',
   },
+  rating: {
+    paddingLeft: 16,
+  },
   mapContainer: {
     flex: 1,
     backgroundColor: '#fff',
@@ -191,8 +198,9 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: 'bold',
     paddingLeft: 16,
-    paddingTop: 16,
-    paddingBottom: 16,
+    paddingTop: 8,
+    paddingBottom: 8,
+    fontSize: 14,
   },
   directionText: {
     fontWeight: 'bold',

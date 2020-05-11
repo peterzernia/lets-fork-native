@@ -26,7 +26,7 @@ export default function Card(props: Props): React.ReactElement {
         <View>
           <Text style={styles.name}>{restaurant.name}</Text>
           <View style={styles.yelp}>
-            <Rating rating={restaurant.rating} />
+            <Rating rating={restaurant.rating} size="lg" />
             <FontAwesome name="yelp" size={32} color={colors.white} />
           </View>
         </View>
