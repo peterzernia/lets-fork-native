@@ -15,6 +15,7 @@ import Price from 'components/Price'
 import { LocationData } from 'expo-location'
 import colors from 'utils/colors'
 import { getLocale } from 'utils/phone'
+import currencies from 'utils/currencies'
 
 type StackParamList = {
   Party: undefined;
@@ -64,13 +65,13 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
     navigation.navigate('Party')
   }
 
-  const symbol = '$'
-
   const locale = getLocale()
   const countries = ['LR', 'MM', 'US']
   const units = countries.includes(locale.substring(3)) ? 'mi' : 'km'
   // m converted to mi or km
   const conversion = countries.includes(locale.substring(3)) ? 1609.344 : 1000
+
+  const symbol = currencies[locale.substring(3)] || '$'
 
   return (
     <ScrollView>
