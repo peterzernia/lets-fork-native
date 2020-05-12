@@ -48,7 +48,7 @@ export default function Details(props: Props): React.ReactElement {
     }
 
     fetchData()
-  }, [restaurant])
+  }, []) // eslint-disable-line
 
   const imageHeight = env.ADS
     ? height - headerHeight - 50
