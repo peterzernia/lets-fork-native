@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Alert, TouchableOpacity, StyleSheet, Text,
+  Alert, TouchableOpacity, StyleSheet, Text, Platform, View,
 } from 'react-native'
 import ReconnectingWebsocket from 'reconnecting-websocket'
 import { NavigationContainer } from '@react-navigation/native'
@@ -184,16 +184,18 @@ export default function App(): React.ReactElement {
       </Stack.Navigator>
       {
         env.ADS ? (
-          <AdMobBanner
-            style={styles.banner}
-            bannerSize="banner"
-            adUnitID={env.ENV === 'development'
-              ? 'ca-app-pub-3940256099942544/6300978111' // test id
-              : 'ca-app-pub-7615991652854969/8991339797'}
-            servePersonalizedAds={false}
-            onAdViewDidReceiveAd={(): void => console.log('ad received')}
-            onDidFailToReceiveAdWithError={(err): void => console.log('Ad mob error: ', err)}
-          />
+          <View style={styles.bannerContainer}>
+            <AdMobBanner
+              style={styles.banner}
+              bannerSize="banner"
+              adUnitID={env.ENV === 'development' // eslint-disable-line no-nested-ternary
+                ? 'ca-app-pub-3940256099942544/6300978111' // test id
+                : (Platform.OS === 'android' ? 'ca-app-pub-7615991652854969/8991339797' : 'ca-app-pub-7615991652854969/8331922298')}
+              servePersonalizedAds={false}
+              onAdViewDidReceiveAd={(): void => console.log('ad received')}
+              onDidFailToReceiveAdWithError={(err): void => console.log('Ad mob error: ', err)}
+            />
+          </View>
         ) : null
       }
     </NavigationContainer>
@@ -207,10 +209,13 @@ const styles = StyleSheet.create({
   matchButton: {
     marginRight: 16,
   },
-  banner: {
-    backgroundColor: colors.black,
+  bannerContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
+    backgroundColor: 'black',
+  },
+  banner: {
+    backgroundColor: colors.black,
   },
   matchHeader: {
     fontWeight: 'bold',
