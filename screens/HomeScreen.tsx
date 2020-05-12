@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  StyleSheet, View, Text, ImageBackground, TouchableOpacity,
+  StyleSheet, View, Text, ImageBackground, TouchableOpacity, Platform,
 } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import homeImage from 'assets/home.jpg'
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     color: colors.white,
     fontSize: 48,
     fontWeight: 'bold',
-    fontFamily: 'serif',
+    fontFamily: Platform.OS === 'android' ? 'serif' : 'Georgia',
   },
   buttons: {
     paddingTop: 32,
