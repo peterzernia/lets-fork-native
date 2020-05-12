@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   button: {
     color: colors.white,
     fontSize: 28,
-    fontFamily: 'serif',
+    fontFamily: Platform.OS === 'android' ? 'serif' : 'Georgia',
   },
 })
 

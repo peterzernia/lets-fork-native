@@ -8,12 +8,13 @@ import { Restaurant } from 'types'
 import colors from 'utils/colors'
 
 type Props = {
+  loading?: boolean; // When loading, top card's image is not rendered
   restaurant: Restaurant;
   setDetails: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
 };
 
 export default function Card(props: Props): React.ReactElement {
-  const { restaurant, setDetails } = props
+  const { loading, restaurant, setDetails } = props
 
   return (
     <TouchableOpacity
@@ -21,7 +22,7 @@ export default function Card(props: Props): React.ReactElement {
       style={styles.container}
       onPress={(): void => setDetails(restaurant)}
     >
-      <Image style={styles.image} source={{ uri: restaurant.image_url }} />
+      { !loading ? <Image style={styles.image} source={{ uri: restaurant.image_url }} /> : null}
       <View style={styles.overlay}>
         <View>
           <Text style={styles.name}>{restaurant.name}</Text>
