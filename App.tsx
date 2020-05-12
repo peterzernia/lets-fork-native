@@ -16,11 +16,12 @@ import PartyScreen from 'screens/PartyScreen'
 import RestaurantScreen from 'screens/RestaurantScreen'
 import * as Location from 'expo-location'
 import { AdMobBanner, setTestDeviceIDAsync } from 'expo-ads-admob'
+import Constants from 'expo-constants'
 import { AppLoading } from 'expo'
 import colors from 'utils/colors'
 import env from 'env'
 
-const ws = new ReconnectingWebsocket(env.WS)
+const ws = new ReconnectingWebsocket(`${env.WS}?id=${Constants.deviceId}`)
 
 const Stack = createStackNavigator()
 
@@ -56,10 +57,6 @@ export default function App(): React.ReactElement {
 
     ws.onclose = (msg): void => {
       console.log('closed', msg.reason)
-      Alert.alert(
-        "Oops! Something's gone wrong",
-        "It looks like you've disconnected. Hang on while we try to reconnect you.",
-      )
     }
 
     ws.onerror = (err): void => {
