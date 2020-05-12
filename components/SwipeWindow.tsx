@@ -243,7 +243,11 @@ export default class SwipeWindow extends SW {
               onGestureEvent={onGestureEvent}
             >
               <Animated.View style={style}>
-                <Card restaurant={lastRestaurant} setDetails={setDetails} />
+                <Card
+                  loading={loading}
+                  restaurant={lastRestaurant}
+                  setDetails={setDetails}
+                />
               </Animated.View>
             </PanGestureHandler>
           )

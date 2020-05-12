@@ -184,6 +184,7 @@ const PartyScreen = React.memo((props: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView
+        scrollEventThrottle={50}
         onScroll={(e): void => {
           if (e.nativeEvent.contentOffset.y === 0) {
             setDetails(undefined)
