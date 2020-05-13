@@ -194,21 +194,25 @@ const PartyScreen = React.memo((props: Props) => {
           }
         }}
       >
-        <Image
-          // this is a workaround: on ios switching between the
-          // SwipeWindow and Details causes a white flash, but
-          // having the same image rendered behind makes the
-          // flash not noticeable
-          style={{
-            ...styles.placeholder,
-            height: viewHeight - 16,
-          }}
-          source={{
-            uri: restaurants?.length
-              ? restaurants[0].image_url
-              : party.restaurants[0].image_url,
-          }}
-        />
+        {
+          Platform.OS === 'ios' ? (
+            <Image
+              // this is a workaround: on ios switching between the
+              // SwipeWindow and Details causes a white flash, but
+              // having the same image rendered behind makes the
+              // flash not noticeable
+              style={{
+                ...styles.placeholder,
+                height: viewHeight - 16,
+              }}
+              source={{
+                uri: restaurants?.length
+                  ? restaurants[0].image_url
+                  : party.restaurants[0].image_url,
+              }}
+            />
+          ) : null
+        }
         { details
           ? (
             <Details
