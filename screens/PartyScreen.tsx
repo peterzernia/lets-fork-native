@@ -194,7 +194,10 @@ const PartyScreen = React.memo((props: Props) => {
       >
         { details
           ? (
-            <Details restaurant={details} setDetails={setDetails} />
+            <Details
+              restaurant={details}
+              setDetails={setDetails}
+            />
           ) : (
             <View style={{ height: viewHeight }}>
               <SwipeWindow
