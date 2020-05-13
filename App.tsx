@@ -44,10 +44,7 @@ export default function App(): React.ReactElement {
       setParty(currentState)
 
       // Alert when there are new matches
-      if (currentState.matches
-        && JSON.stringify(prevState.matches)
-        !== JSON.stringify(currentState.matches)
-      ) {
+      if (currentState.matches?.length !== prevState.matches?.length) {
         Alert.alert(
           'You have a new match!',
           'Click the list icon in the top right to view your matches',

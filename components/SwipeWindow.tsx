@@ -229,7 +229,7 @@ export default class SwipeWindow extends SW {
     return (
       <View style={styles.cards}>
         {
-          rest.length && !loading
+          rest.length
             ? <Card restaurant={rest[0]} setDetails={setDetails} />
             : null
         }
