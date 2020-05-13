@@ -8,7 +8,7 @@ import {
   Text,
   ScrollView,
 } from 'react-native'
-import ReconnectingWebsocket from 'reconnecting-websocket'
+import ReconnectingWebSocket from 'reconnecting-websocket'
 import { StackNavigationProp } from '@react-navigation/stack'
 import MapView, { Circle } from 'react-native-maps'
 import Button from 'components/Button'
@@ -31,7 +31,7 @@ type NavigationProp = StackNavigationProp<
 type Props = {
   location?: LocationData;
   navigation: NavigationProp;
-  ws: ReconnectingWebsocket;
+  ws: ReconnectingWebSocket;
 }
 
 const { width } = Dimensions.get('window')
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   slider: {
-    padding: 16,
+    margin: 16,
   },
   price: {
     flexDirection: 'row',
