@@ -215,17 +215,17 @@ const PartyScreen = React.memo((props: Props) => {
               restaurant={details}
               setDetails={setDetails}
             />
-          ) : (
-            <View style={{ height: viewHeight }}>
-              <SwipeWindow
-                handleSwipeRight={handleSwipeRight}
-                restaurants={restaurants || party.restaurants}
-                setDetails={setDetails}
-                setFinished={setFinished}
-                setRestaurants={setRestaurants}
-              />
-            </View>
-          )}
+          ) : null}
+        <View style={{ height: viewHeight }}>
+          <SwipeWindow
+            handleSwipeRight={handleSwipeRight}
+            restaurants={restaurants || party.restaurants}
+            setDetails={setDetails}
+            setFinished={setFinished}
+            setRestaurants={setRestaurants}
+            visible={!details}
+          />
+        </View>
       </ScrollView>
     </SafeAreaView>
   )

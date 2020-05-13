@@ -9,12 +9,15 @@ import colors from 'utils/colors'
 
 type Props = {
   loading?: boolean; // When loading, top card's image is not rendered
+  noText?: boolean;
   restaurant: Restaurant;
   setDetails: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
 };
 
 export default function Card(props: Props): React.ReactElement {
-  const { loading, restaurant, setDetails } = props
+  const {
+    loading, noText, restaurant, setDetails,
+  } = props
 
   return (
     <TouchableOpacity
@@ -23,15 +26,19 @@ export default function Card(props: Props): React.ReactElement {
       onPress={(): void => setDetails(restaurant)}
     >
       { !loading ? <Image style={styles.image} source={{ uri: restaurant.image_url }} /> : null}
-      <View style={styles.overlay}>
-        <View>
-          <Text style={styles.name}>{restaurant.name}</Text>
-          <View style={styles.yelp}>
-            <Rating rating={restaurant.rating} size="lg" />
-            <FontAwesome name="yelp" size={32} color={colors.white} />
+      {
+        !noText ? (
+          <View style={styles.overlay}>
+            <View>
+              <Text style={styles.name}>{restaurant.name}</Text>
+              <View style={styles.yelp}>
+                <Rating rating={restaurant.rating} size="lg" />
+                <FontAwesome name="yelp" size={32} color={colors.white} />
+              </View>
+            </View>
           </View>
-        </View>
-      </View>
+        ) : null
+      }
     </TouchableOpacity>
   )
 }
