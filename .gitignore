@@ -10,6 +10,7 @@ npm-debug.*
 web-build/
 web-report/
 app.json
+api-key.json
 
 # macOS
 .DS_Store
