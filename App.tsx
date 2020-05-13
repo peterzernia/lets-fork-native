@@ -2,7 +2,7 @@ import React from 'react'
 import {
   Alert, TouchableOpacity, StyleSheet, Text, Platform, View,
 } from 'react-native'
-import ReconnectingWebsocket from 'reconnecting-websocket'
+import ReconnectingWebSocket from 'reconnecting-websocket'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { MaterialIcons } from '@expo/vector-icons'
@@ -21,7 +21,7 @@ import { AppLoading } from 'expo'
 import colors from 'utils/colors'
 import env from 'env'
 
-const ws = new ReconnectingWebsocket(`${env.WS}?id=${Constants.deviceId}`)
+const ws = new ReconnectingWebSocket(`${env.WS}?id=${Constants.deviceId}`)
 
 const Stack = createStackNavigator()
 

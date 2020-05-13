@@ -262,7 +262,6 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 8,
     zIndex: 100,
-    marginBottom: 8,
   },
   hidden: {
     height: 0,
