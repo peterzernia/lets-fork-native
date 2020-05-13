@@ -75,7 +75,6 @@ type Props = {
   setDetails: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
   setFinished: React.Dispatch<React.SetStateAction<boolean>>;
   setRestaurants: React.Dispatch<React.SetStateAction<Restaurant[] | undefined>>;
-  visible: boolean;
 }
 
 type Sta = {
@@ -204,7 +203,7 @@ export default class SwipeWindow extends SW {
 
   render(): React.ReactElement {
     const { onGestureEvent, translateX, translateY } = this
-    const { restaurants, setDetails, visible } = this.props
+    const { restaurants, setDetails } = this.props
     const { loading } = this.state
     const [lastRestaurant, ...rest] = restaurants
 
@@ -226,8 +225,6 @@ export default class SwipeWindow extends SW {
         { rotateZ },
       ],
     }
-
-    if (!visible) return <View style={styles.hidden} />
 
     return (
       <View style={styles.cards}>
@@ -262,8 +259,5 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 8,
     zIndex: 100,
-  },
-  hidden: {
-    height: 0,
   },
 })

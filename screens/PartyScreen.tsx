@@ -53,6 +53,7 @@ const PartyScreen = React.memo((props: Props) => {
   const [restaurants, setRestaurants] = React.useState<Restaurant[]>()
   const [details, setDetails] = React.useState<Restaurant | undefined>()
   const headerHeight = useHeaderHeight()
+  const viewHeight = env.ADS ? height - headerHeight - 50 : height - headerHeight
 
   if (party?.error) {
     Alert.alert(
@@ -129,7 +130,7 @@ const PartyScreen = React.memo((props: Props) => {
       <View
         style={{
           ...styles.waiting,
-          height: height - headerHeight,
+          height: viewHeight,
         }}
       >
         <Text style={styles.text}>Share this code with friends to have them join your party.</Text>
@@ -150,7 +151,7 @@ const PartyScreen = React.memo((props: Props) => {
       <View
         style={{
           ...styles.waiting,
-          height: height - headerHeight,
+          height: viewHeight,
         }}
       >
         <Text style={styles.text}>
@@ -173,7 +174,7 @@ const PartyScreen = React.memo((props: Props) => {
       <View
         style={{
           ...styles.waiting,
-          height: height - headerHeight,
+          height: viewHeight,
         }}
       >
         <ActivityIndicator size="large" />
@@ -191,26 +192,20 @@ const PartyScreen = React.memo((props: Props) => {
           }
         }}
       >
-        <View
-          style={
-            details
-              ? styles.hidden
-              : { height: env.ADS ? height - headerHeight - 50 : height - headerHeight }
-          }
-        >
-          <SwipeWindow
-            handleSwipeRight={handleSwipeRight}
-            restaurants={restaurants || party.restaurants}
-            setDetails={setDetails}
-            setFinished={setFinished}
-            setRestaurants={setRestaurants}
-            visible={!details}
-          />
-        </View>
         { details
           ? (
             <Details restaurant={details} setDetails={setDetails} />
-          ) : null}
+          ) : (
+            <View style={{ height: viewHeight }}>
+              <SwipeWindow
+                handleSwipeRight={handleSwipeRight}
+                restaurants={restaurants || party.restaurants}
+                setDetails={setDetails}
+                setFinished={setFinished}
+                setRestaurants={setRestaurants}
+              />
+            </View>
+          )}
       </ScrollView>
     </SafeAreaView>
   )
@@ -237,8 +232,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fbfaff',
-  },
-  hidden: {
-    height: 0,
   },
 })
