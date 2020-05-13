@@ -13,6 +13,7 @@ import {
   Share,
   ShareAction,
   Platform,
+  Image,
 } from 'react-native'
 import ReconnectingWebsocket from 'reconnecting-websocket'
 import { useFocusEffect } from '@react-navigation/native'
@@ -24,6 +25,7 @@ import { MaterialIcons, Ionicons } from '@expo/vector-icons'
 import { usePrevious } from 'utils/hooks'
 import Button from 'components/Button'
 import env from 'env'
+import colors from 'utils/colors'
 
 type StackParamList = {
   Home: undefined;
@@ -43,7 +45,7 @@ type Props = {
   setParty: React.Dispatch<React.SetStateAction<Party>>;
   ws: ReconnectingWebsocket;
 }
-const { height } = Dimensions.get('window')
+const { width, height } = Dimensions.get('window')
 
 const PartyScreen = React.memo((props: Props) => {
   const {
@@ -192,6 +194,21 @@ const PartyScreen = React.memo((props: Props) => {
           }
         }}
       >
+        <Image
+          // this is a workaround: on ios switching between the
+          // SwipeWindow and Details causes a white flash, but
+          // having the same image rendered behind makes the
+          // flash not noticeable
+          style={{
+            ...styles.placeholder,
+            height: viewHeight - 16,
+          }}
+          source={{
+            uri: restaurants?.length
+              ? restaurants[0].image_url
+              : party.restaurants[0].image_url,
+          }}
+        />
         { details
           ? (
             <Details
@@ -235,5 +252,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fbfaff',
+  },
+  placeholder: {
+    position: 'absolute',
+    left: 8,
+    top: 8,
+    width: width - 16,
+    borderRadius: 8,
+    borderColor: colors.black,
+    borderWidth: 1,
   },
 })
