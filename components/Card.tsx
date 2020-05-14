@@ -59,6 +59,9 @@ const styles = StyleSheet.create({
   name: {
     color: 'white',
     fontSize: 32,
+    textShadowColor: 'black',
+    textShadowOffset: { width: -0.5, height: 0 },
+    textShadowRadius: 5,
   },
   yelp: {
     flexDirection: 'row',

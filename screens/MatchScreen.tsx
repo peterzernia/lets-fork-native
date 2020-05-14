@@ -85,9 +85,13 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     paddingLeft: 8,
+    position: 'absolute',
   },
   name: {
     color: 'white',
     fontSize: 32,
+    textShadowColor: 'black',
+    textShadowOffset: { width: -0.5, height: 0 },
+    textShadowRadius: 5,
   },
 })
