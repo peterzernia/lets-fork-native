@@ -6,8 +6,7 @@ import ReconnectingWebSocket from 'reconnecting-websocket'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { MaterialIcons } from '@expo/vector-icons'
-import { Party } from 'types'
-import { usePrevious } from 'utils/hooks'
+import { Party, Restaurant } from 'types'
 import CreateScreen from 'screens/CreateScreen'
 import HomeScreen from 'screens/HomeScreen'
 import JoinScreen from 'screens/JoinScreen'
@@ -30,27 +29,32 @@ export default function App(): React.ReactElement {
   const [location, setLocation] = React.useState<Location.LocationData>()
   const [party, setParty] = React.useState<Party>({} as Party)
 
-  // prevState of the party
-  const prevState = usePrevious(party)
-
   React.useEffect(() => {
+    // Keep track of current matches
+    let matches: Restaurant[] = []
+
     ws.onopen = (): void => {
       console.log('opened')
     }
 
     ws.onmessage = (msg): void => {
       console.log(msg.data)
-      const currentState = JSON.parse(msg.data)
-      setParty(currentState)
+      const data: Party = JSON.parse(msg.data)
+
+      const newMatches = JSON.stringify(data.matches?.map((r) => r.id).sort())
+      const oldMatches = JSON.stringify(matches?.map((r) => r.id).sort())
 
       // Alert when there are new matches
-      if (currentState.matches?.length
-        && currentState.matches?.length !== prevState.matches?.length) {
+      if (data.matches?.length
+        && oldMatches !== newMatches) {
+        matches = data.matches
         Alert.alert(
           'You have a new match!',
           'Click the list icon in the top right to view your matches',
         )
       }
+
+      setParty(data)
     }
 
     ws.onclose = (msg): void => {
@@ -60,7 +64,7 @@ export default function App(): React.ReactElement {
     ws.onerror = (err): void => {
       console.log('websocket error:', err)
     }
-  }, [prevState])
+  }, [])
 
   const loadApplicationAsync = async (): Promise<void> => {
     const { status } = await Location.requestPermissionsAsync()
