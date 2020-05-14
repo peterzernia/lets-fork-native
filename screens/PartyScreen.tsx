@@ -220,7 +220,7 @@ const PartyScreen = React.memo((props: Props) => {
               setDetails={setDetails}
             />
           ) : null}
-        <View style={{ height: viewHeight }}>
+        <View style={{ height: details ? 0 : viewHeight }}>
           <SwipeWindow
             handleSwipeRight={handleSwipeRight}
             restaurants={restaurants || party.restaurants}
