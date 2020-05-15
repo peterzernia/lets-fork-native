@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "node ./node_modules/jest/bin/jest.js"
   },
   "dependencies": {
     "@expo/vector-icons": "^10.1.0",
@@ -31,6 +32,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
+    "@types/jest": "^25.2.2",
     "@types/react": "~16.9.23",
     "@types/react-native": "~0.61.17",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
@@ -45,6 +47,9 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^4.0.0",
     "eslint-plugin-react-native": "^3.8.1",
+    "jest": "^26.0.1",
+    "react-native-testing-library": "^1.13.2",
+    "react-test-renderer": "^16.13.1",
     "typescript": "~3.8.3"
   },
   "private": true
