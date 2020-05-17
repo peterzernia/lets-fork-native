@@ -24,7 +24,9 @@ export default function Card(props: Props): React.ReactElement {
       style={styles.container}
       onPress={(): void => setDetails(restaurant)}
     >
-      { !loading ? <Image style={styles.image} source={{ uri: restaurant.image_url }} /> : null}
+      { !loading
+        ? <Image style={styles.image} source={{ uri: restaurant.image_url, cache: 'force-cache' }} />
+        : null}
       <View style={styles.overlay}>
         <View>
           <Text style={styles.name}>{restaurant.name}</Text>

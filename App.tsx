@@ -75,7 +75,7 @@ export default function App(): React.ReactElement {
     const loc = await Location.getCurrentPositionAsync({})
     setLocation(loc)
 
-    if (env.ENV === 'development') {
+    if (env.ENV === 'development' && env.ADS) {
       await setTestDeviceIDAsync('EMULATOR')
     }
   }

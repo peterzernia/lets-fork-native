@@ -67,7 +67,7 @@ export default function Details(props: Props): React.ReactElement {
           ...styles.image,
           height: imageHeight,
         }}
-        source={{ uri: restaurant.image_url }}
+        source={{ uri: restaurant.image_url, cache: 'force-cache' }}
       />
     </TouchableOpacity>
   )]
@@ -88,7 +88,7 @@ export default function Details(props: Props): React.ReactElement {
                 ...styles.image,
                 height: imageHeight,
               }}
-              source={{ uri: url }}
+              source={{ uri: url, cache: 'force-cache' }}
             />
           </TouchableOpacity>,
         )
