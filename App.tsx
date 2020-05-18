@@ -133,6 +133,7 @@ export default function App(): React.ReactElement {
         <Stack.Screen
           name="Party"
           options={({ navigation }): object => ({
+            gestureEnabled: false,
             headerTitle: (): null => null,
             headerLeft: (): React.ReactElement => (
               <TouchableOpacity
@@ -203,7 +204,8 @@ export default function App(): React.ReactElement {
 
 const styles = StyleSheet.create({
   backButton: {
-    marginLeft: 16,
+    marginLeft: 8,
+    padding: 8,
   },
   matchButton: {
     marginRight: 16,
