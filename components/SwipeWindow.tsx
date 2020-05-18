@@ -208,6 +208,25 @@ export default class SwipeWindow extends SW {
     const { loading } = this.state
     const [lastRestaurant, ...rest] = restaurants
 
+    // Workaround to prevent text from flashing on ios.
+    // There is a moment where the image is fetched and isn't rendered.
+    // The ios workaround on Party Screen renders the image, but this causes
+    // the text from both the top and bottom cards to flash over top. This workaround
+    // turns the opacity of the bottom text to 0 when the top card hasn't moved.
+    // This makes it look like the card is rendered correctly the entire time.
+    // [TODO] look into using react-native-fast-image for image caching; requires ejecting
+    const textOpacity = cond(
+      greaterThan(translateX, new Value(0)),
+      interpolate(translateX, {
+        inputRange: [0, 0.00001],
+        outputRange: [0, 1],
+      }),
+      interpolate(translateX, {
+        inputRange: [-0.000001, 0],
+        outputRange: [1, 0],
+      }),
+    )
+
     const rotateZ = concat(
       interpolate(translateX, {
         inputRange: [-width / 2, width / 2],
@@ -233,8 +252,13 @@ export default class SwipeWindow extends SW {
       <View style={styles.cards}>
         {
           rest.length
-            ? <Card restaurant={rest[0]} setDetails={setDetails} />
-            : null
+            ? (
+              <Card
+                textOpacity={textOpacity}
+                restaurant={rest[0]}
+                setDetails={setDetails}
+              />
+            ) : null
         }
         {
           lastRestaurant && (
@@ -244,6 +268,7 @@ export default class SwipeWindow extends SW {
             >
               <Animated.View style={style}>
                 <Card
+                  textOpacity={1}
                   loading={loading}
                   restaurant={lastRestaurant}
                   setDetails={setDetails}

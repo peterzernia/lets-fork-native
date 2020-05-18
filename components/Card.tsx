@@ -2,6 +2,7 @@ import * as React from 'react'
 import {
   Image, StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native'
+import Animated from 'react-native-reanimated'
 import { FontAwesome } from '@expo/vector-icons'
 import Rating from 'components/Rating'
 import { Restaurant } from 'types'
@@ -11,11 +12,12 @@ type Props = {
   loading?: boolean; // When loading, top card's image is not rendered
   restaurant: Restaurant;
   setDetails: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
+  textOpacity: Animated.Node<number> | number;
 };
 
 export default function Card(props: Props): React.ReactElement {
   const {
-    loading, restaurant, setDetails,
+    loading, restaurant, setDetails, textOpacity,
   } = props
 
   return (
@@ -29,7 +31,9 @@ export default function Card(props: Props): React.ReactElement {
         : null}
       <View style={styles.overlay}>
         <View>
-          <Text style={styles.name}>{restaurant.name}</Text>
+          <Animated.View style={{ opacity: textOpacity }}>
+            <Text style={styles.name}>{restaurant.name}</Text>
+          </Animated.View>
           <View style={styles.yelp}>
             <Rating rating={restaurant.rating} size="lg" />
             <FontAwesome name="yelp" size={32} color={colors.white} />
