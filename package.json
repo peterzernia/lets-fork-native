@@ -9,6 +9,7 @@
     "test": "node ./node_modules/jest/bin/jest.js"
   },
   "dependencies": {
+    "@expo-google-fonts/montserrat": "^0.1.0",
     "@expo-google-fonts/varela-round": "^0.1.0",
     "@expo/vector-icons": "^10.1.0",
     "@react-native-community/masked-view": "0.1.6",

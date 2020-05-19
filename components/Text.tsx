@@ -10,7 +10,7 @@ export default function Text(props: Props): React.ReactElement {
 
   return (
     <RNText
-      style={[style, { fontFamily: 'VarelaRound_400Regular' }]}
+      style={[style, { fontFamily: 'Montserrat_600SemiBold' }]}
     >
       {children}
     </RNText>

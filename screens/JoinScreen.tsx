@@ -1,7 +1,7 @@
 
 import React from 'react'
 import {
-  View, StyleSheet, Dimensions,
+  View, StyleSheet, Dimensions, KeyboardAvoidingView,
 } from 'react-native'
 import Text from 'components/Text'
 import ReconnectingWebSocket from 'reconnecting-websocket'
@@ -44,11 +44,13 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
         height: height - headerHeight,
       }}
     >
-      <Text style={styles.text}>Please enter the code</Text>
-      <Input value={value} handleChange={setValue} keyboardType="phone-pad" />
-      <Button size="sm" color="purple" onPress={(): void => handleJoin()}>
-        JOIN
-      </Button>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <Text style={styles.text}>Please enter the party code</Text>
+        <Input value={value} handleChange={setValue} keyboardType="phone-pad" />
+        <Button size="sm" color="purple" onPress={(): void => handleJoin()}>
+          JOIN
+        </Button>
+      </KeyboardAvoidingView>
     </View>
   )
 })

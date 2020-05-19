@@ -1,7 +1,8 @@
 import React from 'react'
 import {
-  Alert, TouchableOpacity, StyleSheet, Text, Platform, View,
+  Alert, TouchableOpacity, StyleSheet, Platform, View,
 } from 'react-native'
+import Text from 'components/Text'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
@@ -20,13 +21,16 @@ import { AppLoading } from 'expo'
 import colors from 'utils/colors'
 import env from 'env'
 import { useFonts, VarelaRound_400Regular } from '@expo-google-fonts/varela-round'
+import { Montserrat_600SemiBold } from '@expo-google-fonts/montserrat'
 
 const ws = new ReconnectingWebSocket(`${env.WS}?id=${Constants.deviceId}`)
 
 const Stack = createStackNavigator()
 
 export default function App(): React.ReactElement {
-  const [fontsLoaded] = useFonts({ VarelaRound_400Regular })
+  const [fontsLoaded] = useFonts({
+    VarelaRound_400Regular, Montserrat_600SemiBold,
+  })
   const [loading, setLoading] = React.useState<boolean>(true)
   const [location, setLocation] = React.useState<Location.LocationData>()
   const [party, setParty] = React.useState<Party>({} as Party)

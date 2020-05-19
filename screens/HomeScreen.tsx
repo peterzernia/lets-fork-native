@@ -1,8 +1,7 @@
 import React from 'react'
 import {
-  StyleSheet, View,
+  StyleSheet, View, Text,
 } from 'react-native'
-import Text from 'components/Text'
 import Button from 'components/Button'
 import { StackNavigationProp } from '@react-navigation/stack'
 import colors from 'utils/colors'
@@ -72,6 +71,7 @@ const styles = StyleSheet.create({
   header: {
     color: colors.white,
     fontSize: 48,
+    fontFamily: 'VarelaRound_400Regular',
   },
 })
 
