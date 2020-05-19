@@ -1,5 +1,6 @@
 import React from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
+import Text from 'components/Text'
 import { Hours as HoursType } from 'types'
 import { formatTime } from 'utils/datetime'
 import { getLocale } from 'utils/phone'

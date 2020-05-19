@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   View,
-  Text,
   TouchableOpacity,
   StyleSheet,
   Linking,
@@ -11,6 +10,7 @@ import {
   ScrollView,
   Animated,
 } from 'react-native'
+import Text from 'components/Text'
 import Hours from 'components/Hours'
 import Rating from 'components/Rating'
 import MapView, { Marker } from 'react-native-maps'

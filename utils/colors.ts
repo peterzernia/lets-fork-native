@@ -6,7 +6,8 @@ export default {
   blue: '#5c80bc',
   lightblue: '#BFFFF1',
   green: '#629460',
+  persianGreen: '#18A999',
   orange: '#FF9F1C',
-  purple: '#A470CF',
+  purple: '#957FEF',
   yelpRed: '#D32323',
 }

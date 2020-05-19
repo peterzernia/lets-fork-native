@@ -1,8 +1,9 @@
 
 import React from 'react'
 import {
-  View, StyleSheet, Dimensions, Text,
+  View, StyleSheet, Dimensions,
 } from 'react-native'
+import Text from 'components/Text'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import { StackNavigationProp, useHeaderHeight } from '@react-navigation/stack'
 import Button from 'components/Button'
@@ -45,8 +46,8 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
     >
       <Text style={styles.text}>Please enter the code</Text>
       <Input value={value} handleChange={setValue} keyboardType="phone-pad" />
-      <Button onPress={(): void => handleJoin()}>
-        Join
+      <Button size="sm" color="purple" onPress={(): void => handleJoin()}>
+        JOIN
       </Button>
     </View>
   )

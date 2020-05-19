@@ -1,10 +1,12 @@
 import React from 'react'
 import {
-  StyleSheet, View, Text, ImageBackground, TouchableOpacity, Platform,
+  StyleSheet, View,
 } from 'react-native'
+import Text from 'components/Text'
+import Button from 'components/Button'
 import { StackNavigationProp } from '@react-navigation/stack'
-import homeImage from 'assets/home.jpg'
 import colors from 'utils/colors'
+import { MaterialIcons } from '@expo/vector-icons'
 
 type StackParamList = {
   Create: undefined;
@@ -26,54 +28,50 @@ const HomeScreen = React.memo((props: Props): React.ReactElement => {
   const { navigation } = props
 
   return (
-    <ImageBackground style={styles.container} source={homeImage}>
-      <Text style={styles.header}>Let&apos;s Fork</Text>
-      <View style={styles.buttons}>
-        <TouchableOpacity
+    <View style={styles.container}>
+      <View style={styles.headerContainer}>
+        <MaterialIcons style={styles.icon} name="restaurant" color={colors.white} size={42} />
+        <Text style={styles.header}>Let&apos;s Fork</Text>
+      </View>
+      <View>
+        <Button
+          color="white"
+          size="lg"
           onPress={(): void => navigation.navigate('Create')}
         >
-          <Text style={styles.button}>
-            Create
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+          CREATE A PARTY
+        </Button>
+        <Button
+          color="white"
+          size="lg"
           onPress={(): void => navigation.navigate('Join')}
         >
-          <Text style={styles.button}>
-            Join
-          </Text>
-        </TouchableOpacity>
+          JOIN A PARTY
+        </Button>
       </View>
-    </ImageBackground>
+    </View>
   )
 })
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.purple,
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 32,
-    paddingBottom: 32,
+    paddingTop: 140,
+    paddingBottom: 64,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+  },
+  icon: {
+    paddingTop: 11,
+    paddingRight: 8,
   },
   header: {
-    marginTop: 96,
     color: colors.white,
     fontSize: 48,
-    fontWeight: 'bold',
-    fontFamily: Platform.OS === 'android' ? 'serif' : 'Georgia',
-  },
-  buttons: {
-    paddingTop: 32,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-  },
-  button: {
-    color: colors.white,
-    fontSize: 28,
-    fontFamily: Platform.OS === 'android' ? 'serif' : 'Georgia',
   },
 })
 

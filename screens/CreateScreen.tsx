@@ -5,9 +5,9 @@ import {
   StyleSheet,
   Dimensions,
   Slider,
-  Text,
   ScrollView,
 } from 'react-native'
+import Text from 'components/Text'
 import ReconnectingWebSocket from 'reconnecting-websocket'
 import { StackNavigationProp } from '@react-navigation/stack'
 import MapView, { Circle } from 'react-native-maps'
@@ -109,8 +109,8 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
         <Price selected={price} setSelected={setPrice} n={4}>{symbol}</Price>
       </View>
       <View style={styles.button}>
-        <Button onPress={(): void => handleCreate()}>
-          Create
+        <Button color="purple" size="sm" onPress={(): void => handleCreate()}>
+          CREATE
         </Button>
       </View>
     </ScrollView>

@@ -1,7 +1,8 @@
 import React from 'react'
 import {
-  Image, View, Text, StyleSheet, ScrollView, TouchableOpacity,
+  Image, View, StyleSheet, ScrollView, TouchableOpacity,
 } from 'react-native'
+import Text from 'components/Text'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { Party, Restaurant } from 'types'
 

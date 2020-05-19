@@ -958,6 +958,11 @@
   dependencies:
     "@types/hammerjs" "^2.0.36"
 
+"@expo-google-fonts/varela-round@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/varela-round/-/varela-round-0.1.0.tgz#1bb621171a22c6c59fcdbb274fbecbe373dd3d45"
+  integrity sha512-dxk9kErWKEKH8ZQrY45tbm1ff2ZLkf7X3nIVRT50X27I2ytF5txWKohoiHwHYQwRt+ER2ceo4hkmD3xBQzfRlg==
+
 "@expo/vector-icons@^10.0.2", "@expo/vector-icons@^10.1.0":
   version "10.2.0"
   resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-10.2.0.tgz#3c70656683a6a873e18efc00bc61fc160a80dc55"

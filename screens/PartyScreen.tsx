@@ -4,7 +4,6 @@ import {
   Alert,
   BackHandler,
   View,
-  Text,
   SafeAreaView,
   StyleSheet,
   Dimensions,
@@ -15,6 +14,7 @@ import {
   Platform,
   Image,
 } from 'react-native'
+import Text from 'components/Text'
 import ReconnectingWebsocket from 'reconnecting-websocket'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp, useHeaderHeight } from '@react-navigation/stack'
@@ -160,10 +160,13 @@ const PartyScreen = React.memo((props: Props) => {
           No more restaurants.
           Go through the list again or try expanding your search range.
         </Text>
-        <Button onPress={(): void => {
-          setFinished(false)
-          setRestaurants(party?.restaurants)
-        }}
+        <Button
+          size="sm"
+          color="green"
+          onPress={(): void => {
+            setFinished(false)
+            setRestaurants(party?.restaurants)
+          }}
         >
           Start Over
         </Button>
