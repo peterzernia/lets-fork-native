@@ -80,7 +80,7 @@ const PartyScreen = React.memo((props: Props) => {
     if (restaurants && restaurants?.length === 3) {
       ws.send(JSON.stringify({ type: 'request-more' }))
     }
-  }, [restaurants, ws])
+  }, [restaurants, restaurants?.length, ws])
 
   // When anyone requests more cards, they are set in current
   // and this useEffect loads the new cards into the restaurants array
@@ -162,13 +162,13 @@ const PartyScreen = React.memo((props: Props) => {
         </Text>
         <Button
           size="sm"
-          color="green"
+          color="purple"
           onPress={(): void => {
             setFinished(false)
             setRestaurants(party?.restaurants)
           }}
         >
-          Start Over
+          START OVER
         </Button>
       </View>
     )
@@ -198,7 +198,7 @@ const PartyScreen = React.memo((props: Props) => {
         }}
       >
         {
-          Platform.OS === 'ios' ? (
+          Platform.OS === 'ios' && restaurants?.length && restaurants?.length > 1 ? (
             <Image
               // this is a workaround: on ios switching between the
               // SwipeWindow and Details causes a white flash, but
