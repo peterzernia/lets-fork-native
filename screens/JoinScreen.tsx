@@ -38,20 +38,19 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
   }
 
   return (
-    <View
+    <KeyboardAvoidingView
+      behavior="height"
       style={{
         ...styles.container,
         height: height - headerHeight,
       }}
     >
-      <KeyboardAvoidingView behavior="padding" style={styles.container}>
-        <Text style={styles.text}>Please enter the party code</Text>
-        <Input value={value} handleChange={setValue} keyboardType="phone-pad" />
-        <Button size="sm" color="purple" onPress={(): void => handleJoin()}>
-          JOIN
-        </Button>
-      </KeyboardAvoidingView>
-    </View>
+      <Text style={styles.text}>Please enter the party code</Text>
+      <Input value={value} handleChange={setValue} keyboardType="phone-pad" />
+      <Button size="sm" color="purple" onPress={(): void => handleJoin()}>
+        JOIN
+      </Button>
+    </KeyboardAvoidingView>
   )
 })
 
