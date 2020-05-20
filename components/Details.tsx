@@ -112,10 +112,10 @@ export default function Details(props: Props): React.ReactElement {
         {images}
       </ScrollView>
       <View>
-        <Text style={styles.text}>{restaurant.name}</Text>
+        <Text style={[styles.text, styles.name]}>{restaurant.name}</Text>
         <View style={styles.rating}>
           <Rating rating={restaurant.rating} size="sm" />
-          <Text style={styles.text}>{`•   ${restaurant.review_count} reviews on Yelp`}</Text>
+          <Text style={styles.text}>{`•   ${restaurant.review_count} reviews`}</Text>
         </View>
         <Text
           style={styles.text}
@@ -210,6 +210,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     height: 80,
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: 'normal',
   },
   text: {
     fontWeight: 'bold',
