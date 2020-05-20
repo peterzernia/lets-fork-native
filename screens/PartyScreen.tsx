@@ -57,6 +57,8 @@ const PartyScreen = React.memo((props: Props) => {
   const headerHeight = useHeaderHeight()
   const viewHeight = env.ADS ? height - headerHeight - 50 : height - headerHeight
 
+  const ref = React.useRef<ScrollView>(null)
+
   if (party?.error) {
     Alert.alert(
       'Yike! Something went wrong',
@@ -192,6 +194,7 @@ const PartyScreen = React.memo((props: Props) => {
       <ScrollView
         alwaysBounceVertical={false}
         scrollEventThrottle={50}
+        ref={ref}
         onScroll={(e): void => {
           if (e.nativeEvent.contentOffset.y === 0) {
             setDetails(undefined)
@@ -221,7 +224,14 @@ const PartyScreen = React.memo((props: Props) => {
           ? (
             <Details
               restaurant={details}
-              setDetails={setDetails}
+              onPress={(): void => {
+                if (ref?.current?.scrollTo) {
+                  setDetails(undefined)
+                  // there is a bug with the first scroll overscrolling
+                  ref.current.scrollTo({ x: 0, y: 0, animated: false })
+                  ref.current.scrollTo({ x: 0, y: 0, animated: false })
+                }
+              }}
             />
           ) : null}
         <View style={{ height: details ? 0 : viewHeight }}>

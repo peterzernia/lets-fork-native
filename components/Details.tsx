@@ -24,14 +24,14 @@ import env from 'env'
 
 type Props = {
   restaurant: Restaurant;
-  setDetails?: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
+  onPress: () => void;
 }
 
 const { width, height } = Dimensions.get('window')
 
 export default function Details(props: Props): React.ReactElement {
   const headerHeight = useHeaderHeight()
-  const { restaurant: defaultRestaurant, setDetails } = props
+  const { restaurant: defaultRestaurant, onPress } = props
   const [restaurant, setRestaurant] = React.useState(defaultRestaurant)
 
   React.useEffect(() => {
@@ -59,7 +59,7 @@ export default function Details(props: Props): React.ReactElement {
       key={restaurant.image_url}
       activeOpacity={1}
       onPress={(): void => {
-        if (setDetails) setDetails(undefined)
+        onPress()
       }}
     >
       <Image
