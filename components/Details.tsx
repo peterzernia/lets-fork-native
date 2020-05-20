@@ -80,7 +80,7 @@ export default function Details(props: Props): React.ReactElement {
             key={url}
             activeOpacity={1}
             onPress={(): void => {
-              if (setDetails) setDetails(undefined)
+              onPress()
             }}
           >
             <Image
@@ -100,6 +100,7 @@ export default function Details(props: Props): React.ReactElement {
     <View>
       <ScrollView
         horizontal
+        alwaysBounceHorizontal={false}
         showsHorizontalScrollIndicator
         scrollEventThrottle={10}
         pagingEnabled
@@ -179,7 +180,11 @@ export default function Details(props: Props): React.ReactElement {
           <MaterialIcons name="directions" size={32} />
         </View>
       </TouchableOpacity>
-      <Hours hours={restaurant.hours} />
+      {
+        restaurant.hours
+          ? <Hours hours={restaurant.hours} />
+          : null
+      }
     </View>
   )
 }
