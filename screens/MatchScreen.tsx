@@ -1,9 +1,9 @@
 import React from 'react'
 import {
-  Image, View, StyleSheet, ScrollView, TouchableOpacity,
+  Image, View, StyleSheet, ScrollView, TouchableOpacity, Dimensions,
 } from 'react-native'
 import Text from 'components/Text'
-import { StackNavigationProp } from '@react-navigation/stack'
+import { StackNavigationProp, useHeaderHeight } from '@react-navigation/stack'
 import { Party, Restaurant } from 'types'
 
 type StackParamList = {
@@ -25,14 +25,22 @@ type Props = {
   party?: Party;
 }
 
+const { height } = Dimensions.get('screen')
+
 const MatchScreen = React.memo((props: Props) => {
   const { navigation, party } = props
+  const headerHeight = useHeaderHeight()
 
   if (!party?.matches) {
     return (
-      <View style={styles.container}>
-        <Text>No matches yet</Text>
-        <Text>Keep swiping!</Text>
+      <View
+        style={{
+          ...styles.container,
+          height: height - headerHeight - 108,
+        }}
+      >
+        <Text style={styles.text}>No matches yet</Text>
+        <Text style={styles.text}>Keep swiping!</Text>
       </View>
     )
   }
@@ -67,7 +75,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 8,
+  },
+  text: {
+    fontWeight: 'bold',
   },
   scrollView: {
     margin: 8,
