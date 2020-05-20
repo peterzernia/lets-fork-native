@@ -9,5 +9,6 @@ export default {
   persianGreen: '#18A999',
   orange: '#FF9F1C',
   purple: '#957FEF',
+  red: '#D00000',
   yelpRed: '#D32323',
 }

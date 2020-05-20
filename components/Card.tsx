@@ -3,7 +3,7 @@ import {
   Image, StyleSheet, View, Text, TouchableOpacity,
 } from 'react-native'
 import Animated from 'react-native-reanimated'
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
 import Rating from 'components/Rating'
 import { Restaurant } from 'types'
 import colors from 'utils/colors'
@@ -12,12 +12,14 @@ type Props = {
   loading?: boolean; // When loading, top card's image is not rendered
   restaurant: Restaurant;
   setDetails: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
+  leftOpacity: Animated.Node<number> | number;
+  rightOpacity: Animated.Node<number> | number;
   textOpacity: Animated.Node<number> | number;
 };
 
 export default function Card(props: Props): React.ReactElement {
   const {
-    loading, restaurant, setDetails, textOpacity,
+    loading, restaurant, setDetails, textOpacity, leftOpacity, rightOpacity,
   } = props
 
   return (
@@ -30,6 +32,14 @@ export default function Card(props: Props): React.ReactElement {
         ? <Image style={styles.image} source={{ uri: restaurant.image_url, cache: 'force-cache' }} />
         : null}
       <View style={styles.overlay}>
+        <View style={styles.header}>
+          <Animated.View style={{ opacity: leftOpacity }}>
+            <MaterialIcons name="favorite" color={colors.red} size={64} />
+          </Animated.View>
+          <Animated.View style={{ opacity: rightOpacity }}>
+            <MaterialIcons name="close" color={colors.red} size={64} />
+          </Animated.View>
+        </View>
         <View>
           <Animated.View style={{ opacity: textOpacity }}>
             <Text style={styles.name}>{restaurant.name}</Text>
@@ -59,8 +69,12 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     padding: 16,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   name: {
     color: 'white',

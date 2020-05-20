@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  StyleSheet, View, Text,
+  StyleSheet, View, Text, Platform,
 } from 'react-native'
 import Button from 'components/Button'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   icon: {
-    paddingTop: 11,
+    paddingTop: Platform.OS === 'ios' ? 7 : 11,
     paddingRight: 8,
   },
   header: {

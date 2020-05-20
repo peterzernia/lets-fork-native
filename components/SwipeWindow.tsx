@@ -208,6 +208,16 @@ export default class SwipeWindow extends SW {
     const { loading } = this.state
     const [lastRestaurant, ...rest] = restaurants
 
+    const leftOpacity = interpolate(translateX, {
+      inputRange: [0, width / 3],
+      outputRange: [0, 1],
+    })
+
+    const rightOpacity = interpolate(translateX, {
+      inputRange: [-width / 3, 0],
+      outputRange: [1, 0],
+    })
+
     // Workaround to prevent text from flashing on ios.
     // There is a moment where the image is fetched and isn't rendered.
     // The ios workaround on Party Screen renders the image, but this causes
@@ -255,6 +265,8 @@ export default class SwipeWindow extends SW {
             ? (
               <Card
                 textOpacity={textOpacity}
+                rightOpacity={0}
+                leftOpacity={0}
                 restaurant={rest[0]}
                 setDetails={setDetails}
               />
@@ -269,6 +281,8 @@ export default class SwipeWindow extends SW {
               <Animated.View style={style}>
                 <Card
                   textOpacity={1}
+                  rightOpacity={rightOpacity}
+                  leftOpacity={leftOpacity}
                   loading={loading}
                   restaurant={lastRestaurant}
                   setDetails={setDetails}
