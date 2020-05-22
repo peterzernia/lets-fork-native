@@ -1,7 +1,7 @@
 
 import React from 'react'
 import {
-  View, StyleSheet, Dimensions, KeyboardAvoidingView,
+  Keyboard, StyleSheet, Dimensions, KeyboardAvoidingView,
 } from 'react-native'
 import Text from 'components/Text'
 import ReconnectingWebSocket from 'reconnecting-websocket'
@@ -35,6 +35,7 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
   const handleJoin = (): void => {
     ws.send(JSON.stringify({ type: 'join', payload: { party_id: value } }))
     navigation.navigate('Party')
+    Keyboard.dismiss()
   }
 
   return (

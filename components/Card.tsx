@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {
-  Image, StyleSheet, View, Text, TouchableOpacity,
+  Image, StyleSheet, View, Text,
 } from 'react-native'
 import Animated from 'react-native-reanimated'
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons'
@@ -11,7 +11,6 @@ import colors from 'utils/colors'
 type Props = {
   loading?: boolean; // When loading, top card's image is not rendered
   restaurant: Restaurant;
-  setDetails: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
   leftOpacity: Animated.Node<number> | number;
   rightOpacity: Animated.Node<number> | number;
   textOpacity: Animated.Node<number> | number;
@@ -19,15 +18,11 @@ type Props = {
 
 export default function Card(props: Props): React.ReactElement {
   const {
-    loading, restaurant, setDetails, textOpacity, leftOpacity, rightOpacity,
+    loading, restaurant, textOpacity, leftOpacity, rightOpacity,
   } = props
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      style={styles.container}
-      onPress={(): void => setDetails(restaurant)}
-    >
+    <View style={styles.container}>
       { !loading
         ? <Image style={styles.image} source={{ uri: restaurant.image_url, cache: 'force-cache' }} />
         : null}
@@ -50,7 +45,7 @@ export default function Card(props: Props): React.ReactElement {
           </View>
         </View>
       </View>
-    </TouchableOpacity>
+    </View>
   )
 }
 
@@ -60,6 +55,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 9,
+    zIndex: 10,
   },
   image: {
     ...StyleSheet.absoluteFillObject,

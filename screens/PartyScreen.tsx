@@ -7,20 +7,20 @@ import {
   SafeAreaView,
   StyleSheet,
   Dimensions,
-  ScrollView,
   TouchableOpacity,
   Share,
   ShareAction,
   Platform,
-  Image,
 } from 'react-native'
 import Text from 'components/Text'
 import ReconnectingWebsocket from 'reconnecting-websocket'
 import { useFocusEffect } from '@react-navigation/native'
 import { StackNavigationProp, useHeaderHeight } from '@react-navigation/stack'
+import ScrollBottomSheet from 'react-native-scroll-bottom-sheet'
 import { Party, Restaurant } from 'types'
 import SwipeWindow from 'components/SwipeWindow'
 import Details from 'components/Details'
+import Handle from 'components/Handle'
 import { MaterialIcons, Ionicons } from '@expo/vector-icons'
 import { usePrevious } from 'utils/hooks'
 import Button from 'components/Button'
@@ -53,11 +53,8 @@ const PartyScreen = React.memo((props: Props) => {
   } = props
   const [finished, setFinished] = React.useState<boolean>(false)
   const [restaurants, setRestaurants] = React.useState<Restaurant[]>()
-  const [details, setDetails] = React.useState<Restaurant | undefined>()
   const headerHeight = useHeaderHeight()
   const viewHeight = env.ADS ? height - headerHeight - 50 : height - headerHeight
-
-  const ref = React.useRef<ScrollView>(null)
 
   if (party?.error) {
     Alert.alert(
@@ -189,62 +186,27 @@ const PartyScreen = React.memo((props: Props) => {
     )
   }
 
+  const current = restaurants?.length
+    ? restaurants[0] : party.restaurants[0]
+
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView
-        alwaysBounceVertical={false}
-        scrollEventThrottle={50}
-        ref={ref}
-        onScroll={(e): void => {
-          if (e.nativeEvent.contentOffset.y === 0) {
-            setDetails(undefined)
-          }
-        }}
+      <View style={{ height: viewHeight, zIndex: 0 }}>
+        <SwipeWindow
+          handleSwipeRight={handleSwipeRight}
+          restaurants={restaurants || party.restaurants}
+          setFinished={setFinished}
+          setRestaurants={setRestaurants}
+        />
+      </View>
+      <ScrollBottomSheet
+        componentType="ScrollView"
+        snapPoints={[150, 150, viewHeight - 50]}
+        initialSnapIndex={2}
+        renderHandle={(): React.ReactElement => <Handle />}
       >
-        {
-          Platform.OS === 'ios' && restaurants?.length && restaurants?.length > 1 ? (
-            <Image
-              // this is a workaround: on ios switching between the
-              // SwipeWindow and Details causes a white flash, but
-              // having the same image rendered behind makes the
-              // flash not noticeable
-              style={{
-                ...styles.placeholder,
-                height: viewHeight - 16,
-              }}
-              source={{
-                uri: restaurants?.length
-                  ? restaurants[0].image_url
-                  : party.restaurants[0].image_url,
-              }}
-            />
-          ) : null
-        }
-        { details
-          ? (
-            <Details
-              restaurant={details}
-              onPress={(): void => {
-                if (ref?.current?.scrollTo) {
-                  setDetails(undefined)
-                  // there is a bug with the first scroll overscrolling
-                  ref.current.scrollTo({ x: 0, y: 0, animated: false })
-                  ref.current.scrollTo({ x: 0, y: 0, animated: false })
-                }
-              }}
-            />
-          ) : null}
-        <View style={{ height: details ? 0 : viewHeight }}>
-          <SwipeWindow
-            handleSwipeRight={handleSwipeRight}
-            restaurants={restaurants || party.restaurants}
-            setDetails={setDetails}
-            setFinished={setFinished}
-            setRestaurants={setRestaurants}
-            visible={!details}
-          />
-        </View>
-      </ScrollView>
+        <Details restaurant={current} />
+      </ScrollBottomSheet>
     </SafeAreaView>
   )
 })

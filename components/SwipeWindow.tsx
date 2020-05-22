@@ -72,10 +72,8 @@ const {
 type Props = {
   handleSwipeRight: (id: string) => void;
   restaurants: Restaurant[];
-  setDetails: React.Dispatch<React.SetStateAction<Restaurant | undefined>>;
   setFinished: React.Dispatch<React.SetStateAction<boolean>>;
   setRestaurants: React.Dispatch<React.SetStateAction<Restaurant[] | undefined>>;
-  visible: boolean;
 }
 
 type Sta = {
@@ -204,7 +202,7 @@ export default class SwipeWindow extends SW {
 
   render(): React.ReactElement {
     const { onGestureEvent, translateX, translateY } = this
-    const { restaurants, setDetails, visible } = this.props
+    const { restaurants } = this.props
     const { loading } = this.state
     const [lastRestaurant, ...rest] = restaurants
 
@@ -256,8 +254,6 @@ export default class SwipeWindow extends SW {
       ],
     }
 
-    if (!visible) return <View style={styles.hidden} />
-
     return (
       <View style={styles.cards}>
         {
@@ -268,7 +264,6 @@ export default class SwipeWindow extends SW {
                 rightOpacity={0}
                 leftOpacity={0}
                 restaurant={rest[0]}
-                setDetails={setDetails}
               />
             ) : null
         }
@@ -285,7 +280,6 @@ export default class SwipeWindow extends SW {
                   leftOpacity={leftOpacity}
                   loading={loading}
                   restaurant={lastRestaurant}
-                  setDetails={setDetails}
                 />
               </Animated.View>
             </PanGestureHandler>
@@ -300,7 +294,7 @@ const styles = StyleSheet.create({
   cards: {
     flex: 1,
     margin: 8,
-    zIndex: 100,
+    marginBottom: 58,
   },
   hidden: {
     height: 0,

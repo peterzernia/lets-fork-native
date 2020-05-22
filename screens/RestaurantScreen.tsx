@@ -33,7 +33,10 @@ const RestaurantScreen = React.memo((props: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <Details restaurant={restaurant} />
+        <Details
+          photos
+          restaurant={restaurant}
+        />
       </ScrollView>
     </SafeAreaView>
   )

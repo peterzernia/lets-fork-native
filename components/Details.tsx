@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   View,
-  TouchableOpacity,
   StyleSheet,
   Linking,
   Dimensions,
@@ -10,6 +9,7 @@ import {
   ScrollView,
   Animated,
 } from 'react-native'
+import TouchableOpacity from 'components/BottomSheetTouchable'
 import Text from 'components/Text'
 import Hours from 'components/Hours'
 import Rating from 'components/Rating'
@@ -24,94 +24,91 @@ import env from 'env'
 
 type Props = {
   restaurant: Restaurant;
-  onPress: () => void;
+  photos?: boolean;
 }
 
 const { width, height } = Dimensions.get('window')
 
 export default function Details(props: Props): React.ReactElement {
   const headerHeight = useHeaderHeight()
-  const { restaurant: defaultRestaurant, onPress } = props
+  const { restaurant: defaultRestaurant, photos } = props
   const [restaurant, setRestaurant] = React.useState(defaultRestaurant)
 
   React.useEffect(() => {
     const fetchData = async (): Promise<void> => {
-      try {
-        const rest = await getRestaurant(restaurant.id)
-        setRestaurant({
-          ...restaurant,
-          ...rest,
-        })
-      } catch (err) {
-        console.log(err)
+      // More details about the restaurant can be fetched from
+      // the server. This can be triggered off a feature flag in the future.
+      // For the time being this saves on api requests to yelp.
+      if (false) { // eslint-disable-line
+        try {
+          const rest = await getRestaurant(defaultRestaurant.id)
+          setRestaurant({
+            ...rest,
+            ...defaultRestaurant,
+          })
+        } catch (err) {
+          console.log(err)
+        }
+      } else {
+        setRestaurant(defaultRestaurant)
       }
     }
 
     fetchData()
-  }, []) // eslint-disable-line
+  }, [defaultRestaurant])
 
   const imageHeight = env.ADS
     ? height - headerHeight - 50
     : height - headerHeight
 
   const images = [(
-    <TouchableOpacity
+    <Image
       key={restaurant.image_url}
-      activeOpacity={1}
-      onPress={(): void => {
-        onPress()
+      style={{
+        ...styles.image,
+        height: imageHeight,
       }}
-    >
-      <Image
-        style={{
-          ...styles.image,
-          height: imageHeight,
-        }}
-        source={{ uri: restaurant.image_url, cache: 'force-cache' }}
-      />
-    </TouchableOpacity>
+      source={{ uri: restaurant.image_url, cache: 'force-cache' }}
+    />
   )]
 
   if (restaurant.photos?.length) {
     restaurant.photos.forEach((url) => {
       if (url !== restaurant.image_url) {
         images.push(
-          <TouchableOpacity
+          <Image
             key={url}
-            activeOpacity={1}
-            onPress={(): void => {
-              onPress()
+            style={{
+              ...styles.image,
+              height: imageHeight,
             }}
-          >
-            <Image
-              style={{
-                ...styles.image,
-                height: imageHeight,
-              }}
-              source={{ uri: url, cache: 'force-cache' }}
-            />
-          </TouchableOpacity>,
+            source={{ uri: url, cache: 'force-cache' }}
+          />,
         )
       }
     })
   }
 
   return (
-    <View>
-      <ScrollView
-        horizontal
-        alwaysBounceHorizontal={false}
-        showsHorizontalScrollIndicator
-        scrollEventThrottle={10}
-        pagingEnabled
-        onScroll={
-          Animated.event(
-            [{ nativeEvent: { contentOffset: { x: new Animated.Value(0) } } }],
-          )
-        }
-      >
-        {images}
-      </ScrollView>
+    <View style={styles.container}>
+      {
+        photos ? (
+          <ScrollView
+            horizontal
+            alwaysBounceHorizontal={false}
+            showsHorizontalScrollIndicator
+            scrollEventThrottle={10}
+            pagingEnabled
+            onScroll={
+              Animated.event(
+                [{ nativeEvent: { contentOffset: { x: new Animated.Value(0) } } }],
+              )
+            }
+          >
+            {images}
+          </ScrollView>
+        ) : null
+      }
       <View>
         <Text style={[styles.text, styles.name]}>{restaurant.name}</Text>
         <View style={styles.rating}>
@@ -143,7 +140,7 @@ export default function Details(props: Props): React.ReactElement {
           ? (
             <View style={styles.mapContainer}>
               <MapView
-                initialRegion={{
+                region={{
                   latitude: restaurant.coordinates.latitude,
                   longitude: restaurant.coordinates.longitude,
                   latitudeDelta: 0.005,
@@ -190,6 +187,9 @@ export default function Details(props: Props): React.ReactElement {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: colors.white,
+  },
   image: {
     width,
     resizeMode: 'cover',
