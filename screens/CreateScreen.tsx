@@ -36,10 +36,46 @@ type Props = {
 
 const { width } = Dimensions.get('window')
 
+const UNITS = {
+  minimumValue: {
+    metric: 500,
+    imperial: 804,
+  },
+  maximumValue: {
+    metric: 10000,
+    imperial: 9648,
+  },
+  step: {
+    metric: 500,
+    imperial: 804,
+  },
+  // conversion from meters to km or mi
+  conversion: {
+    metric: 1000,
+    imperial: 1609.344,
+  },
+  initialRadius: {
+    metric: 2000,
+    imperial: 2412,
+  },
+  units: {
+    metric: 'km',
+    imperial: 'mi',
+  },
+}
+
 const JoinScreen = React.memo((props: Props): React.ReactElement => {
+  const locale = getLocale()
+  const countries = ['LR', 'MM', 'US']
+  const system = countries.includes(locale.substring(3)) ? 'imperial' : 'metric'
+
+  const units = UNITS.units[system]
+  const conversion = UNITS.conversion[system]
+  const symbol = currencies[locale.substring(3)] || '$'
+
   const { location, navigation, ws } = props
   const [price, setPrice] = React.useState([false, false, false, false])
-  const [radius, setRadius] = React.useState(2000)
+  const [radius, setRadius] = React.useState(UNITS.initialRadius[system])
   const [region, setRegion] = React.useState({
     latitude: location?.coords?.latitude || 52.520008,
     longitude: location?.coords?.longitude || 13.404954,
@@ -66,14 +102,6 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
     navigation.navigate('Party')
   }
 
-  const locale = getLocale()
-  const countries = ['LR', 'MM', 'US']
-  const units = countries.includes(locale.substring(3)) ? 'mi' : 'km'
-  // m converted to mi or km
-  const conversion = countries.includes(locale.substring(3)) ? 1609.344 : 1000
-
-  const symbol = currencies[locale.substring(3)] || '$'
-
   return (
     <ScrollView>
       <MapView
@@ -94,13 +122,13 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
       </Text>
       <Slider
         style={styles.slider}
-        minimumValue={500}
-        maximumValue={10000}
+        minimumValue={UNITS.minimumValue[system]}
+        maximumValue={UNITS.maximumValue[system]}
         minimumTrackTintColor={colors.green}
         maximumTrackTintColor={colors.green}
         value={radius}
         onValueChange={setRadius}
-        step={500}
+        step={UNITS.step[system]}
       />
       <View style={styles.price}>
         <Price selected={price} setSelected={setPrice} n={1}>{symbol}</Price>
