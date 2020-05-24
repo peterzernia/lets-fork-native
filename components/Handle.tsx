@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import colors from 'utils/colors'
+import { BOTTOM_BAR_HEIGHT } from 'utils/constants'
 
 export default function Handle(): React.ReactElement {
   return (
@@ -14,7 +15,7 @@ const styles = StyleSheet.create({
   handle: {
     backgroundColor: colors.white,
     borderBottomWidth: 0.1,
-    height: 50,
+    height: BOTTOM_BAR_HEIGHT,
     flexDirection: 'row',
     justifyContent: 'center',
     borderTopLeftRadius: 20,

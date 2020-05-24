@@ -6,6 +6,7 @@ import { PanGestureHandler, State } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated'
 import { Restaurant } from 'types'
 import Card from 'components/Card'
+import { BOTTOM_BAR_HEIGHT } from 'utils/constants'
 
 const runSpring = (
   clock: Animated.Clock,
@@ -294,7 +295,7 @@ const styles = StyleSheet.create({
   cards: {
     flex: 1,
     margin: 8,
-    marginBottom: 58,
+    marginBottom: BOTTOM_BAR_HEIGHT + 8,
   },
   hidden: {
     height: 0,

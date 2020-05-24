@@ -26,6 +26,7 @@ import { usePrevious } from 'utils/hooks'
 import Button from 'components/Button'
 import env from 'env'
 import colors from 'utils/colors'
+import { BOTTOM_BAR_HEIGHT } from 'utils/constants'
 
 type StackParamList = {
   Home: undefined;
@@ -201,7 +202,7 @@ const PartyScreen = React.memo((props: Props) => {
       </View>
       <ScrollBottomSheet
         componentType="ScrollView"
-        snapPoints={[150, 150, viewHeight - 50]}
+        snapPoints={[150, 150, viewHeight - BOTTOM_BAR_HEIGHT]}
         initialSnapIndex={2}
         renderHandle={(): React.ReactElement => <Handle />}
       >
