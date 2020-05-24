@@ -33,9 +33,11 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
 
   // joins an existing party
   const handleJoin = (): void => {
-    ws.send(JSON.stringify({ type: 'join', payload: { party_id: value } }))
-    navigation.navigate('Party')
-    Keyboard.dismiss()
+    if (value) {
+      ws.send(JSON.stringify({ type: 'join', payload: { party_id: value } }))
+      navigation.navigate('Party')
+      Keyboard.dismiss()
+    }
   }
 
   return (
