@@ -149,7 +149,7 @@ export default function Details(props: Props): React.ReactElement {
                 style={styles.map}
                 rotateEnabled={false}
                 scrollEnabled={false}
-                zoomEnabled
+                zoomEnabled={false}
               >
                 <Marker
                   coordinate={{
