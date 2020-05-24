@@ -29,7 +29,7 @@ const HomeScreen = React.memo((props: Props): React.ReactElement => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <MaterialIcons style={styles.icon} name="restaurant" color={colors.white} size={42} />
+        <MaterialIcons style={styles.icon} name="restaurant" color={colors.white} size={40} />
         <Text style={styles.header}>Let&apos;s Fork</Text>
       </View>
       <View>
@@ -63,15 +63,16 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   icon: {
-    paddingTop: Platform.OS === 'ios' ? 7 : 11,
     paddingRight: 8,
   },
   header: {
     color: colors.white,
     fontSize: 48,
     fontFamily: 'VarelaRound_400Regular',
+    paddingTop: Platform.OS === 'ios' ? 4 : 0,
   },
 })
 
