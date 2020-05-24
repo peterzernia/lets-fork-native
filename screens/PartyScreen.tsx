@@ -52,6 +52,7 @@ const PartyScreen = React.memo((props: Props) => {
   const {
     navigation, party, setParty, ws,
   } = props
+  const [snapIndex, setSnapIndex] = React.useState(2)
   const [finished, setFinished] = React.useState<boolean>(false)
   const [restaurants, setRestaurants] = React.useState<Restaurant[]>()
   const headerHeight = useHeaderHeight()
@@ -192,7 +193,11 @@ const PartyScreen = React.memo((props: Props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ height: viewHeight, zIndex: 0 }}>
+      <View
+        // disable swiping while BottomSheet is open
+        pointerEvents={snapIndex !== 2 ? 'none' : 'auto'}
+        style={{ height: viewHeight, zIndex: 0 }}
+      >
         <SwipeWindow
           handleSwipeRight={handleSwipeRight}
           restaurants={restaurants || party.restaurants}
@@ -202,9 +207,14 @@ const PartyScreen = React.memo((props: Props) => {
       </View>
       <ScrollBottomSheet
         componentType="ScrollView"
-        snapPoints={[150, 150, viewHeight - BOTTOM_BAR_HEIGHT]}
+        contentContainerStyle={styles.scrollBottomSheet}
+        snapPoints={[100, 100, viewHeight - BOTTOM_BAR_HEIGHT]}
         initialSnapIndex={2}
+        onSettle={setSnapIndex}
         renderHandle={(): React.ReactElement => <Handle />}
+        animationConfig={{
+          duration: 100,
+        }}
       >
         <Details restaurant={current} />
       </ScrollBottomSheet>
@@ -242,5 +252,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderColor: colors.black,
     borderWidth: 1,
+  },
+  scrollBottomSheet: {
+    backgroundColor: colors.white,
+    borderColor: 'red',
   },
 })
