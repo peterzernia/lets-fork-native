@@ -90,7 +90,12 @@ export default function Details(props: Props): React.ReactElement {
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        minHeight: (height - headerHeight) * 0.8,
+      }}
+    >
       {
         photos ? (
           <ScrollView
@@ -162,20 +167,20 @@ export default function Details(props: Props): React.ReactElement {
             </View>
           ) : null
       }
-      <TouchableOpacity onPress={(): void => {
-        const url = Platform.select({
-          ios: `maps:0,0?q=${restaurant.coordinates.latitude},${restaurant.coordinates.longitude}`,
-          android: `geo:0,0?q=${restaurant.coordinates.latitude},${restaurant.coordinates.longitude}`,
-        })
-        if (url) {
-          Linking.openURL(url)
-        }
-      }}
+      <TouchableOpacity
+        style={styles.section}
+        onPress={(): void => {
+          const url = Platform.select({
+            ios: `maps:0,0?q=${restaurant.coordinates.latitude},${restaurant.coordinates.longitude}`,
+            android: `geo:0,0?q=${restaurant.coordinates.latitude},${restaurant.coordinates.longitude}`,
+          })
+          if (url) {
+            Linking.openURL(url)
+          }
+        }}
       >
-        <View style={styles.section}>
-          <Text style={styles.directionText}>Get Directions</Text>
-          <MaterialIcons name="directions" size={32} />
-        </View>
+        <Text style={styles.directionText}>Get Directions</Text>
+        <MaterialIcons name="directions" size={32} />
       </TouchableOpacity>
       {
         restaurant.hours
@@ -204,6 +209,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    maxHeight: 200,
   },
   map: {
     height: 200,
@@ -215,6 +221,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     height: 80,
+    maxHeight: 80,
   },
   name: {
     fontSize: 24,
