@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Alert, TouchableOpacity, StyleSheet, Platform, View,
+  Alert, TouchableOpacity, StyleSheet,
 } from 'react-native'
 import Text from 'components/Text'
 import ReconnectingWebSocket from 'reconnecting-websocket'
@@ -15,7 +15,6 @@ import MatchScreen from 'screens/MatchScreen'
 import PartyScreen from 'screens/PartyScreen'
 import RestaurantScreen from 'screens/RestaurantScreen'
 import * as Location from 'expo-location'
-import { AdMobBanner, setTestDeviceIDAsync } from 'expo-ads-admob'
 import Constants from 'expo-constants'
 import { AppLoading } from 'expo'
 import colors from 'utils/colors'
@@ -77,10 +76,6 @@ export default function App(): React.ReactElement {
 
     const loc = await Location.getCurrentPositionAsync({})
     setLocation(loc)
-
-    if (env.ENV === 'development' && env.ADS) {
-      await setTestDeviceIDAsync('EMULATOR')
-    }
   }
 
   if (loading || !fontsLoaded) {
@@ -185,22 +180,6 @@ export default function App(): React.ReactElement {
           })}
         />
       </Stack.Navigator>
-      {
-        env.ADS ? (
-          <View style={styles.bannerContainer}>
-            <AdMobBanner
-              style={styles.banner}
-              bannerSize="banner"
-              adUnitID={env.ENV === 'development' // eslint-disable-line no-nested-ternary
-                ? 'ca-app-pub-3940256099942544/6300978111' // test id
-                : (Platform.OS === 'android' ? 'ca-app-pub-7615991652854969/8991339797' : 'ca-app-pub-7615991652854969/8331922298')}
-              servePersonalizedAds={false}
-              onAdViewDidReceiveAd={(): void => console.log('ad received')}
-              onDidFailToReceiveAdWithError={(err): void => console.log('Ad mob error: ', err)}
-            />
-          </View>
-        ) : null
-      }
     </NavigationContainer>
   )
 }
