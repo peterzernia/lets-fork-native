@@ -1,5 +1,7 @@
 import React from 'react'
-import { Text as RNText, TextProps } from 'react-native'
+import {
+  Text as RNText, TextProps, Platform, StyleSheet,
+} from 'react-native'
 
 type Props = TextProps & {
   children: string;
@@ -11,9 +13,17 @@ export default function Text(props: Props): React.ReactElement {
 
   return (
     <RNText
-      style={style}
+      style={[style, styles.text]}
     >
       {children}
     </RNText>
   )
 }
+
+const styles = StyleSheet.create({
+  text: {
+    ...Platform.select({
+      android: { fontFamily: 'Roboto' },
+    }),
+  },
+})
