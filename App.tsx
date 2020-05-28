@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  Alert, TouchableOpacity, StyleSheet,
+  Alert, TouchableOpacity, StyleSheet, AsyncStorage,
 } from 'react-native'
 import Text from 'components/Text'
 import ReconnectingWebSocket from 'reconnecting-websocket'
@@ -14,6 +14,7 @@ import JoinScreen from 'screens/JoinScreen'
 import MatchScreen from 'screens/MatchScreen'
 import PartyScreen from 'screens/PartyScreen'
 import RestaurantScreen from 'screens/RestaurantScreen'
+import TutorialScreen from 'screens/TutorialScreen'
 import * as Location from 'expo-location'
 import Constants from 'expo-constants'
 import { AppLoading } from 'expo'
@@ -26,6 +27,7 @@ const ws = new ReconnectingWebSocket(`${env.WS}?id=${Constants.deviceId}`)
 const Stack = createStackNavigator()
 
 export default function App(): React.ReactElement {
+  const [showApp, setShowApp] = React.useState(false)
   const [fontsLoaded] = useFonts({ VarelaRound_400Regular })
   const [loading, setLoading] = React.useState<boolean>(true)
   const [location, setLocation] = React.useState<Location.LocationData>()
@@ -74,8 +76,15 @@ export default function App(): React.ReactElement {
       console.log('Permission to access location was denied')
     }
 
-    const loc = await Location.getCurrentPositionAsync({})
-    setLocation(loc)
+    const [loc, val] = await Promise.all([
+      Location.getCurrentPositionAsync({}),
+      AsyncStorage.getItem('showApp'),
+    ])
+
+    if (loc) setLocation(loc)
+
+    // User has seen intro
+    if (val) setShowApp(true)
   }
 
   if (loading || !fontsLoaded) {
@@ -86,6 +95,10 @@ export default function App(): React.ReactElement {
         onError={console.warn}
       />
     )
+  }
+
+  if (!showApp) {
+    return <TutorialScreen setShowApp={setShowApp} />
   }
 
   return (
