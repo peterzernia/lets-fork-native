@@ -10,15 +10,15 @@ import colors from 'utils/colors'
 const slides = [
   {
     key: '1',
-    text: 'Swipe right on your\nnext favorite restaurant',
+    text: 'Swipe right on your next favorite restaurant',
   },
   {
     key: '2',
-    text: "Deciding on food doesn't have to be hard",
+    text: 'Get started by creating a party, choosing your location, and inviting friends to start swiping',
   },
   {
     key: '3',
-    text: 'Get started by creating a party,\nchoosing your location, and inviting\nfriends to start swiping',
+    text: 'Your party will be notified once you have all swiped right on the same restaurant',
   },
 ]
 
@@ -69,6 +69,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.purple,
     flex: 1,
     paddingTop: 40,
+    paddingRight: 20,
+    paddingLeft: 20,
   },
   headerContainer: {
     flexDirection: 'row',
