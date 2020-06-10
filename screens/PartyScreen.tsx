@@ -14,7 +14,7 @@ import {
 } from 'react-native'
 import Text from 'components/Text'
 import ReconnectingWebsocket from 'reconnecting-websocket'
-import { useFocusEffect } from '@react-navigation/native'
+import { useFocusEffect, RouteProp } from '@react-navigation/native'
 import { StackNavigationProp, useHeaderHeight } from '@react-navigation/stack'
 import ScrollBottomSheet from 'react-native-scroll-bottom-sheet'
 import { Party, Restaurant } from 'types'
@@ -31,7 +31,9 @@ import { BOTTOM_BAR_HEIGHT } from 'utils/constants'
 type StackParamList = {
   Home: undefined;
   Join: undefined;
-  Party: undefined;
+  Party: undefined | {
+    id?: number;
+  };
   Match: undefined;
 }
 
@@ -40,9 +42,12 @@ type NavigationProp = StackNavigationProp<
   'Home'
 >
 
+type PartyScreenRouteProp = RouteProp<StackParamList, 'Party'>
+
 type Props = {
   navigation: NavigationProp;
   party?: Party;
+  route: PartyScreenRouteProp;
   setParty: React.Dispatch<React.SetStateAction<Party>>;
   ws: ReconnectingWebsocket;
 }
@@ -50,8 +55,9 @@ const { width, height } = Dimensions.get('window')
 
 const PartyScreen = React.memo((props: Props) => {
   const {
-    navigation, party, setParty, ws,
+    navigation, party, route, setParty, ws,
   } = props
+
   const [snapIndex, setSnapIndex] = React.useState(2)
   const [finished, setFinished] = React.useState<boolean>(false)
   const [restaurants, setRestaurants] = React.useState<Restaurant[]>()
@@ -66,7 +72,7 @@ const PartyScreen = React.memo((props: Props) => {
         {
           text: 'OK',
           onPress: (): void => {
-            navigation.navigate('Join')
+            navigation.goBack()
             setParty({} as Party)
           },
         },
@@ -82,6 +88,14 @@ const PartyScreen = React.memo((props: Props) => {
       ws.send(JSON.stringify({ type: 'request-more' }))
     }
   }, [restaurants, restaurants?.length, ws])
+
+  // Deep linking will open the app to the party screen
+  // but the party still needs to be joined
+  React.useEffect(() => {
+    if (route?.params?.id) {
+      ws.send(JSON.stringify({ type: 'join', payload: { party_id: route?.params?.id } }))
+    }
+  }, [route?.params?.id, ws])
 
   // When anyone requests more cards, they are set in current
   // and this useEffect loads the new cards into the restaurants array

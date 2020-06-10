@@ -33,6 +33,13 @@ export default function App(): React.ReactElement {
   const [location, setLocation] = React.useState<Location.LocationData>()
   const [party, setParty] = React.useState<Party>({} as Party)
 
+  const linking = {
+    prefixes: ['https://letsfork.app', 'letsfork://', 'exp://192.168.178.25:19000/+'],
+    config: {
+      Party: 'party/:id',
+    },
+  }
+
   React.useEffect(() => {
     // Keep track of current matches
     let matches: Restaurant[] = []
@@ -102,7 +109,7 @@ export default function App(): React.ReactElement {
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking} fallback={<Text>Loading...</Text>}>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
           name="Create"
