@@ -9,9 +9,9 @@ const ENV = {
   },
   production: {
     ADS: false,
-    API: 'https://letsfork.peterzernia.com/api/v1',
+    API: 'https://letsfork.app/api/v1',
     ENV: 'production',
-    WS: 'wss://letsfork.peterzernia.com/api/v1/ws',
+    WS: 'wss://letsfork.app/api/v1/ws',
   },
 }
 
