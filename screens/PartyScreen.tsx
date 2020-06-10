@@ -27,6 +27,7 @@ import Button from 'components/Button'
 import env from 'env'
 import colors from 'utils/colors'
 import { BOTTOM_BAR_HEIGHT } from 'utils/constants'
+import QRCode from 'react-native-qrcode-svg'
 
 type StackParamList = {
   Home: undefined;
@@ -72,7 +73,7 @@ const PartyScreen = React.memo((props: Props) => {
         {
           text: 'OK',
           onPress: (): void => {
-            navigation.goBack()
+            navigation.navigate('Home')
             setParty({} as Party)
           },
         },
@@ -152,7 +153,15 @@ const PartyScreen = React.memo((props: Props) => {
       >
         <Text style={styles.text}>Share this code with friends to have them join your party.</Text>
         <Text style={styles.code}>{party.id}</Text>
-        <TouchableOpacity onPress={(): Promise<ShareAction> => Share.share({ message: `Join my party on Let's Fork with this code: ${party.id}` })}>
+        <QRCode
+          size={200}
+          value={`https://letsfork.app/party/${party.id}`}
+        />
+        <TouchableOpacity
+          onPress={(): Promise<ShareAction> => Share.share(
+            { message: `Join my party on Let's Fork by clicking this link:\nhttps://letsfork.app/party/${party.id}\n\nor by opening the app and entering the code ${party.id}` },
+          )}
+        >
           {Platform.OS === 'ios' ? (
             <Ionicons name="ios-share-alt" size={32} />
           ) : (
