@@ -123,7 +123,11 @@ export default function Details(props: Props): React.ReactElement {
         <Text
           style={styles.text}
         >
-          {`${restaurant.price}   •   ${restaurant?.categories?.map((c) => c.title).join(', ')}`}
+          {
+            restaurant.price
+              ? `${restaurant.price}   •   ${restaurant?.categories?.map((c) => c.title).join(', ')}`
+              : restaurant?.categories?.map((c) => c.title).join(', ')
+          }
         </Text>
         { restaurant?.transactions?.length
           ? (
