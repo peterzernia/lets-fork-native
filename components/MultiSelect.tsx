@@ -69,7 +69,7 @@ export default function MultiSelect(props: Props): React.ReactElement {
             ? `${selected.length} ${selected.length === 1 ? 'category' : 'categories'} selected`
             : 'Filter by Categories (Optional)'}
         </Text>
-        <Ionicons name="md-arrow-dropright" size={16} />
+        <Ionicons name="md-arrow-dropright" size={26} />
       </TouchableOpacity>
     </View>
   )
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 16,
     padding: 3,
   },
 })
