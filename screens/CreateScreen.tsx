@@ -12,11 +12,13 @@ import ReconnectingWebSocket from 'reconnecting-websocket'
 import { StackNavigationProp } from '@react-navigation/stack'
 import MapView, { Circle } from 'react-native-maps'
 import Button from 'components/Button'
+import MultiSelect from 'components/MultiSelect'
 import Price from 'components/Price'
 import { LocationData } from 'expo-location'
 import colors from 'utils/colors'
 import { getLocale } from 'utils/phone'
 import currencies from 'utils/currencies'
+import { CATEGORIES } from 'utils/constants'
 
 type StackParamList = {
   Party: undefined;
@@ -74,6 +76,7 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
   const symbol = currencies[locale.substring(3)] || '$'
 
   const { location, navigation, ws } = props
+  const [categories, setCategories] = React.useState<string[]>([])
   const [price, setPrice] = React.useState([false, false, false, false])
   const [radius, setRadius] = React.useState(UNITS.initialRadius[system])
   const [region, setRegion] = React.useState({
@@ -93,6 +96,7 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
     ws.send(JSON.stringify({
       type: 'create',
       payload: {
+        categories: categories.length ? categories.join(',') : 'restaurants',
         latitude: `${region.latitude}`,
         longitude: `${region.longitude}`,
         radius: `${radius}`,
@@ -136,6 +140,10 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
         <Price selected={price} setSelected={setPrice} n={3}>{symbol}</Price>
         <Price selected={price} setSelected={setPrice} n={4}>{symbol}</Price>
       </View>
+      <MultiSelect
+        handleSelect={setCategories}
+        items={CATEGORIES}
+      />
       <View style={styles.button}>
         <Button color="purple" size="sm" onPress={(): void => handleCreate()}>
           CREATE

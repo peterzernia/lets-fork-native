@@ -11,6 +11,8 @@ web-build/
 web-report/
 app.json
 api-key.json
+categories
+
 
 # macOS
 .DS_Store
