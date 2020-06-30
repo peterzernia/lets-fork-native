@@ -8,6 +8,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Party, Restaurant } from 'types'
+import Menu from 'components/Menu'
 import CreateScreen from 'screens/CreateScreen'
 import HomeScreen from 'screens/HomeScreen'
 import JoinScreen from 'screens/JoinScreen'
@@ -21,6 +22,7 @@ import { AppLoading } from 'expo'
 import colors from 'utils/colors'
 import env from 'env'
 import { useFonts, VarelaRound_400Regular } from '@expo-google-fonts/varela-round'
+import ShareScreen from 'screens/ShareScreen'
 
 const ws = new ReconnectingWebSocket(`${env.WS}?id=${Constants.deviceId}`)
 
@@ -143,7 +145,7 @@ export default function App(): React.ReactElement {
         <Stack.Screen
           name="Match"
           options={(): object => ({
-            headerTitle: (): React.ReactElement => <Text style={styles.matchHeader}>{`Party code: ${party.id}`}</Text>,
+            headerTitle: (): null => null,
           })}
         >
           {(props): React.ReactElement => <MatchScreen {...props} party={party} />}
@@ -177,9 +179,7 @@ export default function App(): React.ReactElement {
               </TouchableOpacity>
             ),
             headerRight: (): React.ReactElement => (
-              <TouchableOpacity style={styles.matchButton} onPress={(): void => navigation.navigate('Match')}>
-                <MaterialIcons name="list" size={32} color="black" />
-              </TouchableOpacity>
+              <Menu navigation={navigation} />
             ),
           })}
         >
@@ -199,6 +199,16 @@ export default function App(): React.ReactElement {
             headerTitle: (): null => null,
           })}
         />
+        <Stack.Screen
+          name="Share"
+          options={(): object => ({
+            headerTitle: (): null => null,
+          })}
+        >
+          {(props): React.ReactElement => (
+            <ShareScreen {...props} party={party} />
+          )}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   )
