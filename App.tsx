@@ -178,8 +178,10 @@ export default function App(): React.ReactElement {
                 <MaterialIcons name="close" color="black" size={24} />
               </TouchableOpacity>
             ),
-            headerRight: (): React.ReactElement => (
-              <Menu navigation={navigation} />
+            headerRight: (): React.ReactElement | null => (
+              party.status === 'active'
+                ? <Menu navigation={navigation} />
+                : null
             ),
           })}
         >
