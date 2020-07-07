@@ -5,17 +5,21 @@ import colors from 'utils/colors'
 type Props = {
   handleChange: React.Dispatch<React.SetStateAction<string>>;
   keyboardType?: KeyboardTypeOptions;
+  placeholder?: string;
   value: string;
 }
 
 export default function Input(props: Props): React.ReactElement {
-  const { handleChange, keyboardType, value } = props
+  const {
+    handleChange, keyboardType, placeholder, value,
+  } = props
 
   return (
     <TextInput
       onChangeText={handleChange}
       style={styles.input}
       value={value}
+      placeholder={placeholder}
       keyboardType={keyboardType}
     />
   )

@@ -32,6 +32,7 @@ export default function Button(props: Props): React.ReactElement {
 
   return (
     <TouchableOpacity
+      accessibilityRole="button"
       style={{
         ...styles.button,
         backgroundColor: COLORS[color],

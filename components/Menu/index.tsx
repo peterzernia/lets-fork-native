@@ -27,7 +27,11 @@ export default function Menu(props: Props): React.ReactElement {
   const [open, setOpen] = React.useState(false)
 
   return (
-    <TouchableOpacity style={styles.button} onPress={(): void => setOpen(true)}>
+    <TouchableOpacity
+      accessibilityRole="button"
+      style={styles.button}
+      onPress={(): void => setOpen(true)}
+    >
       <MaterialIcons name="more-vert" color="black" size={24} />
       <Modal
         isVisible={open}
@@ -35,9 +39,11 @@ export default function Menu(props: Props): React.ReactElement {
         animationIn="fadeIn"
         animationOut="fadeOut"
         backdropColor="transparent"
+        testID="modal"
       >
         <View style={styles.modal}>
           <TouchableOpacity
+            accessibilityRole="button"
             style={styles.item}
             onPress={(): void => {
               setOpen(false)
@@ -52,6 +58,7 @@ export default function Menu(props: Props): React.ReactElement {
             <Text style={styles.text}>Share</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            accessibilityRole="button"
             style={styles.item}
             onPress={(): void => {
               setOpen(false)

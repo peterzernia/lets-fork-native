@@ -43,6 +43,7 @@ export default function Rating(props: Props): React.ReactElement {
         width: size === 'lg' ? 160 : 80,
       }}
       source={RATINGS[rating]}
+      testID="rating"
     />
   )
 }
