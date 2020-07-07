@@ -45,6 +45,7 @@ module.exports = {
     "@typescript-eslint/no-use-before-define": 0,
     "no-console": 0,
     "react/jsx-props-no-spreading": 0,
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.ts", "**/*.test.tsx"]}]
   },
   settings: {
     'import/resolver': {

@@ -1,3 +1,8 @@
 module.exports = {
-  preset: 'react-native',
+  preset: '@testing-library/react-native',
+  collectCoverageFrom: [
+    './components/**/*',
+    './screens/**/*',
+    './utils/**/*',
+  ],
 }
