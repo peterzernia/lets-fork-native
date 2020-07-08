@@ -17,6 +17,7 @@ export default function Price(props: Props): React.ReactElement {
 
   return (
     <TouchableOpacity
+      accessibilityRole="button"
       onPress={(): void => {
         const s = [...selected]
         s[n - 1] = !s[n - 1]

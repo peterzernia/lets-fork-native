@@ -22,7 +22,6 @@ export type Restaurant = {
   hours?: Hours[];
   id: string;
   image_url: string;
-  is_claimed: boolean;
   is_closed: boolean;
   name: string;
   phone: string;

@@ -21,4 +21,4 @@ const getEnvVars = (releaseChannel: string | undefined): typeof ENV.development 
   return ENV.development
 }
 
-export default getEnvVars(Constants.manifest.releaseChannel)
+export default getEnvVars(Constants?.manifest?.releaseChannel)

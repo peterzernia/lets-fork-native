@@ -6,6 +6,12 @@ module.exports = {
     './utils/**/*',
     '!**/__snapshots__/*',
   ],
+  moduleNameMapper: {
+    '^ky$': require.resolve('ky').replace('index.js', 'umd.js'),
+  },
+  setupFiles: [
+    './setupTests.ts',
+  ],
   setupFilesAfterEnv: [
     '@testing-library/react-native/cleanup-after-each',
   ],
