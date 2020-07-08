@@ -34,12 +34,13 @@ export default function MultiSelect(props: Props): React.ReactElement {
 
   return (
     <View>
-      <Modal isVisible={open} onBackdropPress={(): void => setOpen(false)}>
+      <Modal isVisible={open} onBackdropPress={(): void => setOpen(false)} testID="modal">
         <ScrollView style={styles.scroll}>
           {
             items.map((c) => (
               <View key={c.id} style={styles.item}>
                 <TouchableOpacity
+                  accessibilityRole="button"
                   onPress={(): void => handlePress(c.id)}
                 >
                   <Text
@@ -61,6 +62,7 @@ export default function MultiSelect(props: Props): React.ReactElement {
         </ScrollView>
       </Modal>
       <TouchableOpacity
+        accessibilityRole="button"
         style={styles.openButton}
         onPress={(): void => setOpen(true)}
       >

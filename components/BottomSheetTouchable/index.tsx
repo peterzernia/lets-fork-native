@@ -11,9 +11,9 @@ type Props = TouchableOpacityProps & {
 export default function BottomSheetTouchable(props: Props): React.ReactElement {
   if (Platform.OS === 'android') {
     return (
-      <RNGHTouchableOpacity {...props} />
+      <RNGHTouchableOpacity accessibilityRole="button" {...props} />
     )
   }
 
-  return <TouchableOpacity {...props} />
+  return <TouchableOpacity accessibilityRole="button" {...props} />
 }

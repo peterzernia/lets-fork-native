@@ -37,6 +37,7 @@ export default function Share(props: Props): React.ReactElement {
         value={`https://letsfork.app/party/${party.id}`}
       />
       <TouchableOpacity
+        accessibilityRole="button"
         onPress={(): Promise<ShareAction> => RNShare.share(
           { message: `Join my party on Let's Fork by clicking this link:\nhttps://letsfork.app/party/${party.id}\n\nor by opening the app and entering the code ${party.id}` },
         )}
