@@ -27,11 +27,11 @@ upload-android:
 .PHONY: upload-android
 
 build-ios:
-	expo build:ios -t archive --release-channel production
+	expo build:ios --apple-id peter@peterzernia.com -t archive --release-channel production
 .PHONY: build-ios
 
 upload-ios:
-	expo upload:ios --app-name "Let's Fork"
+	expo upload:ios --apple-id peter@peterzernia.com --app-name "Let's Fork"
 .PHONY: upload-ios
 
 debug:
