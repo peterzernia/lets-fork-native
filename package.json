@@ -19,6 +19,7 @@
     "expo-constants": "~9.1.1",
     "expo-font": "~8.2.1",
     "expo-location": "~8.2.1",
+    "expo-store-review": "~2.1.2",
     "ky": "^0.19.1",
     "react": "16.11.0",
     "react-dom": "16.11.0",
