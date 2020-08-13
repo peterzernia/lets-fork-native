@@ -107,6 +107,7 @@ export default function Details(props: Props): React.ReactElement {
             onScroll={
               Animated.event(
                 [{ nativeEvent: { contentOffset: { x: new Animated.Value(0) } } }],
+                { useNativeDriver: true },
               )
             }
           >
