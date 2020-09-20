@@ -38,7 +38,7 @@ export default function Share(props: Props): React.ReactElement {
   const handlePress = (): void => {
     Alert.alert(
       '',
-      'No matches will be shown until another user joins',
+      'No matches will be shown until another user joins your party',
       [
         {
           text: 'OK',
