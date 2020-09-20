@@ -13,7 +13,7 @@ const Stack = createStackNavigator()
 test('Share', () => {
   const shareSpy = jest.spyOn(RNShare, 'share')
 
-  const { getByRole } = render(
+  const { getAllByRole } = render(
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
@@ -27,7 +27,7 @@ test('Share', () => {
     </NavigationContainer>,
   )
 
-  const button = getByRole('button')
+  const button = getAllByRole('button')[1]
   fireEvent.press(button)
   expect(shareSpy).toBeCalledTimes(1)
 })

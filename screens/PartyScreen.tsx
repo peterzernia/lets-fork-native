@@ -139,7 +139,7 @@ const PartyScreen = React.memo((props: Props) => {
   }
 
   if (party?.status === 'waiting') {
-    return <Share party={party} />
+    return <Share party={party} ws={ws} />
   }
 
   if (finished || party?.total === 0) {

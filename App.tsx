@@ -63,7 +63,7 @@ export default function App(): React.ReactElement {
         matches = data.matches
         Alert.alert(
           'You have a new match!',
-          'Click the list icon in the top right to view your matches',
+          'Click the icon in the top right to view your matches',
         )
       }
 
