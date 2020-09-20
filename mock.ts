@@ -1,5 +1,7 @@
+import { Restaurant } from 'types'
+
 // eslint-disable-next-line import/prefer-default-export
-export const restaurant: any = {
+export const restaurant: Restaurant = {
   id: 'PsicJn3TiQlIFOY1xL-3FA',
   alias: 'サツキ-千代田区',
   name: 'Satsuki',
@@ -22,10 +24,10 @@ export const restaurant: any = {
     },
   ],
   rating: 4.0,
-  // coordinates: {
-  //   latitude: 35.6814637317131,
-  //   longitude: 139.734079076139,
-  // },
+  coordinates: {
+    latitude: 35.6814637317131,
+    longitude: 139.734079076139,
+  },
   transactions: [],
   price: '￥￥￥',
   location: {

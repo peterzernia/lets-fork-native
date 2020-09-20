@@ -6,6 +6,7 @@ import {
   Dimensions,
   Slider,
   ScrollView,
+  Switch,
 } from 'react-native'
 import Text from 'components/Text'
 import ReconnectingWebSocket from 'reconnecting-websocket'
@@ -66,7 +67,7 @@ const UNITS = {
   },
 }
 
-const JoinScreen = React.memo((props: Props): React.ReactElement => {
+const CreateScreen = React.memo((props: Props): React.ReactElement => {
   const locale = getLocale()
   const countries = ['LR', 'MM', 'US']
   const system = countries.includes(locale.substring(3)) ? 'imperial' : 'metric'
@@ -78,6 +79,7 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
   const { location, navigation, ws } = props
   const [categories, setCategories] = React.useState<string[]>([])
   const [price, setPrice] = React.useState([false, false, false, false])
+  const [openNow, setOpenNow] = React.useState(true)
   const [radius, setRadius] = React.useState(UNITS.initialRadius[system])
   const [region, setRegion] = React.useState({
     latitude: location?.coords?.latitude || 52.520008,
@@ -100,6 +102,7 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
         latitude: `${region.latitude}`,
         longitude: `${region.longitude}`,
         radius: `${radius}`,
+        open_now: openNow,
         price: pr.length ? pr : null,
       },
     }))
@@ -134,6 +137,14 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
         onValueChange={setRadius}
         step={UNITS.step[system]}
       />
+      <View style={styles.openNow}>
+        <Switch
+          style={styles.switch}
+          value={openNow}
+          onValueChange={setOpenNow}
+        />
+        <Text style={styles.openNowText}>{openNow ? 'Currently open' : 'All restaurants'}</Text>
+      </View>
       <View style={styles.price}>
         <Price selected={price} setSelected={setPrice} n={1}>{symbol}</Price>
         <Price selected={price} setSelected={setPrice} n={2}>{symbol}</Price>
@@ -153,7 +164,7 @@ const JoinScreen = React.memo((props: Props): React.ReactElement => {
   )
 })
 
-export default JoinScreen
+export default CreateScreen
 
 const styles = StyleSheet.create({
   mapContainer: {
@@ -172,6 +183,20 @@ const styles = StyleSheet.create({
   },
   slider: {
     margin: 16,
+  },
+  openNow: {
+    marginTop: 8,
+    marginBottom: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  openNowText: {
+    fontWeight: 'bold',
+    marginLeft: 16,
+  },
+  switch: {
+    alignSelf: 'flex-start',
+    marginLeft: 16,
   },
   price: {
     flexDirection: 'row',
