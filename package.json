@@ -18,7 +18,7 @@
     "expo": "^38.0.0",
     "expo-constants": "~9.1.1",
     "expo-font": "~8.2.1",
-    "expo-location": "~8.2.1",
+    "expo-location": "~9.0.0",
     "expo-store-review": "~2.1.2",
     "ky": "^0.23.0",
     "react": "16.11.0",
