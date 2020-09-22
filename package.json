@@ -20,7 +20,7 @@
     "expo-font": "~8.2.1",
     "expo-location": "~8.2.1",
     "expo-store-review": "~2.1.2",
-    "ky": "^0.19.1",
+    "ky": "^0.23.0",
     "react": "16.11.0",
     "react-dom": "16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
