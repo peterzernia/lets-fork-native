@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@expo-google-fonts/varela-round": "^0.1.0",
-    "@expo/vector-icons": "^10.0.0",
+    "@expo/vector-icons": "^10.2.1",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/slider": "3.0.0",
     "@react-navigation/native": "^5.2.3",
