@@ -27,6 +27,10 @@ type Slide = {
   text: string;
 }
 
+type Item = {
+  item: Slide;
+}
+
 type Props = {
   setShowApp: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -35,9 +39,9 @@ const TutorialScreen = React.memo((props: Props): React.ReactElement => {
   const { setShowApp } = props
 
 
-  const renderItem = ({ item }: { item: Slide }): React.ReactElement => (
+  const renderItem = (item: Item): React.ReactElement => (
     <View style={styles.slide}>
-      <Text style={styles.text}>{item.text}</Text>
+      <Text style={styles.text}>{item.item.text}</Text>
     </View>
   )
 

@@ -10,6 +10,10 @@ test:
 	yarn test
 .PHONY: test
 
+lint:
+	yarn lint
+.PHONY: lint
+
 publish:
 	expo publish --release-channel production
 .PHONY: publish

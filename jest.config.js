@@ -1,5 +1,5 @@
 module.exports = {
-  preset: '@testing-library/react-native',
+  preset: 'react-native',
   collectCoverageFrom: [
     './components/**/*',
     './screens/**/*',
@@ -11,9 +11,6 @@ module.exports = {
   },
   setupFiles: [
     './setupTests.ts',
-  ],
-  setupFilesAfterEnv: [
-    '@testing-library/react-native/cleanup-after-each',
   ],
   transformIgnorePatterns: [
     'node_modules/(?!(jest-)?react-native|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)', 'node_modules/(?!(jest-)?react-native|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)',

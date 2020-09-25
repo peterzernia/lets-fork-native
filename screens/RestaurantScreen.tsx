@@ -2,7 +2,6 @@ import React from 'react'
 import {
   AsyncStorage, SafeAreaView, ScrollView, StyleSheet, Platform, Alert,
 } from 'react-native'
-import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import Details from 'components/Details'
 import { Restaurant } from 'types'
@@ -19,13 +18,7 @@ type StackParamList = {
 
 type HomeScreenRouteProp = RouteProp<StackParamList, 'Restaurant'>
 
-type NavigationProp = StackNavigationProp<
-  StackParamList,
-  'Restaurant'
->
-
 type Props = {
-  navigation: NavigationProp;
   route: HomeScreenRouteProp;
 }
 
