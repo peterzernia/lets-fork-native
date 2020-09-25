@@ -58,7 +58,7 @@
     "eslint-plugin-react-native": "^3.9.1",
     "jest": "^26.4.2",
     "jest-expo": "^39.0.0",
-    "react-native-testing-library": "^1.13.2",
+    "react-native-testing-library": "^6.0.0",
     "react-test-renderer": "^16.13.1",
     "snapshot-diff": "^0.8.1",
     "typescript": "~3.9.2"
