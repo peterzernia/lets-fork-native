@@ -2,7 +2,7 @@
 A mobile application built with React Native, Expo and Typescript.
 
 ## Demo
-[![Let's Fork](https://i.imgur.com/URBirJ3.png)](http://www.youtube.com/watch?v=yax6ekVGPnk "Let's Fork")
+[![Let's Fork](https://letsfork.app/thumbnail.png)](https://vimeo.com/477511968 "Let's Fork")
 
 ## Development
 Requirements: [Expo](https://expo.io)
