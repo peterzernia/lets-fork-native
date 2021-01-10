@@ -18,7 +18,7 @@ import RestaurantScreen from 'screens/RestaurantScreen'
 import TutorialScreen from 'screens/TutorialScreen'
 import * as Location from 'expo-location'
 import Constants from 'expo-constants'
-import { AppLoading } from 'expo'
+import AppLoading from 'expo-app-loading'
 import colors from 'utils/colors'
 import env from 'env'
 import { useFonts, VarelaRound_400Regular } from '@expo-google-fonts/varela-round'
@@ -36,7 +36,7 @@ export default function App(): React.ReactElement {
   const [party, setParty] = React.useState<Party>({} as Party)
 
   const linking = {
-    prefixes: ['https://letsfork.app', 'letsfork://', 'exp://192.168.178.25:19000/+'],
+    prefixes: ['https://letsfork.app', 'letsfork://', 'exp://192.168.178.76:19000/+'],
     config: {
       Party: 'party/:id',
     },

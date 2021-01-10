@@ -3,9 +3,9 @@ import Constants from 'expo-constants'
 const ENV = {
   development: {
     ADS: false,
-    API: 'http://192.168.178.25:8003/api/v1',
+    API: 'http://192.168.178.76:8003/api/v1',
     ENV: 'development',
-    WS: 'ws://192.168.178.25:8003/api/v1/ws',
+    WS: 'ws://192.168.178.76:8003/api/v1/ws',
   },
   production: {
     ADS: false,

@@ -78,6 +78,7 @@ export default function Share(props: Props): React.ReactElement {
       <Text style={styles.code}>{party.id}</Text>
       <QRCode
         size={200}
+        // value={`http://192.168.178.76:8003/party/${party.id}`}
         value={`https://letsfork.app/party/${party.id}`}
       />
       {
