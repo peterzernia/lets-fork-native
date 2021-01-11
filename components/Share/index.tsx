@@ -92,7 +92,7 @@ export default function Share(props: Props): React.ReactElement {
         )}
       >
         {Platform.OS === 'ios' ? (
-          <Ionicons name="ios-share-alt" size={32} />
+          <Ionicons name="ios-share-outline" size={32} />
         ) : (
           <MaterialIcons name="share" size={32} />
         )}

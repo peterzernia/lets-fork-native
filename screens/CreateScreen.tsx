@@ -15,7 +15,7 @@ import MapView, { Circle } from 'react-native-maps'
 import Button from 'components/Button'
 import MultiSelect from 'components/MultiSelect'
 import Price from 'components/Price'
-import { LocationData } from 'expo-location'
+import { LocationObject } from 'expo-location'
 import colors from 'utils/colors'
 import { getLocale } from 'utils/phone'
 import currencies from 'utils/currencies'
@@ -32,7 +32,7 @@ type NavigationProp = StackNavigationProp<
 >
 
 type Props = {
-  location?: LocationData;
+  location?: LocationObject;
   navigation: NavigationProp;
   ws: ReconnectingWebSocket;
 }

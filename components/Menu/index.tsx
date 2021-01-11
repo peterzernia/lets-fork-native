@@ -51,7 +51,7 @@ export default function Menu(props: Props): React.ReactElement {
             }}
           >
             {Platform.OS === 'ios' ? (
-              <Ionicons name="ios-share-alt" color="black" size={24} />
+              <Ionicons name="ios-share-outline" color="black" size={24} />
             ) : (
               <MaterialIcons name="share" color="black" size={24} />
             )}

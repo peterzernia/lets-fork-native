@@ -32,13 +32,15 @@ export default function App(): React.ReactElement {
   const [showApp, setShowApp] = React.useState(false)
   const [fontsLoaded] = useFonts({ VarelaRound_400Regular })
   const [loading, setLoading] = React.useState<boolean>(true)
-  const [location, setLocation] = React.useState<Location.LocationData>()
+  const [location, setLocation] = React.useState<Location.LocationObject>()
   const [party, setParty] = React.useState<Party>({} as Party)
 
   const linking = {
     prefixes: ['https://letsfork.app', 'letsfork://', 'exp://192.168.178.76:19000/+'],
     config: {
-      Party: 'party/:id',
+      screens: {
+        Party: 'party/:id',
+      },
     },
   }
 
