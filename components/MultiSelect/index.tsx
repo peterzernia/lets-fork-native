@@ -4,7 +4,7 @@ import {
 } from 'react-native'
 import Modal from 'react-native-modal'
 import Text from 'components/Text'
-import { Feather, Ionicons } from '@expo/vector-icons'
+import { Feather, MaterialIcons } from '@expo/vector-icons'
 
 type Props = {
   handleSelect: (s: string[]) => void;
@@ -71,7 +71,7 @@ export default function MultiSelect(props: Props): React.ReactElement {
             ? `${selected.length} ${selected.length === 1 ? 'category' : 'categories'} selected`
             : 'Filter by Categories (Optional)'}
         </Text>
-        <Ionicons name="md-arrow-dropright" size={26} />
+        <MaterialIcons name="arrow-right" size={26} />
       </TouchableOpacity>
     </View>
   )
